@@ -1,5 +1,18 @@
 import xml.etree.ElementTree as ET
+import yaml
 import csv
+
+class YamlLoader:
+    """設定ファイル(.yaml)をロードするLoader"""
+
+    def __init__(self, input):
+        self.input = input
+
+    def load(self):
+        with open(self.input, "r+") as f:
+            text = f.read()
+        # ここでエラー処理。もしなければこの形式で作成してくださいと出力
+        self.data = yaml.load(text)
 
 class Parser:
     """BLXMLをパースして欲しい情報をCSVで出力するParser"""
@@ -47,6 +60,8 @@ class Parser:
         return list(map(lambda attr: info.get(attr),self.attrs))
 
 if __name__ == "__main__":
-    # parser = Parser("perf.xml")
-    parser = Parser("perf.xml", ["id", "name", "peinfo", "rate"])
-    parser.to_csv("output.csv")
+    loader = YamlLoader("setting.yaml")
+    loader.load()
+
+    parser = Parser(loader.data["parser"]["input_file"], loader.data["parser"]["attributes"])
+    parser.to_csv(loader.data["parser"]["output_file"])

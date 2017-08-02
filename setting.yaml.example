@@ -1,0 +1,9 @@
+# copy this file, rename setting.yaml
+parser:
+  input_file_name: perf.xml
+  output_file_name: output.csv
+  attributes:
+    - id
+    - name
+    - peinfo
+    - rate

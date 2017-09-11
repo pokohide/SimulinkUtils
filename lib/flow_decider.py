@@ -1,6 +1,6 @@
 from . import utils as Utils
 
-class Decider:
+class FlowDecider:
     """
     与えられたブロックごとに実行順序と実行サイクルの近接リストから
     実行順序を決定するモジュール。

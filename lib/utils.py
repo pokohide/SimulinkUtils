@@ -13,8 +13,8 @@ class BlockInfo:
         self.peinfo = peinfo
         self.rate = rate
         self.cycle = cycle
-        self.start = 0
-        self.end = 0
+        self.start = 0.0
+        self.end = 0.0
 
     def __str__(self):
         return str(self.id) + "::" + str(self.name) + ": core-" + str(self.peinfo) + ", cycle: " + str(self.cycle)
@@ -46,7 +46,6 @@ class BlockInfo:
     def has_next(self):
         return self.adjacent and not self.adjacent.is_empty()
 
-    #
     def set_adjacent(self, adjacent):
         self.adjacent = adjacent
 

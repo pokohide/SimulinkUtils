@@ -38,7 +38,12 @@ class GraphManager:
                     adjacencyList.append( (nextBlockName, cycle) )
             self.blockTable[blockName].set_adjacent(adjacencyList)
 
+        self._set_base_rate()
         self._print(self.blockTable)
+
+    # ベース周期を取得する
+    def _set_base_rate(self):
+        self.base_rate = min(self.blockTable[k].rate for k in self.blockTable)
 
     def _print(self, dict):
         for k in sorted(dict, key=lambda k: int(dict[k].id)):
@@ -66,6 +71,6 @@ class GraphManager:
             block.get("blocktype"),
             block.get("name"),
             block.get("peinfo"),
-            block.get("rate"),
+            float(block.get("rate")),
             cycle
         )

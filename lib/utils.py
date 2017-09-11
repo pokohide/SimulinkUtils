@@ -24,6 +24,7 @@ class BlockInfo:
             self.id,
             self.name,
             self.peinfo,
+            self.rate,
             self.start,
             self.end
         ]

@@ -1,5 +1,4 @@
 from . import utils as Utils
-import csv
 
 class Decider:
     """

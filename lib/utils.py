@@ -24,7 +24,7 @@ class BlockInfo:
             self.id,
             self.name,
             self.peinfo,
-            self.rate,
+            # self.rate,
             self.start,
             self.end
         ]
@@ -107,5 +107,7 @@ class Exporter:
     def to_csv(self, filename, header, body):
         with open(filename, "w") as f:
             writer = csv.writer(f, lineterminator="\n")
+            writer.writerow(["# num of blocks", " maximum endTime"])
             writer.writerow(header)
+            writer.writerow(["# id", " name", " peinfo", " startTime", " endTime"])
             writer.writerows(body)

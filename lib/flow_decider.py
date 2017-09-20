@@ -12,6 +12,7 @@ class FlowDecider:
         self.blockTable = blockTable
         self.stack = Utils.Stack()
         self.results = {}
+        self.maxEndTime = 0.0
 
     def run(self):
         while(True):
@@ -28,6 +29,7 @@ class FlowDecider:
         block = self.blockTable[target]
         startTime = block.start
         endTime = startTime + block.cycle
+        if self.maxEndTime < endTime: self.maxEndTime = endTime
 
         block.set_time(startTime, endTime)
 
@@ -46,7 +48,8 @@ class FlowDecider:
             return self._calculate_time(importer[0])
 
     def _csv_header(self):
-        return ["id", "name", "peinfo", "rate", "startTime", "endTime"]
+        return [len(self.blockTable), self.maxEndTime]
+        # return ["id", "name", "peinfo", "rate", "startTime", "endTime"]
 
     def _csv_body(self):
         body = []

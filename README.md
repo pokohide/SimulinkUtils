@@ -23,6 +23,7 @@ GraphManagerから受け取った重み付き隣接リストを深さ優先探�
 ```
 git clone hogehoge & cd hogehoge
 pip install pyyaml
+pip install plotly
 python main.py # 実行
 ```
 

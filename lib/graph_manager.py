@@ -20,26 +20,46 @@ class GraphManager:
             self.blockTable[name] = self._get_block(block)
 
     def run(self):
-        blocks = self.root.findall(".//block")
-        self.startBlockName = blocks[0].get("name")
-
-        for block in blocks:
+        for block in self.root.findall(".//block"):
             # ここでこのブロックが周期内かを確認。周期外であればスキップする
-
-            blockName = block.get("name")
-            adjacencyList = Utils.Stack()
-
-            nextBlockElem = block.find(".//output")
-            output = block.find(".//output")
-            if output != None:
-                for connect in output.findall("connect"):
-                    nextBlockName = connect.get("block")
-                    cycle = self._calculate_cycle(blockName, nextBlockName)
-                    adjacencyList.append( (nextBlockName, cycle) )
-            self.blockTable[blockName].set_adjacent(adjacencyList)
+            # rateがない(=0)の場合もあることに注意
+            self._set_next_blocks(block)
+            self._set_prev_blocks(block)
 
         self._set_base_rate()
-        self._print(self.blockTable)
+        self._set_startBlocks()
+        # print('--------------')
+        #$ print(self.startBlockName)
+        # self._print(self.blockTable)
+
+    # あるブロックの次のブロックを登録する
+    def _set_next_blocks(self, block):
+        nextBlocks = Utils.Stack()
+        blockName = block.get("name")
+        output = block.find("./output")
+        if output is not None:
+            for connect in output.findall("connect"):
+                nextBlockName = connect.get("block")
+                cycle = self._calculate_cycle(blockName, nextBlockName)
+                nextBlocks.append( (nextBlockName, cycle) )
+        self.blockTable[blockName].set_neighbor("output", nextBlocks)
+
+    def _set_prev_blocks(self, block):
+        prevBlocks = Utils.Stack()
+        blockName = block.get("name")
+        for input in block.findall("./input"):
+            for connect in input.findall("connect"):
+                prevBlockName = connect.get("block")
+                cycle = 0.0
+                prevBlocks.append( (prevBlockName, cycle) )
+        self.blockTable[blockName].set_neighbor("input", prevBlocks)
+
+    def _set_startBlocks(self):
+        self.startBlocks = Utils.Stack()
+        for blockName, block in self.blockTable.items():
+            if block.has_next() and not block.has_prev():
+                # block.print_raw()
+                self.startBlocks.append(blockName)
 
     # ベース周期を取得する
     def _set_base_rate(self):
@@ -55,6 +75,9 @@ class GraphManager:
         nextBlock = self.blockTable.get(nextBlockName)
         cycle = block.cycle
 
+        if block.peinfo is None or nextBlock.peinfo is None:
+            return cycle
+
         if block.peinfo != nextBlock.peinfo:
             # 行き先ブロックとコアが違う場合コア間通信が発生。ここでは50とする。
             cycle += float(50)
@@ -64,13 +87,13 @@ class GraphManager:
     def _get_block(self, block):
         performance = block.find(".//performance[@type='task']")
         cycle = 0
-        if performance != None: cycle = float(performance.get("typical"))
+        if performance is not None: cycle = float(performance.get("typical"))
 
         return Utils.BlockInfo(
             block.get("id"),
             block.get("blocktype"),
             block.get("name"),
             block.get("peinfo"),
-            float(block.get("rate")),
+            float(block.get("rate") or 0),
             cycle
         )

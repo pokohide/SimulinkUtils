@@ -1,5 +1,6 @@
 from pprint import pprint
 import csv
+import yaml
 
 class BlockInfo:
     """
@@ -39,15 +40,23 @@ class BlockInfo:
             "cycle": self.cycle,
             "start": self.start,
             "end": self.end,
-            "adjacent": self.adjacent.data()
+            "next": self.next.data(),
+            "prev": self.prev.data()
         })
 
     # 次のブロックが存在するかどうか
     def has_next(self):
-        return self.adjacent and not self.adjacent.is_empty()
+        return self.next and not self.next.is_empty()
 
-    def set_adjacent(self, adjacent):
-        self.adjacent = adjacent
+    # 前にブロックが存在するかどうか
+    def has_prev(self):
+        return self.prev and not self.prev.is_empty()
+
+    def set_neighbor(self, key, blocks):
+        if key == "input":
+            self.prev = blocks
+        elif key == "output":
+            self.next = blocks
 
     def set_time(self, start, end = None):
         if start and self.start <= start:
@@ -111,3 +120,33 @@ class Exporter:
             writer.writerow(header)
             writer.writerow(["# id", " name", " peinfo", " startTime", " endTime"])
             writer.writerows(body)
+
+class YamlLoader:
+    """
+    YAMLからデータをロードする
+    """
+
+    def __init__(self, fname):
+        self.data = self._load(fname)
+
+    def get(self, key, default = None):
+        return self.data.get(key, default)
+
+    def _load(self, fname):
+        with open(fname, 'rt') as fp:
+            text = fp.read()
+            return yaml.safe_load(text)
+
+class Plotly:
+    """
+    ガントチャートをプロットする
+    """
+
+    def __init__(self, fname):
+        self.data = self._read(fname)
+
+    def plot(self):
+        print(1)
+
+    def _read(self, fname):
+        hoge = 1

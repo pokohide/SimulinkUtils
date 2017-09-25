@@ -7,21 +7,24 @@ class FlowDecider:
     show: https://paper.dropbox.com/doc/iNWxqRTxmCzgRouRWcoLY
     """
 
-    def __init__(self, start, blockTable):
-        self.start = start
+    def __init__(self, startBlocks, blockTable):
+        self.startBlocks = startBlocks
         self.blockTable = blockTable
         self.stack = Utils.Stack()
         self.results = {}
         self.maxEndTime = 0.0
 
     def run(self):
-        while(True):
-            if self._calculate_time(self.start): break
+        for start in self.startBlocks:
+            while(True):
+                if self._calculate_time(start): break
         print("done")
         # self._print(self.blockTable)
 
     def to_csv(self, filename):
         exporter = Utils.Exporter()
+        print(filename)
+        print(self._csv_header())
         exporter.to_csv(filename, self._csv_header(), self._csv_body())
 
     # 開始ブロック名を与えればそこから計算する。再帰関数
@@ -34,12 +37,12 @@ class FlowDecider:
         block.set_time(startTime, endTime)
 
         if block.has_next():
-            for nextSet in block.adjacent:
+            for nextSet in block.next:
                 nextBlock = self.blockTable[nextSet[0]]
                 nextBlock.set_time(endTime)
 
-            nextBlock = block.adjacent.shift()
-            self.stack.append(block.adjacent.data())
+            nextBlock = block.next.shift()
+            self.stack.append(block.next.data())
             return self._calculate_time(nextBlock[0])
 
         else:

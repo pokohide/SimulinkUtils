@@ -23,8 +23,6 @@ class FlowDecider:
 
     def to_csv(self, filename):
         exporter = Utils.Exporter()
-        print(filename)
-        print(self._csv_header())
         exporter.to_csv(filename, self._csv_header(), self._csv_body())
 
     # 開始ブロック名を与えればそこから計算する。再帰関数

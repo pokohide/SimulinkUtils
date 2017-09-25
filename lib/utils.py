@@ -24,7 +24,7 @@ class BlockInfo:
         return [
             self.id,
             self.name,
-            self.peinfo,
+            self.peinfo or 0,
             # self.rate,
             self.start,
             self.end

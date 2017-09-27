@@ -22,17 +22,8 @@ class GraphManager:
     def run(self):
         rootBlocks = self.root.findall("./block")
         self._scan_blocks(rootBlocks)
-
-        # for block in self.root.findall(".//block"):
-        #     # ここでこのブロックが周期内かを確認。周期外であればスキップする
-        #     # rateがない(=0)の場合もあることに注意
-        #     self._set_next_blocks(block)
-        #     self._set_prev_blocks(block)
-
         self._set_base_rate()
         self._set_startBlocks()
-        # print('--------------')
-        #$ print(self.startBlockName)
         # self._print(self.blockTable)
 
     # BLXMLのブロックを解析する
@@ -127,7 +118,7 @@ class GraphManager:
     def _calculate_cycle(self, blockName, nextBlockName):
         block = self.blockTable.get(blockName)
         nextBlock = self.blockTable.get(nextBlockName)
-        cycle = block.cycle
+        cycle = block.performance["task"]
 
         if block.peinfo is None or nextBlock.peinfo is None:
             return cycle
@@ -138,16 +129,25 @@ class GraphManager:
 
         return cycle
 
-    def _get_block(self, block):
-        performance = block.find(".//performance[@type='task']")
-        cycle = 0
-        if performance is not None: cycle = float(performance.get("typical"))
+    def _get_attr(self, block, attr):
+        key = "typical" if attr == "performance" else "line"
+        task = block.find(".//" + attr + "[@type='task']")
+        update = block.find(".//" + attr + "[@type='update']")
+        init = block.find(".//" + attr + "[@type='init']")
 
+        task = float(task.get(key)) if task is not None else 0.0
+        update = float(update.get(key)) if update is not None else 0.0
+        init = float(init.get(key)) if init is not None else 0.0
+
+        return { "task": task, "update": update, "init": init }
+
+    def _get_block(self, block):
         return Utils.BlockInfo(
             block.get("id"),
             block.get("blocktype"),
             block.get("name"),
             block.get("peinfo"),
             float(block.get("rate") or 0),
-            cycle
+            self._get_attr(block, "performance"),
+            self._get_attr(block, "code")
         )

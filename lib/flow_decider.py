@@ -29,7 +29,7 @@ class FlowDecider:
     def _calculate_time(self, target):
         block = self.blockTable[target]
         startTime = block.start
-        endTime = startTime + block.cycle
+        endTime = startTime + block.performance["task"]
         if self.maxEndTime < endTime: self.maxEndTime = endTime
 
         block.set_time(startTime, endTime)

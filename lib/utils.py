@@ -7,20 +7,18 @@ class BlockInfo:
     ブロックのid, 名前, 開始サイクル、終了サイクルを格納するクラス
     """
 
-    def __init__(self, id, type, name, peinfo, rate, cycle):
+    def __init__(self, id, type, name, peinfo, rate, performance, code):
         self.id = id
         self.type = type
         self.name = name
         self.peinfo = peinfo
         self.rate = rate
-        self.cycle = cycle
+        self.performance = performance
+        self.code = code
         self.start = 0.0
         self.end = 0.0
         self.next = Stack()
         self.prev = Stack()
-
-    def __str__(self):
-        return str(self.id) + "::" + str(self.name) + ": core-" + str(self.peinfo) + ", cycle: " + str(self.cycle)
 
     def raw(self):
         return [
@@ -39,7 +37,8 @@ class BlockInfo:
             "name": self.name,
             "peinfo": self.peinfo,
             "rate": self.rate,
-            "cycle": self.cycle,
+            "performance": self.performance,
+            "code": self.code,
             "start": self.start,
             "end": self.end,
             "next": self.next.data(),
@@ -53,6 +52,10 @@ class BlockInfo:
     # 前にブロックが存在するかどうか
     def has_prev(self):
         return self.prev and not self.prev.is_empty()
+
+    # このブロックは複数ブロックから合流しているかどうか
+    def is_confluence(self):
+        return self.prev and self.prev.length() >= 2
 
     # サブシステムかどうか
     def is_subsystem(self):
@@ -97,6 +100,10 @@ class Stack:
             self.stack.extend(data)
         else:
             self.stack.append(data)
+
+    def length(self):
+        if self.stack: return len(self.stack)
+        return 0
 
     def data(self):
         return self.stack

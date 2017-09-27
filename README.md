@@ -23,13 +23,16 @@ GraphManagerから受け取った重み付き隣接リストを深さ優先探�
 ```
 git clone hogehoge & cd hogehoge
 pip install pyyaml
-pip install plotly
 python main.py # 実行
 ```
 
 ## Usage
 `setting.yaml.example`を元に`setting.yaml`を作成する
 
+```
+cp setting.yaml.example setting.yaml
+vim setting.yaml # 適宜修正
+```
 
 ## TODO
 - ベース周期を取得したので、周期だけの配列を取得してそれをユニークにして、`> 0`の値のみを取り出す。[0.1, 0.2, 0.3]の場合、周期は[0.1, 0.2, 0.3, 0.6]の4種類分の周期表がいる。存在する周期から何通りあるかを確認するメソッドを作る。あとはその回数だけループをまわす。周期はベースレートの定数倍である必要があるという制約を加える。

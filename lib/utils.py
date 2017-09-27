@@ -16,6 +16,8 @@ class BlockInfo:
         self.cycle = cycle
         self.start = 0.0
         self.end = 0.0
+        self.next = Stack()
+        self.prev = Stack()
 
     def __str__(self):
         return str(self.id) + "::" + str(self.name) + ": core-" + str(self.peinfo) + ", cycle: " + str(self.cycle)
@@ -51,6 +53,18 @@ class BlockInfo:
     # 前にブロックが存在するかどうか
     def has_prev(self):
         return self.prev and not self.prev.is_empty()
+
+    # サブシステムかどうか
+    def is_subsystem(self):
+        return self.type and self.type == "SubSystem"
+
+    # Constantかどうか
+    def is_constant(self):
+        return self.type and self.type == "Constant"
+
+    # UnitDelayかどうか
+    def is_unitdelay(self):
+        return self.type and self.type == "UnitDelay"
 
     def set_neighbor(self, key, blocks):
         if key == "input":

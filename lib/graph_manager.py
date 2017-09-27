@@ -20,11 +20,14 @@ class GraphManager:
             self.blockTable[name] = self._get_block(block)
 
     def run(self):
-        for block in self.root.findall(".//block"):
-            # ここでこのブロックが周期内かを確認。周期外であればスキップする
-            # rateがない(=0)の場合もあることに注意
-            self._set_next_blocks(block)
-            self._set_prev_blocks(block)
+        rootBlocks = self.root.findall("./block")
+        self._scan_blocks(rootBlocks)
+
+        # for block in self.root.findall(".//block"):
+        #     # ここでこのブロックが周期内かを確認。周期外であればスキップする
+        #     # rateがない(=0)の場合もあることに注意
+        #     self._set_next_blocks(block)
+        #     self._set_prev_blocks(block)
 
         self._set_base_rate()
         self._set_startBlocks()
@@ -32,33 +35,84 @@ class GraphManager:
         #$ print(self.startBlockName)
         # self._print(self.blockTable)
 
+    # BLXMLのブロックを解析する
+    def _scan_blocks(self, blocks):
+        # total_cycle = 0.0
+        # peinfo = None
+
+        for block in blocks:
+            # ここでこのブロックが周期内かを確認。周期外であればスキップする
+            # rateがない(=0)の場合もあることに注意
+            name = block.get("name")
+            # peinfo = peinfo or block.get("peinfo")
+            # total_cycle += float(block.get(""))
+            # cycle = float(block.get(""))
+
+            if block.get("blocktype") == "SubSystem":
+                for input in block.findall("./input"):
+                    # 後ろのブロックを取得
+                    prevBlockName = self._get_inner_block(input.find("connect"))
+                    nextBlockName = input.get("port")
+
+                    # つなぎこみ
+                    self.blockTable[prevBlockName].next.append( (nextBlockName, 0.0) )
+                    self.blockTable[nextBlockName].prev.append( (prevBlockName, 0.0) )
+
+                output = block.find("./output")
+                if output is not None:
+                    prevBlockName = output.get("port")
+                    for connect in output.findall("connect"):
+                        nextBlockName = self._get_inner_block(connect)
+
+                        # つなぎこみ
+                        self.blockTable[prevBlockName].next.append( (nextBlockName, 0.0) )
+                        self.blockTable[nextBlockName].prev.append( (prevBlockName, 0.0) )
+
+                # 再帰
+                smBlocks = block.findall("./sm:blocks/block", namespaces = { "sm": "http://example.com/SimulinkModel" })
+                self._scan_blocks(smBlocks)
+            else:
+                self._set_next_blocks(block)
+                self._set_prev_blocks(block)
+
+    # サブシステム内のブロックを取得する
+    def _get_inner_block(self, connect):
+        blockName = connect.get("block")
+        if self.blockTable[blockName].is_subsystem():
+            blockName = connect.get("port")
+        return blockName
+
     # あるブロックの次のブロックを登録する
     def _set_next_blocks(self, block):
-        nextBlocks = Utils.Stack()
+        # nextBlocks = Utils.Stack()
         blockName = block.get("name")
         output = block.find("./output")
         if output is not None:
             for connect in output.findall("connect"):
-                nextBlockName = connect.get("block")
+                nextBlockName = self._get_inner_block(connect)
                 cycle = self._calculate_cycle(blockName, nextBlockName)
-                nextBlocks.append( (nextBlockName, cycle) )
-        self.blockTable[blockName].set_neighbor("output", nextBlocks)
+                self.blockTable[blockName].next.append( (nextBlockName, cycle) )
+                # nextBlocks.append( (nextBlockName, cycle) )
+        # self.blockTable[blockName].set_neighbor("output", nextBlocks)
 
     def _set_prev_blocks(self, block):
-        prevBlocks = Utils.Stack()
+        # prevBlocks = Utils.Stack()
         blockName = block.get("name")
         for input in block.findall("./input"):
             for connect in input.findall("connect"):
-                prevBlockName = connect.get("block")
+                prevBlockName = self._get_inner_block(connect)
                 cycle = 0.0
-                prevBlocks.append( (prevBlockName, cycle) )
-        self.blockTable[blockName].set_neighbor("input", prevBlocks)
+                # prevBlocks.append( (prevBlockName, cycle) )
+                self.blockTable[blockName].prev.append( (prevBlockName, cycle) )
+        # self.blockTable[blockName].set_neighbor("input", prevBlocks)
 
     def _set_startBlocks(self):
         self.startBlocks = Utils.Stack()
         for blockName, block in self.blockTable.items():
-            if block.has_next() and not block.has_prev():
-                # block.print_raw()
+            # サブシステムでなく、次のブロックがあるが後続ブロックがない場合、そのブロックは開始ブロックである。
+            if block.is_subsystem() or block.is_constant(): continue # 定数やサブシステムからは開始しない
+            if block.is_unitdelay() or (block.has_next() and not block.has_prev()):
+                block.print_raw()
                 self.startBlocks.append(blockName)
 
     # ベース周期を取得する

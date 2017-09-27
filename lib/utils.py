@@ -25,7 +25,7 @@ class BlockInfo:
             self.id,
             self.name,
             self.peinfo or 0,
-            # self.rate,
+            # self.performance,
             self.start,
             self.end
         ]
@@ -76,7 +76,7 @@ class BlockInfo:
             self.next = blocks
 
     def set_time(self, start, end = None):
-        if start and self.start <= start:
+        if self.start <= start:
             self.start = start
             if end and self.end <= end:
                 self.end = end
@@ -116,6 +116,9 @@ class Stack:
             return self.stack.pop(0)
         else:
             return None
+
+    def sorted(self, key):
+        self.stack.sort(key=lambda x:x[key])
 
     # イテレーター用宣言。next()は下記
     def __iter__(self):

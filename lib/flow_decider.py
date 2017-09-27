@@ -17,36 +17,64 @@ class FlowDecider:
     def run(self):
         for start in self.startBlocks:
             while(True):
-                if self._calculate_time(start): break
+                if self._calculate_time(start.name): break
         print("done")
         # self._print(self.blockTable)
 
+    # CSVで出力
     def to_csv(self, filename):
         exporter = Utils.Exporter()
         exporter.to_csv(filename, self._csv_header(), self._csv_body())
 
-    # 開始ブロック名を与えればそこから計算する。再帰関数
     def _calculate_time(self, target):
         block = self.blockTable[target]
-        startTime = block.start
-        endTime = startTime + block.performance["task"]
+
+        # block.is_unitdelay()の時はupdateを加算する?
+        startTime, endTime = block.start, block.start + block.performance["task"]
+        block.set_time(startTime, endTime)
         if self.maxEndTime < endTime: self.maxEndTime = endTime
 
-        block.set_time(startTime, endTime)
+        # ブロックが合流地点だった場合
+        # if block.is_confluence():
 
+        # 次のブロックがあるとき
         if block.has_next():
+            block.next.sorted("code")
             for nextSet in block.next:
-                nextBlock = self.blockTable[nextSet[0]]
-                nextBlock.set_time(endTime)
+                nextBlock = self.blockTable[nextSet.get("name")]
+                # 次のブロックに今のブロックの終了時刻と次のブロックまでの移動コストを開始時刻として設定する
+                nextBlock.set_time(endTime + nextSet.get("cycle"))
 
             nextBlock = block.next.shift()
             self.stack.append(block.next.data())
-            return self._calculate_time(nextBlock[0])
-
+            return self._calculate_time(nextBlock.get("name"))
         else:
             importer = self.stack.pop()
-            if importer == None: return True
-            return self._calculate_time(importer[0])
+            if importer is None: return True
+            return self._calculate_time(importer.get("name"))
+
+    # 開始ブロック名を与えればそこから計算する。再帰関数
+    # def _calculate_time(self, target):
+    #     block = self.blockTable[target]
+    #     startTime = block.start
+    #     endTime = startTime + block.performance["task"]
+    #     if self.maxEndTime < endTime: self.maxEndTime = endTime
+    #
+    #     block.set_time(startTime, endTime)
+    #
+    #     if block.has_next():
+    #         for nextSet in block.next:
+    #             nextBlock = self.blockTable[nextSet[0]]
+    #             nextBlock.set_time(endTime)
+    #
+    #         nextBlock = block.next.shift()
+    #         self.stack.append(block.next.data())
+    #         return self._calculate_time(nextBlock[0])
+    #
+    #     else:
+    #         importer = self.stack.pop()
+    #         if importer == None: return True
+    #         return self._calculate_time(importer[0])
 
     def _csv_header(self):
         return [len(self.blockTable), self.maxEndTime]

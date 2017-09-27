@@ -27,44 +27,44 @@ class GraphManager:
         # self._print(self.blockTable)
 
     # BLXMLのブロックを解析する
-    def _scan_blocks(self, blocks):
+    def _scan_blocks(self, blockNodes):
         # total_cycle = 0.0
         # peinfo = None
 
-        for block in blocks:
+        for node in blockNodes:
             # ここでこのブロックが周期内かを確認。周期外であればスキップする
             # rateがない(=0)の場合もあることに注意
-            name = block.get("name")
+            name = node.get("name")
             # peinfo = peinfo or block.get("peinfo")
             # total_cycle += float(block.get(""))
             # cycle = float(block.get(""))
 
-            if block.get("blocktype") == "SubSystem":
-                for input in block.findall("./input"):
+            if node.get("blocktype") == "SubSystem":
+                for input in node.findall("./input"):
                     # 後ろのブロックを取得
                     prevBlockName = self._get_inner_block(input.find("connect"))
                     nextBlockName = input.get("port")
 
                     # つなぎこみ
-                    self.blockTable[prevBlockName].next.append( (nextBlockName, 0.0) )
-                    self.blockTable[nextBlockName].prev.append( (prevBlockName, 0.0) )
+                    self.blockTable[prevBlockName].next.append({ "name": nextBlockName, "cycle": 0.0, "code": 0 })
+                    self.blockTable[nextBlockName].prev.append({ "name": prevBlockName, "cycle": 0.0, "code": 0 })
 
-                output = block.find("./output")
+                output = node.find("./output")
                 if output is not None:
                     prevBlockName = output.get("port")
                     for connect in output.findall("connect"):
                         nextBlockName = self._get_inner_block(connect)
 
                         # つなぎこみ
-                        self.blockTable[prevBlockName].next.append( (nextBlockName, 0.0) )
-                        self.blockTable[nextBlockName].prev.append( (prevBlockName, 0.0) )
+                        self.blockTable[prevBlockName].next.append({ "name": nextBlockName, "cycle": 0.0, "code": 0 })
+                        self.blockTable[nextBlockName].prev.append({ "name": prevBlockName, "cycle": 0.0, "code": 0 })
 
                 # 再帰
-                smBlocks = block.findall("./sm:blocks/block", namespaces = { "sm": "http://example.com/SimulinkModel" })
+                smBlocks = node.findall("./sm:blocks/block", namespaces = { "sm": "http://example.com/SimulinkModel" })
                 self._scan_blocks(smBlocks)
             else:
-                self._set_next_blocks(block)
-                self._set_prev_blocks(block)
+                self._set_next_blocks(node)
+                self._set_prev_blocks(node)
 
     # サブシステム内のブロックを取得する
     def _get_inner_block(self, connect):
@@ -74,28 +74,26 @@ class GraphManager:
         return blockName
 
     # あるブロックの次のブロックを登録する
-    def _set_next_blocks(self, block):
-        # nextBlocks = Utils.Stack()
-        blockName = block.get("name")
-        output = block.find("./output")
+    def _set_next_blocks(self, blockNode):
+        blockName = blockNode.get("name")
+        block = self.blockTable[blockName]
+        output = blockNode.find("./output")
         if output is not None:
             for connect in output.findall("connect"):
                 nextBlockName = self._get_inner_block(connect)
-                cycle = self._calculate_cycle(blockName, nextBlockName)
-                self.blockTable[blockName].next.append( (nextBlockName, cycle) )
-                # nextBlocks.append( (nextBlockName, cycle) )
-        # self.blockTable[blockName].set_neighbor("output", nextBlocks)
+                nextBlock = self.blockTable[nextBlockName]
+                cycle = self._calculate_cycle(block, nextBlock)
+                self.blockTable[blockName].next.append({ "name": nextBlockName, "cycle": cycle, "code": nextBlock.code["task"] })
 
-    def _set_prev_blocks(self, block):
-        # prevBlocks = Utils.Stack()
-        blockName = block.get("name")
-        for input in block.findall("./input"):
+    def _set_prev_blocks(self, blockNode):
+        blockName = blockNode.get("name")
+        block = self.blockTable[blockName]
+        for input in blockNode.findall("./input"):
             for connect in input.findall("connect"):
                 prevBlockName = self._get_inner_block(connect)
-                cycle = 0.0
-                # prevBlocks.append( (prevBlockName, cycle) )
-                self.blockTable[blockName].prev.append( (prevBlockName, cycle) )
-        # self.blockTable[blockName].set_neighbor("input", prevBlocks)
+                prevBlock = self.blockTable[prevBlockName]
+                cycle = self._calculate_cycle(prevBlock, block)
+                self.blockTable[blockName].prev.append({ "name": prevBlockName, "cycle": cycle, "code": prevBlock.code["task"] })
 
     def _set_startBlocks(self):
         self.startBlocks = Utils.Stack()
@@ -104,7 +102,7 @@ class GraphManager:
             if block.is_subsystem() or block.is_constant(): continue # 定数やサブシステムからは開始しない
             if block.is_unitdelay() or (block.has_next() and not block.has_prev()):
                 block.print_raw()
-                self.startBlocks.append(blockName)
+                self.startBlocks.append(block)
 
     # ベース周期を取得する
     def _set_base_rate(self):
@@ -115,19 +113,14 @@ class GraphManager:
             dict[k].print_raw()
 
     # 現在ブロック名と次ブロック名から実行サイクルを計算
-    def _calculate_cycle(self, blockName, nextBlockName):
-        block = self.blockTable.get(blockName)
-        nextBlock = self.blockTable.get(nextBlockName)
-        cycle = block.performance["task"]
-
+    # 現在のブロックと次のブロックとの通信コストを計算
+    def _calculate_cycle(self, block, nextBlock):
         if block.peinfo is None or nextBlock.peinfo is None:
-            return cycle
-
+            return 0.0
         if block.peinfo != nextBlock.peinfo:
             # 行き先ブロックとコアが違う場合コア間通信が発生。ここでは50とする。
-            cycle += float(50)
-
-        return cycle
+            return float(50)
+        return 0.0
 
     def _get_attr(self, block, attr):
         key = "typical" if attr == "performance" else "line"

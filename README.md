@@ -22,7 +22,7 @@ GraphManagerから受け取った重み付き隣接リストを深さ優先探�
 
 ```
 git clone hogehoge & cd hogehoge
-pip install pyyaml
+pip install -r requirements.txt
 python main.py # 実行
 ```
 
@@ -32,6 +32,12 @@ python main.py # 実行
 ```
 cp setting.yaml.example setting.yaml
 vim setting.yaml # 適宜修正
+```
+
+## Hot to Test
+
+```
+python -m unittest discover tests
 ```
 
 ## TODO

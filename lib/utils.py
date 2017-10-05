@@ -117,8 +117,8 @@ class Stack:
         else:
             return None
 
-    def sorted(self, key):
-        self.stack.sort(key=lambda x:x[key])
+    def sorted(self, target):
+        self.stack.sort(key=lambda x:x[target])
 
     # イテレーター用宣言。next()は下記
     def __iter__(self):

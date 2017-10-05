@@ -48,3 +48,10 @@ python -m unittest discover tests
 - サブシステム内のブロックを全て展開して考える。実行順序を決定後サブシステム内のブロックの最小startTime ~ 最大endTimeをサブシステムのstartTime ~ endTimeとする。peifoはNoneのままにして、それに対応した色づけを行う。
 - startBlocksは複数あるが、別コアなら同時スタート。同じコアならcodeのline番号の小さい順にする。
 - Stackも基本的には先入れ先だしではなく、codeのline番号でソートする？
+
+### Plotly
+- BrokenBarに文字を追加したい
+http://matplotlib.org/examples/pylab_examples/broken_barh.html
+https://stackoverflow.com/questions/44706151/how-to-hatch-broken-barh-on-matplotlib-python
+http://www.randalolson.com/2014/06/28/how-to-make-beautiful-data-visualizations-in-python-with-matplotlib/
+http://matplotlib.org/examples/pylab_examples/barchart_demo2.html

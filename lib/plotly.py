@@ -32,11 +32,12 @@ class Plotly:
             colors = [COLORS[i % 20] for (i, x) in enumerate(data)]
             # hatches = [("//", "\\\\")[i % 2] for (i, x) in enumerate(data)]
             self._hatch_broken_bar(xs, (core * 1.5 + 1, 1), facecolors=colors)
-        self._ax.set_ylim(0, 1.5 * 3 + 1.5 + 0.5)
+        self._ax.set_ylim(0, 1.5 * self.max_core + 1.5 + 0.5)
         self._ax.set_xlim(0, self.endtime)
-        self._ax.set_yticks([1, 2.5, 4, 5.5])
+        self._ax.set_yticks([(i * 1.5 + 1.0) for i in range(self.max_core + 1)])
+        # self._ax.set_yticks([1, 2.5, 4, 5.5])
         self._ax.set_yticklabels(["core 0", "core 1", "core 2", "core 3"])
-        self._ax.set_xlabel("seconds since start")
+        # self._ax.set_xlabel("seconds since start")
         self._ax.grid(True)
         plt.show()
 
@@ -51,6 +52,7 @@ class Plotly:
 
     def _load_csv(self, fname):
         cores = {}
+        self.max_core = 0
         try:
             with open(fname, newline="", encoding="utf-8") as f:
                 csv_reader = csv.reader(f, delimiter=",", quotechar='"')
@@ -60,6 +62,7 @@ class Plotly:
                 self.endtime = float(header[1])
                 for row in csv_reader:
                     core_num = int(row[2]) # コア数: 0 ~ x (x > 0)
+                    if self.max_core < core_num: self.max_core = core_num
                     if core_num not in cores: cores[core_num] = Utils.Stack()
                     cores[core_num].append(self._format(row))
         except FileNotFoundError as e: print(e)
@@ -79,5 +82,9 @@ class Plotly:
         }
 
 if __name__ == "__main__":
-    plot = Plotly("./examples/sample.csv")
+    # plot = Plotly("./examples/adddelay_singlerate_sensorless.csv")
+    plot = Plotly("./examples/adddelay_singlerate_sensorless_100us.csv")
+    # plot = Plotly("./examples/singlerate_100us.csv")
+    # plot = Plotly("./examples/singlerate.csv")
+    # plot = Plotly("./examples/sample.csv")
     plot.plot()

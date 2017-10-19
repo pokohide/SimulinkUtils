@@ -3,6 +3,7 @@
 このファイルは以下の要素で構成されいます。
 - `GraphManager`
 - `FlowDecider`
+- `Plotly`
 
 ### GraphManager
 
@@ -15,8 +16,12 @@
 GraphManagerから受け取った重み付き隣接リストを深さ優先探索で走査する。
 この走査によって、各ブロックの開始/終了サイクルを決める。
 
+### Plotly
+各ブロックごとの開始・終了サイクルが記載されたcsvファイルを読み込んで、ガントチャートを表示するツール。
+FlowDeciderによって出力されるcsvファイルやbltmp2cでコア割当時に生成されるtmp_sch_results.csvが使える。
+
 ## Requirements
-- python3
+- python3.6.2
 
 ## Getting Started
 

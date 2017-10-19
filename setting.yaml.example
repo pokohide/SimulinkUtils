@@ -1,7 +1,9 @@
 # copy this file, rename setting.yaml
+input: examples/perf.xml    # default: input.xml
+output: examples/sample.csv   # default: output.csv
 parser:
-  input_file_name: perf.xml
-  output_file_name: output.csv
+  input_file: perf.xml
+  output_file: hoge.csv
   attributes:
     - id
     - name

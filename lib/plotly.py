@@ -76,8 +76,7 @@ class Plotly:
         y = block["core"] * 1.5 + 1
         annotation = self._ax.annotate(
             block["name"], xy = (x, y), xycoords="data",
-            xytext=(x + 10, y + 1.0), textcoords="data",
-            # xytext=(0.8, 0.95), textcoords='axes points',
+            xytext=(x + 10, y + self.__class__.HEIGHT / 2), textcoords="data",
             bbox=dict(boxstyle="round", facecolor="w", edgecolor="0.5", alpha=0.9),
             arrowprops=dict(arrowstyle="->", connectionstyle='arc3,rad=0.3', facecolor='black', edgecolor="black")
             )
@@ -125,9 +124,9 @@ class Plotly:
         }
 
 if __name__ == "__main__":
-    # plot = Plotly("./examples/adddelay_singlerate_sensorless.csv")
+    plot = Plotly("./examples/adddelay_singlerate_sensorless.csv")
     # plot = Plotly("./examples/adddelay_singlerate_sensorless_100us.csv")
     # plot = Plotly("./examples/singlerate_sensorless_100us.csv")
     # plot = Plotly("./examples/singlerate_sensorless.csv")
-    plot = Plotly("./examples/sample.csv")
+    # plot = Plotly("./examples/sample.csv")
     plot.plot()

@@ -8,10 +8,13 @@ class Plotly:
     """
     棒グラフを表示する
     """
+    HEIGHT = 1.0
 
     def __init__(self, fname):
         self.data = self._load_csv(fname)
         self._ax = plt.gca()
+        self._fig = self._ax.figure
+        self._annotations = []
 
     def plot(self):
         COLORS = [(31, 119, 180), (174, 199, 232), (255, 127, 14), (255, 187, 120),
@@ -32,14 +35,54 @@ class Plotly:
             colors = [COLORS[i % 20] for (i, x) in enumerate(data)]
             # hatches = [("//", "\\\\")[i % 2] for (i, x) in enumerate(data)]
             self._hatch_broken_bar(xs, (core * 1.5 + 1, 1), facecolors=colors)
-        self._ax.set_ylim(0, 1.5 * self.max_core + 1.5 + 0.5)
+            for block in data:
+                width, annotation = self._get_annotation(block)
+                self._annotations.append((width, annotation))
+        self._ax.set_ylim(0, 1.5 * self.max_core + 1.5 + self.__class__.HEIGHT / 2)
         self._ax.set_xlim(0, self.endtime)
-        self._ax.set_yticks([(i * 1.5 + 1.0) for i in range(self.max_core + 1)])
-        # self._ax.set_yticks([1, 2.5, 4, 5.5])
-        self._ax.set_yticklabels(["core 0", "core 1", "core 2", "core 3"])
-        # self._ax.set_xlabel("seconds since start")
+        self._ax.set_yticks([(i * 1.5 + self.__class__.HEIGHT) for i in range(self.max_core + 1)])
+        self._ax.set_yticklabels([("core " + str(i)) for i in range(self.max_core + 1)])
         self._ax.grid(True)
+
+        self._fig.canvas.mpl_connect('button_press_event', self._on_press)
         plt.show()
+
+    def _on_press(self, event):
+        visibility_changed = False
+        x, y = event.xdata, event.ydata
+        for width, annotation in self._annotations:
+            should_be_visible = self._is_contain(annotation.xy, width, self.__class__.HEIGHT, x, y)
+
+            if should_be_visible != annotation.get_visible():
+                visibility_changed = True
+                annotation.set_visible(should_be_visible)
+        if visibility_changed: plt.draw()
+
+    def _is_contain(self, txy, width, height, x, y):
+        """
+        ターゲットのxyとそのwidth, heightを渡す。その長方形の中にx, yが含まれているかを返す
+        """
+        tx, ty = txy
+        dx = abs(tx - x)
+        dy = abs(ty - y)
+        return (dx < width / 2) and (dy < height / 2)
+
+    def _get_annotation(self, block):
+        """
+        ブロックのホバー時にブロック名を表示する
+        """
+        width = block["end"] - block["start"]
+        x = block["start"] + width / 2.0
+        y = block["core"] * 1.5 + 1
+        annotation = self._ax.annotate(
+            block["name"], xy = (x, y), xycoords="data",
+            xytext=(x + 10, y + 1.0), textcoords="data",
+            # xytext=(0.8, 0.95), textcoords='axes points',
+            bbox=dict(boxstyle="round", facecolor="w", edgecolor="0.5", alpha=0.9),
+            arrowprops=dict(arrowstyle="->", connectionstyle='arc3,rad=0.3', facecolor='black', edgecolor="black")
+            )
+        annotation.set_visible(False)
+        return (width, annotation)
 
     def _hatch_broken_bar(self, xs, y, **kw):
         hatches = kw.pop("hatches", [None] * len(xs))
@@ -83,8 +126,8 @@ class Plotly:
 
 if __name__ == "__main__":
     # plot = Plotly("./examples/adddelay_singlerate_sensorless.csv")
-    plot = Plotly("./examples/adddelay_singlerate_sensorless_100us.csv")
+    # plot = Plotly("./examples/adddelay_singlerate_sensorless_100us.csv")
     # plot = Plotly("./examples/singlerate_sensorless_100us.csv")
     # plot = Plotly("./examples/singlerate_sensorless.csv")
-    # plot = Plotly("./examples/sample.csv")
+    plot = Plotly("./examples/sample.csv")
     plot.plot()

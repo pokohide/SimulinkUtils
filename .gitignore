@@ -1,4 +1,3 @@
-*.csv
 *.xml
 *.yaml
 lib/__pycache__

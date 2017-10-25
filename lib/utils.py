@@ -19,6 +19,7 @@ class BlockInfo:
         self.end = 0.0
         self.next = Stack()
         self.prev = Stack()
+        self.settled = set()
 
     def raw(self):
         return [
@@ -55,7 +56,8 @@ class BlockInfo:
 
     # このブロックは複数ブロックから合流しているかどうか
     def is_confluence(self):
-        return self.prev and self.prev.length() >= 2
+        return self.prev.length() - len(self.settled) >= 1
+        # return self.prev and self.prev.length() >= 2
 
     # サブシステムかどうか
     def is_subsystem(self):
@@ -81,6 +83,9 @@ class BlockInfo:
             if end and self.end <= end:
                 self.end = end
 
+    def add_settled(self, blockName):
+        self.settled.add(blockName)
+
 class Stack:
     """
     実行順序決定に使うようのスタック
@@ -91,7 +96,8 @@ class Stack:
 
     def pop(self):
         if self.stack:
-            return self.stack.pop()
+            # return self.stack.pop() # 後ろからとる
+            return self.stack.pop(0)
         else:
             return None
 

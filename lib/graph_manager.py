@@ -12,8 +12,8 @@ class GraphManager:
         self.root = ET.parse(input).getroot()
         self._make_block_table()
 
-    # ブロック名からidやコア数などを索引できる表を作成
     def _make_block_table(self):
+        "ブロック名からidやコア数を索引できるテーブルを作成"
         self.blockTable = {}
         for block in self.root.findall(".//block"):
             name = block.get("name")
@@ -26,8 +26,8 @@ class GraphManager:
         self._set_startBlocks()
         # self._print(self.blockTable)
 
-    # BLXMLのブロックを解析する
     def _scan_blocks(self, blockNodes):
+        "BLXMLのブロックを解析する"
         # total_cycle = 0.0
         # peinfo = None
 
@@ -66,15 +66,15 @@ class GraphManager:
                 self._set_next_blocks(node)
                 self._set_prev_blocks(node)
 
-    # サブシステム内のブロックを取得する
     def _get_inner_block(self, connect):
+        "サブシステム内のブロック名を取得する"
         blockName = connect.get("block")
         if self.blockTable[blockName].is_subsystem():
             blockName = connect.get("port")
         return blockName
 
-    # あるブロックの次のブロックを登録する
     def _set_next_blocks(self, blockNode):
+        "あるブロックの次のブロックをセットする"
         blockName = blockNode.get("name")
         block = self.blockTable[blockName]
         output = blockNode.find("./output")
@@ -86,6 +86,7 @@ class GraphManager:
                 self.blockTable[blockName].next.append({ "name": nextBlockName, "cycle": cycle, "code": nextBlock.code["task"] })
 
     def _set_prev_blocks(self, blockNode):
+        "あるブロックの手前のブロックをセットする"
         blockName = blockNode.get("name")
         block = self.blockTable[blockName]
         for input in blockNode.findall("./input"):
@@ -96,6 +97,7 @@ class GraphManager:
                 self.blockTable[blockName].prev.append({ "name": prevBlockName, "cycle": cycle, "code": prevBlock.code["task"] })
 
     def _set_startBlocks(self):
+        "開始ブロックをセットする"
         self.startBlocks = Utils.Stack()
         for blockName, block in self.blockTable.items():
             # サブシステムでなく、次のブロックがあるが後続ブロックがない場合、そのブロックは開始ブロックである。
@@ -112,9 +114,8 @@ class GraphManager:
         for k in sorted(dict, key=lambda k: int(dict[k].id)):
             dict[k].print_raw()
 
-    # 現在ブロック名と次ブロック名から実行サイクルを計算
-    # 現在のブロックと次のブロックとの通信コストを計算
     def _calculate_cycle(self, block, nextBlock):
+        "現在のブロック名と次のブロック名から移動コスト(コア間通信)を返す。"
         if block.peinfo is None or nextBlock.peinfo is None:
             return 0.0
         if block.peinfo != nextBlock.peinfo:
@@ -123,6 +124,7 @@ class GraphManager:
         return 0.0
 
     def _get_attr(self, block, attr):
+        "ブロックから属性を抽出して整形する"
         key = "typical" if attr == "performance" else "line"
         task = block.find(".//" + attr + "[@type='task']")
         update = block.find(".//" + attr + "[@type='update']")

@@ -21,12 +21,13 @@ class FlowDecider:
         print("done")
         # self._print(self.blockTable)
 
-    # CSVで出力
     def to_csv(self, filename):
+        "結果をCSV出力"
         exporter = Utils.Exporter()
         exporter.to_csv(filename, self._csv_header(), self._csv_body())
 
     def _calculate_time(self, target):
+        "開始ブロックから次のブロックまでのサイクル数などを計算する"
         block = self.blockTable[target]
 
         # block.is_unitdelay()の時はupdateを加算する?
@@ -35,23 +36,42 @@ class FlowDecider:
         if self.maxEndTime < endTime: self.maxEndTime = endTime
 
         # ブロックが合流地点だった場合
-        # if block.is_confluence():
+        if block.is_confluence():
+            self.stack.sorted("code")
+            nextBlock = self.stack.pop()
+            if nextBlock is None: return True
+            nextBlockName = nextBlock.get("name")
+            self.blockTable[nextBlockName].add_settled(target)
+            if block.peinfo == self.blockTable[nextBlockName].peinfo:
+                self.blockTable[nextBlockName].set_time(startTime)
+            return self._calculate_time(nextBlockName)
 
         # 次のブロックがあるとき
         if block.has_next():
             block.next.sorted("code")
             for nextSet in block.next:
                 nextBlock = self.blockTable[nextSet.get("name")]
-                # 次のブロックに今のブロックの終了時刻と次のブロックまでの移動コストを開始時刻として設定する
+                "次のブロックに今のブロックの終了時刻と次のブロックまでの移動コストを開始時刻として設定する"
                 nextBlock.set_time(endTime + nextSet.get("cycle"))
 
             nextBlock = block.next.shift()
+            nextBlockName = nextBlock.get("name")
+            self.blockTable[nextBlockName].add_settled(target)
             self.stack.append(block.next.data())
-            return self._calculate_time(nextBlock.get("name"))
+
+            "行き先ブロックと割当コアが変わったときはスタック上の同じ割当コアのブロックのstartTimeを変更する"
+            if block.peinfo != self.blockTable[nextBlockName].peinfo:
+                for stack in self.stack.data():
+                    stack_block = self.blockTable[stack.get("name")]
+                    if block.peinfo == stack_block.peinfo: stack_block.set_time(endTime)
+
+            return self._calculate_time(nextBlockName)
         else:
             importer = self.stack.pop()
             if importer is None: return True
-            return self._calculate_time(importer.get("name"))
+            importerName = importer.get("name")
+            self.blockTable[importerName].add_settled(target)
+            return self._calculate_time(importerName)
 
     # 開始ブロック名を与えればそこから計算する。再帰関数
     # def _calculate_time(self, target):

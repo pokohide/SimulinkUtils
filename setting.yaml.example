@@ -1,6 +1,7 @@
 # copy this file, rename setting.yaml
 input: examples/perf.xml    # default: input.xml
 output: examples/sample.csv   # default: output.csv
+plot: False
 parser:
   input_file: perf.xml
   output_file: hoge.csv

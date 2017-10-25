@@ -1,5 +1,6 @@
 from lib import flow_decider as FD
 from lib import graph_manager as GM
+from lib import plotly as Plotly
 from lib import utils as Utils
 
 if __name__ == "__main__":
@@ -12,5 +13,6 @@ if __name__ == "__main__":
     fd.run()
     fd.to_csv(yl.get("output", "output.csv"))
 
-    # plotly = Utils.Plotly('hoge')
-    # plotly.plot()
+    if yl.get("plot", False):
+        plotly = Plotly.Plotly(yl.get("output", "output.csv"))
+        plotly.plot()

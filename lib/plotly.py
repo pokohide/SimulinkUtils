@@ -1,6 +1,6 @@
 import csv
 import matplotlib.pyplot as plt
-import utils as Utils
+from . import utils as Utils
 plt.rcParams.update({ 'font.size': 15 }) # フォントサイズ変更
 plt.style.use('bmh')
 
@@ -122,11 +122,3 @@ class Plotly:
             "start": float(data[3] or 0),
             "end"  : float(data[4] or 0)
         }
-
-if __name__ == "__main__":
-    plot = Plotly("./examples/adddelay_singlerate_sensorless.csv")
-    # plot = Plotly("./examples/adddelay_singlerate_sensorless_100us.csv")
-    # plot = Plotly("./examples/singlerate_sensorless_100us.csv")
-    # plot = Plotly("./examples/singlerate_sensorless.csv")
-    # plot = Plotly("./examples/sample.csv")
-    plot.plot()

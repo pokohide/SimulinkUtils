@@ -41,9 +41,14 @@ class FlowDecider:
             nextBlock = self.stack.pop()
             if nextBlock is None: return True
             nextBlockName = nextBlock.get("name")
-            self.blockTable[nextBlockName].add_settled(target)
-            if block.peinfo == self.blockTable[nextBlockName].peinfo:
-                self.blockTable[nextBlockName].set_time(startTime)
+
+            nextBlockInfo = self.blockTable[nextBlockName]
+            nextBlockInfo.add_settled(target)
+            if block.peinfo == nextBlockInfo.peinfo:
+                shouldUpdate = False
+                for settled in block.settled:
+                    if block.peinfo == self.blockTable[settled].peinfo: shouldUpdate = True
+                if shouldUpdate: nextBlockInfo.set_time(startTime)
             return self._calculate_time(nextBlockName)
 
         # 次のブロックがあるとき
@@ -53,7 +58,6 @@ class FlowDecider:
                 nextBlock = self.blockTable[nextSet.get("name")]
                 "次のブロックに今のブロックの終了時刻と次のブロックまでの移動コストを開始時刻として設定する"
                 nextBlock.set_time(endTime + nextSet.get("cycle"))
-
             nextBlock = block.next.shift()
             nextBlockName = nextBlock.get("name")
             self.blockTable[nextBlockName].add_settled(target)

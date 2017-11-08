@@ -10,7 +10,7 @@ class Plotly:
     """
     HEIGHT = 1.0
 
-    def __init__(self, fname):
+    def __init__(self, fname, config = None):
         self.csvs = self._load(fname)
         count = len(self.csvs)
 
@@ -18,11 +18,13 @@ class Plotly:
         if count is 1: self._ax = [self._ax]
         self._annotations = [[] for i in range(count)]
         self._init_colors()
+        self._set_config(config)
 
     def plot(self):
         for index, csv in enumerate(self.csvs):
             self._set_graph(index, csv)
         self._fig.canvas.mpl_connect('button_press_event', self._on_press)
+        self._fig.tight_layout()
         plt.show()
 
     def _set_graph(self, index, csv):
@@ -37,6 +39,8 @@ class Plotly:
                 width, annotation = self._get_annotation(index, block)
                 self._annotations[index].append((width, annotation))
 
+        if self.config.get("showTitle", False):
+            self._ax[index].set_title(self.fnames[index], { "fontsize": 10 })
         self._ax[index].set_ylim(0, 1.5 * self.max_core + 1.5 + self.__class__.HEIGHT / 2)
         self._ax[index].set_xlim(0, self.endtime)
         self._ax[index].set_yticks([(i * 1.5 + self.__class__.HEIGHT) for i in range(self.max_core + 1)])
@@ -94,12 +98,14 @@ class Plotly:
 
     def _load(self, fnames):
         if isinstance(fnames, list):
+            self.fnames = fnames
             csvs = []
             for fname in fnames:
                 csv = self._load_csv(fname)
                 csvs.append(csv)
             return csvs
         elif isinstance(fnames, str):
+            self.fnames = [fnames]
             return [self._load_csv(fnames)]
 
     def _load_csv(self, fname):
@@ -122,6 +128,12 @@ class Plotly:
         for core in cores.values(): core.sorted("start") # startTimeでソート
 
         return sorted(cores.items())
+
+    def _set_config(self, config):
+        if config is None:
+            self.config = { "showTitle": True }
+        else:
+            self.config = config
 
     def _init_colors(self):
         def to_rgb(color):

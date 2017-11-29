@@ -26,13 +26,28 @@ GraphManagerから受け取った重み付き隣接リストを深さ優先探�
 各ブロックごとの開始・終了サイクルが記載されたcsvファイルを読み込んで、ガントチャートを表示するツール。
 FlowDeciderによって出力されるcsvファイルやbltmp2cでコア割当時に生成されるtmp_sch_results.csvが使える。
 
+#### Plotlyの実行方法
+
+`plotly.py`を参考に.
+
+```
+from lib import plotly as Plotly
+
+# source = "example.csv"
+# source = ["example1.csv", "example2.csv"]
+options = { "showTitle": False }
+
+plotly = Plotly.Plotly(source, options)
+plotly.plot()
+```
+
 ## Requirements
 - python3.6.2
 
 ## Getting Started
 
 ```
-git clone hogehoge & cd hogehoge
+git clone https://github.com/hyde2able/SimulinkUtils.git & cd SimulinkUtils
 pip install -r requirements.txt
 python main.py # 実行
 ```

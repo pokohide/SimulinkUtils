@@ -11,6 +11,7 @@ class Plotly:
     HEIGHT = 1.0
 
     def __init__(self, fname, config = None):
+        self.endtime = 0
         self.csvs = self._load(fname)
         count = len(self.csvs)
 
@@ -117,7 +118,7 @@ class Plotly:
                 next(csv_reader)          # コメント行は無視
                 header = next(csv_reader) # ヘッダー
                 next(csv_reader)          # コメント行は無視
-                self.endtime = float(header[1])
+                if self.endtime < float(header[1]): self.endtime = float(header[1])
                 for row in csv_reader:
                     core_num = int(row[2]) # コア数: 0 ~ x (x > 0)
                     if self.max_core < core_num: self.max_core = core_num

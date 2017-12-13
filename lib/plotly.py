@@ -33,8 +33,7 @@ class Plotly:
             core = item[0]
             data = item[1].data()
             xs = list(map(lambda x: (x["start"], x["end"] - x["start"]), data))
-            colors = list(map(lambda x: "red", data))
-            colors = [self.colors[i % 20] for (i, x) in enumerate(data)]
+            colors = self._set_colors(data)
             self._hatch_broken_bar(index, xs, (core * 1.5 + 1, 1), facecolors=colors)
             for block in data:
                 width, annotation = self._get_annotation(index, block)
@@ -130,6 +129,18 @@ class Plotly:
 
         return sorted(cores.items())
 
+    def _set_colors(self, data):
+        colors = []
+        for block in data:
+            block_id = block['id']
+            color = self.color_table.get(block_id, None)
+            if color is None:
+                color = self.colors[self.color_index % len(self.colors)]
+                self.color_table[block_id] = color
+                self.color_index += 1
+            colors.append(color)
+        return colors
+
     def _set_config(self, config):
         if config is None:
             self.config = { "showTitle": True }
@@ -148,6 +159,8 @@ class Plotly:
              (188, 189, 34), (219, 219, 141), (23, 190, 207), (158, 218, 229)]
 
         self.colors = list(map(lambda color: to_rgb(color), COLORS ))
+        self.color_table = {}
+        self.color_index = 0
 
     def _format(self, data):
         """格納する配列データを整形する"""

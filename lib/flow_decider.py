@@ -1,4 +1,5 @@
 from . import utils as Utils
+import copy
 
 class FlowDecider:
     """
@@ -9,6 +10,7 @@ class FlowDecider:
 
     def __init__(self, startBlocks, blockTable, maxRate):
         self.startBlocks = startBlocks
+        self.blockTableOrigin = blockTable
         self.blockTable = blockTable
         self.stack = Utils.Stack()
         self.results = {}
@@ -18,10 +20,11 @@ class FlowDecider:
         self.maxRate = maxRate
 
     def run(self):
-        while self.lapNum < self.maxRate:
+        while self.lapNum < 1: #self.maxRate:
+            # self.blockTable = copy.deepcopy(self.blockTableOrigin)
             for start in self.startBlocks:
                 while(True):
-                    if self._calculate_time(start.name): break
+                    if self._calculate_time(start.name, start = True): break
             self.lapNum += 1
             print(self.lapNum)
         print("done")
@@ -32,17 +35,30 @@ class FlowDecider:
         exporter = Utils.Exporter()
         exporter.to_csv(filename, self._csv_header(), self._csv_body())
 
-    def _calculate_time(self, target):
+    def _calculate_time(self, target, start = False):
         "開始ブロックから次のブロックまでのサイクル数などを計算する"
         block = self.blockTable[target]
 
-        # block.is_unitdelay()の時はupdateを加算する?
-        startTime, endTime = block.start, block.start + block.performance["task"]
+        print(block.name, block.type, block.rate, block.performance)
+
+        # ブロックがUnitDelayかつ開始ブロックではない場合
+        if block.is_unitdelay() and start is False:
+            startTime = block.start
+            endTime = startTime + block.performance["update"]
+            block.set_time(startTime, endTime)
+            importer = self.stack.pop()
+            if importer is None: return True
+            importerName = importer.get("name")
+            self.blockTable[importerName].add_settled(target)
+            return self._calculate_time(importerName)
+
+        startTime = block.start
+        endTime = startTime + block.performance["task"]
         block.set_time(startTime, endTime)
         if self.maxEndTime < endTime: self.maxEndTime = endTime
 
         # ブロックが合流地点だった場合
-        if block.is_confluence():
+        if block.is_confluence() and start is False:
             self.stack.sorted("code")
             nextBlock = self.stack.pop()
             if nextBlock is None: return True

@@ -21,6 +21,7 @@ class BlockInfo:
         self.next = Stack()
         self.prev = Stack()
         self.settled = set()
+        # もう解析したブロック名
 
     def raw(self):
         return [

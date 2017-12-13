@@ -104,7 +104,8 @@ class GraphManager:
             # サブシステムでなく、次のブロックがあるが後続ブロックがない場合、そのブロックは開始ブロックである。
             if block.is_subsystem() or block.is_constant(): continue # 定数やサブシステムからは開始しない
             if block.is_unitdelay() or (block.has_next() and not block.has_prev()):
-                block.print_raw()
+                # block.print_raw()
+                # print(block.name, block.type, block.rate)
                 self.startBlocks.append(block)
 
     # ベース周期を取得する
@@ -141,12 +142,13 @@ class GraphManager:
         "ブロックから周期とオフセットを返す"
         try:
             rate = eval(block.get("rate"))
-            if isinstance(rate, int):
+            if isinstance(rate, int) or isinstance(rate, float):
                 rate, offset = rate, 0
             elif isinstance(rate, list):
                 rate, offset = rate
         except:
             rate, offset = 0, 0
+        if rate <=0 : rate = 0
         return rate, offset
 
     def _get_block(self, block):

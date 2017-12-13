@@ -9,7 +9,7 @@ if __name__ == "__main__":
     gm = GM.GraphManager(yl.get("input", "input.xml"))
     gm.run()
 
-    fd = FD.FlowDecider(gm.startBlocks, gm.blockTable)
+    fd = FD.FlowDecider(gm.startBlocks, gm.blockTable, gm.maxRate)
     fd.run()
     fd.to_csv(yl.get("output", "output.csv"))
 

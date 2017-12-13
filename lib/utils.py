@@ -7,7 +7,7 @@ class BlockInfo:
     ブロックのid, 名前, 開始サイクル、終了サイクルを格納するクラス
     """
 
-    def __init__(self, id, type, name, peinfo, rate, performance, code):
+    def __init__(self, id, type, name, peinfo, rate, offset, performance, code):
         self.id = id
         self.type = type
         self.name = name
@@ -17,6 +17,7 @@ class BlockInfo:
         self.code = code
         self.start = 0.0
         self.end = 0.0
+        self.offset = offset
         self.next = Stack()
         self.prev = Stack()
         self.settled = set()
@@ -38,6 +39,7 @@ class BlockInfo:
             "name": self.name,
             "peinfo": self.peinfo,
             "rate": self.rate,
+            "offset": self.offset,
             "performance": self.performance,
             "code": self.code,
             "start": self.start,

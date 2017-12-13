@@ -7,17 +7,23 @@ class FlowDecider:
     show: https://paper.dropbox.com/doc/iNWxqRTxmCzgRouRWcoLY
     """
 
-    def __init__(self, startBlocks, blockTable):
+    def __init__(self, startBlocks, blockTable, maxRate):
         self.startBlocks = startBlocks
         self.blockTable = blockTable
         self.stack = Utils.Stack()
         self.results = {}
         self.maxEndTime = 0.0
 
+        self.lapNum = 0 # 周回数
+        self.maxRate = maxRate
+
     def run(self):
-        for start in self.startBlocks:
-            while(True):
-                if self._calculate_time(start.name): break
+        while self.lapNum < self.maxRate:
+            for start in self.startBlocks:
+                while(True):
+                    if self._calculate_time(start.name): break
+            self.lapNum += 1
+            print(self.lapNum)
         print("done")
         # self._print(self.blockTable)
 

@@ -9,6 +9,7 @@ class GraphManager:
     """
 
     def __init__(self, input):
+        self.maxRate = 0
         self.root = ET.parse(input).getroot()
         self._make_block_table()
 
@@ -136,13 +137,28 @@ class GraphManager:
 
         return { "task": task, "update": update, "init": init }
 
+    def _get_rate_and_offset(self, block):
+        "ブロックから周期とオフセットを返す"
+        try:
+            rate = eval(block.get("rate"))
+            if isinstance(rate, int):
+                rate, offset = rate, 0
+            elif isinstance(rate, list):
+                rate, offset = rate
+        except:
+            rate, offset = 0, 0
+        return rate, offset
+
     def _get_block(self, block):
+        rate, offset = self._get_rate_and_offset(block)
+        if rate > self.maxRate: self.maxRate = rate
         return Utils.BlockInfo(
             block.get("id"),
             block.get("blocktype"),
             block.get("name"),
             block.get("peinfo"),
-            float(block.get("rate") or 0),
+            float(rate),
+            float(offset),
             self._get_attr(block, "performance"),
             self._get_attr(block, "code")
         )

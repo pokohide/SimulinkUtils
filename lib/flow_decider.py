@@ -13,6 +13,8 @@ class FlowDecider:
         self.blockTableOrigin = blockTable
         self.blockTable = blockTable
         self.stack = Utils.Stack()
+        # UnitDelayのUpdate用のスタック
+        self.updateStack = Utils.Stack()
         self.results = {}
         self.maxEndTime = 0.0
 
@@ -23,12 +25,15 @@ class FlowDecider:
         while self.lapNum < self.maxRate:
             self.blockTable = copy.deepcopy(self.blockTableOrigin)
             self.startBlocks = copy.deepcopy(self.startBlocksOrigin)
-            # for start in self.startBlocksOrigin:
-                # self.startBlocks.pop_if(lambda x: x == start)
-            while (not self.startBlocks.is_empty()):
+            while (not self.startBlocks.is_empty()) or (not self.stack.is_empty()):
                 start = self.startBlocks.pop()
+                if start is None:
+                    start = self.stack.shift()
+                    startName = start.get("name")
+                else:
+                    startName = start.name
                 while(True):
-                    if self._analysis(start.name, start = True): break
+                    if self._analysis(startName, start = True): break
             fname = "outputs/output_rate_" + str(self.lapNum) + ".csv"
             self.to_csv(fname)
             self.lapNum += 1
@@ -44,7 +49,6 @@ class FlowDecider:
     def _analysis(self, target, start = False):
         "開始ブロックから次のブロックまでのサイクル数などを計算する"
         block = self.blockTable[target]
-        # print(block.name, block.type, block.rate)
 
         startTime = block.start
 
@@ -53,13 +57,12 @@ class FlowDecider:
             block.set_time(0.0, 0.0, force = True)
             return True
 
-        print(block.raw(), block.is_confluence())
-        print('-----------')
-
-        # ブロックがUnitDelayかつ開始ブロックではない場合
-        if block.is_unitdelay() and start is False:
+        # UnitDelay[update]は最後に空いているタイミングで行う。
+        if block.is_unitdelay_update():
+            self.updateStack.append(block)
             endTime = startTime + block.performance["update"]
             block.set_time(startTime, endTime)
+            if self.maxEndTime < endTime: self.maxEndTime = endTime
             importerName = self._get_stack_block(target)
             if importerName is None: return True
             return self._analysis(importerName)
@@ -69,7 +72,7 @@ class FlowDecider:
         if self.maxEndTime < endTime: self.maxEndTime = endTime
 
         # ブロックが合流地点だった場合
-        if block.is_confluence() and start is False:
+        if block.is_confluence(): # and start is False:
             self.stack.sorted("code")
             nextBlockName = self._get_stack_block(target, in_start = True)
             if nextBlockName is None: return True
@@ -84,13 +87,15 @@ class FlowDecider:
         # 次のブロックがあるとき
         if block.has_next():
             block.next.sorted("code")
+            "次のブロックに今のブロックの終了時刻と次のブロックまでの移動コストを開始時刻として設定する"
             for nextSet in block.next:
-                nextBlock = self.blockTable[nextSet.get("name")]
-                "次のブロックに今のブロックの終了時刻と次のブロックまでの移動コストを開始時刻として設定する"
+                nextBlockName = nextSet.get("name")
+                nextBlock = self.blockTable[nextBlockName]
                 nextBlock.set_time(endTime + nextSet.get("cycle"))
+                self.blockTable[nextBlockName].add_settled(target)
+
             nextBlock = block.next.shift()
             nextBlockName = nextBlock.get("name")
-            self.blockTable[nextBlockName].add_settled(target)
             self.stack.append(block.next.data())
 
             "行き先ブロックと割当コアが変わったときはスタック上の同じ割当コアのブロックのstartTimeを変更する"
@@ -118,7 +123,6 @@ class FlowDecider:
                 importer = self.startBlocks.pop()
                 if importer is None: return None
                 importerName = importer.name
-                print(importerName)
             else:
                 return None
         else:

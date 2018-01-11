@@ -60,7 +60,6 @@ class BlockInfo:
     # このブロックは複数ブロックから合流しているかどうか
     def is_confluence(self):
         return self.prev.length() - len(self.settled) >= 1
-        # return self.prev and self.prev.length() >= 2
 
     # サブシステムかどうか
     def is_subsystem(self):
@@ -73,6 +72,10 @@ class BlockInfo:
     # UnitDelayかどうか
     def is_unitdelay(self):
         return self.type and self.type == "UnitDelay"
+
+    # UnitDelay[update]かどうか
+    def is_unitdelay_update(self):
+        return self.is_unitdelay() and ('[update]' in self.name)
 
     def set_neighbor(self, key, blocks):
         if key == "input":

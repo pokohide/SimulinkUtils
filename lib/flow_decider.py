@@ -34,6 +34,8 @@ class FlowDecider:
                     startName = start.name
                 while(True):
                     if self._analysis(startName, start = True): break
+            # ここでupdateの時間を計測して、秋時間にupdateを挟み込む
+            """"""""""""""
             fname = "outputs/output_rate_" + str(self.lapNum) + ".csv"
             self.to_csv(fname)
             self.lapNum += 1

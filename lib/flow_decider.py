@@ -9,7 +9,7 @@ class FlowDecider:
     """
 
     def __init__(self, startBlocks, blockTable, maxRate):
-        self.startBlocks = startBlocks
+        self.startBlocksOrigin = startBlocks
         self.blockTableOrigin = blockTable
         self.blockTable = blockTable
         self.stack = Utils.Stack()
@@ -20,11 +20,17 @@ class FlowDecider:
         self.maxRate = maxRate
 
     def run(self):
-        while self.lapNum < 1: #self.maxRate:
-            # self.blockTable = copy.deepcopy(self.blockTableOrigin)
-            for start in self.startBlocks:
+        while self.lapNum < self.maxRate:
+            self.blockTable = copy.deepcopy(self.blockTableOrigin)
+            self.startBlocks = copy.deepcopy(self.startBlocksOrigin)
+            # for start in self.startBlocksOrigin:
+                # self.startBlocks.pop_if(lambda x: x == start)
+            while (not self.startBlocks.is_empty()):
+                start = self.startBlocks.pop()
                 while(True):
-                    if self._calculate_time(start.name, start = True): break
+                    if self._analysis(start.name, start = True): break
+            fname = "outputs/output_rate_" + str(self.lapNum) + ".csv"
+            self.to_csv(fname)
             self.lapNum += 1
             print(self.lapNum)
         print("done")
@@ -35,24 +41,29 @@ class FlowDecider:
         exporter = Utils.Exporter()
         exporter.to_csv(filename, self._csv_header(), self._csv_body())
 
-    def _calculate_time(self, target, start = False):
+    def _analysis(self, target, start = False):
         "開始ブロックから次のブロックまでのサイクル数などを計算する"
         block = self.blockTable[target]
+        # print(block.name, block.type, block.rate)
 
-        print(block.name, block.type, block.rate, block.performance)
+        startTime = block.start
+
+        "周期と評価して、走査すべきブロックかを判定。Falseの場合は無視"
+        if self._should_scan(block) is False:
+            block.set_time(0.0, 0.0, force = True)
+            return True
+
+        print(block.raw(), block.is_confluence())
+        print('-----------')
 
         # ブロックがUnitDelayかつ開始ブロックではない場合
         if block.is_unitdelay() and start is False:
-            startTime = block.start
             endTime = startTime + block.performance["update"]
             block.set_time(startTime, endTime)
-            importer = self.stack.pop()
-            if importer is None: return True
-            importerName = importer.get("name")
-            self.blockTable[importerName].add_settled(target)
-            return self._calculate_time(importerName)
+            importerName = self._get_stack_block(target)
+            if importerName is None: return True
+            return self._analysis(importerName)
 
-        startTime = block.start
         endTime = startTime + block.performance["task"]
         block.set_time(startTime, endTime)
         if self.maxEndTime < endTime: self.maxEndTime = endTime
@@ -60,18 +71,15 @@ class FlowDecider:
         # ブロックが合流地点だった場合
         if block.is_confluence() and start is False:
             self.stack.sorted("code")
-            nextBlock = self.stack.pop()
-            if nextBlock is None: return True
-            nextBlockName = nextBlock.get("name")
-
+            nextBlockName = self._get_stack_block(target, in_start = True)
+            if nextBlockName is None: return True
             nextBlockInfo = self.blockTable[nextBlockName]
-            nextBlockInfo.add_settled(target)
             if block.peinfo == nextBlockInfo.peinfo:
                 shouldUpdate = False
                 for settled in block.settled:
                     if block.peinfo == self.blockTable[settled].peinfo: shouldUpdate = True
                 if shouldUpdate: nextBlockInfo.set_time(startTime)
-            return self._calculate_time(nextBlockName)
+            return self._analysis(nextBlockName)
 
         # 次のブロックがあるとき
         if block.has_next():
@@ -91,36 +99,32 @@ class FlowDecider:
                     stack_block = self.blockTable[stack.get("name")]
                     if block.peinfo == stack_block.peinfo: stack_block.set_time(endTime)
 
-            return self._calculate_time(nextBlockName)
+            return self._analysis(nextBlockName)
         else:
-            importer = self.stack.pop()
-            if importer is None: return True
-            importerName = importer.get("name")
-            self.blockTable[importerName].add_settled(target)
-            return self._calculate_time(importerName)
+            importerName = self._get_stack_block(target)
+            if importerName is None: return True
+            return self._analysis(importerName)
 
-    # 開始ブロック名を与えればそこから計算する。再帰関数
-    # def _calculate_time(self, target):
-    #     block = self.blockTable[target]
-    #     startTime = block.start
-    #     endTime = startTime + block.performance["task"]
-    #     if self.maxEndTime < endTime: self.maxEndTime = endTime
-    #
-    #     block.set_time(startTime, endTime)
-    #
-    #     if block.has_next():
-    #         for nextSet in block.next:
-    #             nextBlock = self.blockTable[nextSet[0]]
-    #             nextBlock.set_time(endTime)
-    #
-    #         nextBlock = block.next.shift()
-    #         self.stack.append(block.next.data())
-    #         return self._calculate_time(nextBlock[0])
-    #
-    #     else:
-    #         importer = self.stack.pop()
-    #         if importer == None: return True
-    #         return self._calculate_time(importer[0])
+    def _should_scan(self, block):
+        if block.rate <= 0: return False
+        return (self.lapNum - block.offset) % block.rate == 0
+
+    def _get_stack_block(self, target = None, in_start = False):
+        "次のブロックを計算時間を計算する"
+        importer = self.stack.pop()
+        "スタックになければ"
+        if importer is None:
+            if in_start:
+                importer = self.startBlocks.pop()
+                if importer is None: return None
+                importerName = importer.name
+                print(importerName)
+            else:
+                return None
+        else:
+            importerName = importer.get("name")
+        if target is not None: self.blockTable[importerName].add_settled(target)
+        return importerName
 
     def _csv_header(self):
         return [len(self.blockTable), self.maxEndTime]

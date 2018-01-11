@@ -80,11 +80,14 @@ class BlockInfo:
         elif key == "output":
             self.next = blocks
 
-    def set_time(self, start, end = None):
+    def set_time(self, start, end = None, force = False):
         if self.start <= start:
             self.start = start
             if end and self.end <= end:
                 self.end = end
+        if force is True:
+            self.start = start
+            self.end = end
 
     def add_settled(self, blockName):
         self.settled.add(blockName)
@@ -104,11 +107,31 @@ class Stack:
         else:
             return None
 
+    def pop_if(self, condition):
+        "条件を満たす要素を取り出す"
+        if self.stack:
+            for index, item in enumerate(self.stack):
+                if condition(item): return self.stack.pop(index)
+            return None
+        else:
+            return None
+
+    def any(self, condition):
+        for item in self.stack:
+            if condition(item): return True
+        return False
+
     def append(self, data):
         if isinstance(data, list):
             self.stack.extend(data)
         else:
             self.stack.append(data)
+
+    def remove_by_name(self, name):
+        new_stack = [e for e in self.stack if e.get('name') != name]
+        self.stack.clear()
+        self.stack.extend(new_stack)
+        del new_stack
 
     def length(self):
         if self.stack: return len(self.stack)

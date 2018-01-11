@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     fd = FD.FlowDecider(gm.startBlocks, gm.blockTable, gm.maxRate)
     fd.run()
-    fd.to_csv(yl.get("output", "output.csv"))
+    # fd.to_csv(yl.get("output", "output.csv"))
 
     if yl.get("plot", False):
         plotly = Plotly.Plotly(yl.get("output", "output.csv"))

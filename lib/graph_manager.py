@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 from . import utils as Utils
+import copy
 
 class GraphManager:
     """
@@ -12,6 +13,7 @@ class GraphManager:
         self.maxRate = 0
         self.root = ET.parse(input).getroot()
         self._make_block_table()
+        self.startBlocks = Utils.Stack()
 
     def _make_block_table(self):
         "ブロック名からidやコア数を索引できるテーブルを作成"
@@ -63,6 +65,41 @@ class GraphManager:
                 # 再帰
                 smBlocks = node.findall("./sm:blocks/block", namespaces = { "sm": "http://example.com/SimulinkModel" })
                 self._scan_blocks(smBlocks)
+            elif node.get("blocktype") == "UnitDelay":
+
+                blockName = node.get("name")
+                updateName = blockName + '[update]'
+                taskName = blockName + '[task]'
+
+                self.blockTable[taskName] = copy.deepcopy(self.blockTable[blockName])
+                self.blockTable[taskName].name = taskName
+
+                self.blockTable[updateName] = copy.deepcopy(self.blockTable[blockName])
+                self.blockTable[updateName].name = updateName
+
+                block = self.blockTable[blockName]
+
+                output = node.find("./output")
+                if output is not None:
+                    self.startBlocks.append(self.blockTable[taskName])
+                    for connect in output.findall("connect"):
+                        nextBlockName = self._get_inner_block(connect)
+                        nextBlock = self.blockTable[nextBlockName]
+                        cycle = self._calculate_cycle(block, nextBlock)
+
+                        self.blockTable[taskName].next.append({ "name": nextBlockName, "cycle": cycle, "code": nextBlock.code["task"] })
+                        self.blockTable[nextBlockName].prev.append({ "name": taskName, "cycle": cycle, "code": 0 })
+                        self.blockTable[nextBlockName].prev.remove_by_name(blockName)
+
+                for input in node.findall("./input"):
+                    for connect in input.findall("connect"):
+                        prevBlockName = self._get_inner_block(connect)
+                        prevBlock = self.blockTable[prevBlockName]
+                        cycle = self._calculate_cycle(prevBlock, block)
+
+                        self.blockTable[updateName].prev.append({ "name": prevBlockName, "cycle": cycle, "code": prevBlock.code["task"] })
+                        self.blockTable[prevBlockName].next.append({ "name": updateName, "cycle": cycle, "code": 0 })
+                        self.blockTable[prevBlockName].next.remove_by_name(blockName)
             else:
                 self._set_next_blocks(node)
                 self._set_prev_blocks(node)
@@ -99,13 +136,10 @@ class GraphManager:
 
     def _set_startBlocks(self):
         "開始ブロックをセットする"
-        self.startBlocks = Utils.Stack()
         for blockName, block in self.blockTable.items():
             # サブシステムでなく、次のブロックがあるが後続ブロックがない場合、そのブロックは開始ブロックである。
-            if block.is_subsystem() or block.is_constant(): continue # 定数やサブシステムからは開始しない
-            if block.is_unitdelay() or (block.has_next() and not block.has_prev()):
-                # block.print_raw()
-                # print(block.name, block.type, block.rate)
+            if block.is_subsystem() or block.is_constant() or block.is_unitdelay(): continue # 定数やサブシステムからは開始しない
+            if block.has_next() and not block.has_prev():
                 self.startBlocks.append(block)
 
     # ベース周期を取得する
@@ -148,7 +182,7 @@ class GraphManager:
                 rate, offset = rate
         except:
             rate, offset = 0, 0
-        if rate <=0 : rate = 0
+        if rate <= 0 : rate = 0
         return rate, offset
 
     def _get_block(self, block):

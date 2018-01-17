@@ -34,8 +34,7 @@ class FlowDecider:
                     startName = start.name
                 while(True):
                     if self._analysis(startName, start = True): break
-            # ここでupdateの時間を計測して、秋時間にupdateを挟み込む
-            """"""""""""""
+            self._fill_update_task()
             fname = "outputs/output_rate_" + str(self.lapNum) + ".csv"
             self.to_csv(fname)
             self.lapNum += 1
@@ -62,9 +61,6 @@ class FlowDecider:
         # UnitDelay[update]は最後に空いているタイミングで行う。
         if block.is_unitdelay_update():
             self.updateStack.append(block)
-            endTime = startTime + block.performance["update"]
-            block.set_time(startTime, endTime)
-            if self.maxEndTime < endTime: self.maxEndTime = endTime
             importerName = self._get_stack_block(target)
             if importerName is None: return True
             return self._analysis(importerName)
@@ -115,6 +111,25 @@ class FlowDecider:
     def _should_scan(self, block):
         if block.rate <= 0: return False
         return (self.lapNum - block.offset) % block.rate == 0
+
+    def _fill_update_task(self):
+        "UnitDelayのupadteタスクを空いている時間に埋める"
+        "とりあえずは各コアの一番遅い時間のブロックの後ろに配置する"
+
+        for updateTask in self.updateStack:
+            maxEndTime = 0
+            for blockName, block in self.blockTable.items():
+                if (updateTask.peinfo == block.peinfo) and (block.end > maxEndTime):
+                    maxEndTime = block.end
+            print(updateTask.raw())
+            print(maxEndTime)
+            startTime = maxEndTime
+            endTime = startTime + block.performance["update"]
+            block.set_time(maxEndTime, endTime, force = True)
+            if self.maxEndTime < endTime: self.maxEndTime = endTime
+            # print(updateTask.raw())
+
+
 
     def _get_stack_block(self, target = None, in_start = False):
         "次のブロックを計算時間を計算する"

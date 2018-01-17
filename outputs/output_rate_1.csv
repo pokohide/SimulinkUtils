@@ -1,5 +1,5 @@
 # num of blocks, maximum endTime
-13,844.5
+13,794.5
 # id, name, peinfo, startTime, endTime
 1,simplemodel_In1,0,124.0,124.0
 2,simplemodel_MathFunction,0,287.0,450.0
@@ -12,5 +12,5 @@
 7,simplemodel_ud1[update],1,0.0,0.0
 8,simplemodel_ud2,0,0.0,0.0
 8,simplemodel_ud2[task],0,0.0,124.0
-8,simplemodel_ud2[update],0,0.0,0.0
+8,simplemodel_ud2[update],0,0,92.0
 9,simplemodel_Out1,0,629.0,629.0

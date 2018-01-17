@@ -5,7 +5,7 @@ class TestGM(unittest.TestCase):
 
     def setUp(self):
         # print("Set UP")
-        self._gm = GM.GraphManager("examples/sample.xml")
+        self._gm = GM.GraphManager("examples/simple_model.xml")
 
     def test_initialize(self):
         self.assertEqual(1, 1)

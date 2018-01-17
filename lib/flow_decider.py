@@ -17,6 +17,7 @@ class FlowDecider:
         self.updateStack = Utils.Stack()
         self.results = {}
         self.maxEndTime = 0.0
+        self.files = []
 
         self.lapNum = 0 # 周回数
         self.maxRate = maxRate
@@ -38,7 +39,6 @@ class FlowDecider:
             fname = "outputs/output_rate_" + str(self.lapNum) + ".csv"
             self.to_csv(fname)
             self.lapNum += 1
-            print(self.lapNum)
         print("done")
         # self._print(self.blockTable)
 
@@ -46,6 +46,7 @@ class FlowDecider:
         "結果をCSV出力"
         exporter = Utils.Exporter()
         exporter.to_csv(filename, self._csv_header(), self._csv_body())
+        self.files.append(filename)
 
     def _analysis(self, target, start = False):
         "開始ブロックから次のブロックまでのサイクル数などを計算する"
@@ -61,9 +62,7 @@ class FlowDecider:
         # UnitDelay[update]は最後に空いているタイミングで行う。
         if block.is_unitdelay_update():
             self.updateStack.append(block)
-            importerName = self._get_stack_block(target)
-            if importerName is None: return True
-            return self._analysis(importerName)
+            return True
 
         endTime = startTime + block.performance["task"]
         block.set_time(startTime, endTime)
@@ -115,21 +114,16 @@ class FlowDecider:
     def _fill_update_task(self):
         "UnitDelayのupadteタスクを空いている時間に埋める"
         "とりあえずは各コアの一番遅い時間のブロックの後ろに配置する"
-
         for updateTask in self.updateStack:
             maxEndTime = 0
             for blockName, block in self.blockTable.items():
-                if (updateTask.peinfo == block.peinfo) and (block.end > maxEndTime):
+                if (updateTask.peinfo == block.peinfo) and (block.end >= maxEndTime):
                     maxEndTime = block.end
-            print(updateTask.raw())
-            print(maxEndTime)
             startTime = maxEndTime
-            endTime = startTime + block.performance["update"]
-            block.set_time(maxEndTime, endTime, force = True)
+            endTime = startTime + updateTask.performance["update"]
+            updateTask.set_time(startTime, endTime, force = True)
             if self.maxEndTime < endTime: self.maxEndTime = endTime
-            # print(updateTask.raw())
-
-
+        self.updateStack.clear()
 
     def _get_stack_block(self, target = None, in_start = False):
         "次のブロックを計算時間を計算する"

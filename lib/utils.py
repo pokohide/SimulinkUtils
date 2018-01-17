@@ -155,6 +155,9 @@ class Stack:
     def sorted(self, target):
         self.stack.sort(key=lambda x:x[target])
 
+    def clear(self):
+        self.stack.clear()
+
     # イテレーター用宣言。next()は下記
     def __iter__(self):
         self._i = 0

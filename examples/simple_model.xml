@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<sm:blocks xmlns:sm="http://example.com/SimulinkModel" name="simplemodel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://example.com/SimulinkModel SimulinkModel.xsd">
+  <file name="simplemodel.h" size="4342" timestamp="2017-12-19T12:05:01+0900" type="c-header"/>
+  <file name="out_simplemodel.xml" size="17251" timestamp="2017-12-19T12:05:01+0900" type="xml"/>
+  <file name="simplemodel.c" size="4219" timestamp="2017-12-19T12:05:01+0900" type="c-source"/>
+  <file name="simplemodel_data.c" size="1559" timestamp="2017-12-19T12:05:01+0900" type="c-data"/>
+  <file name="../../renesas.mcg4p_8core.1_0_0.gcc.4_6_2.xml" size="963553" timestamp="2017-12-13T16:24:58+0900" type="shim"/>
+  <shim-params element="componentset" name="PE_P01"/>
+  <shim-params element="mastercomponent" name="CPU_P01"/>
+  <shim-params element="commoninstructionset" name="LLVM Instructions"/>
+  <block blocktype="Inport" id="1" name="simplemodel_In1" peinfo="0" rate="1">
+    <output dimensions="[1 1]" line="simplemodel_In1_1" port="simplemodel_In1_1" usename="true">
+      <connect block="simplemodel_Sqrt" port="simplemodel_Sqrt_1"/>
+    </output>
+    <var line="simplemodel_In1_1" mode="output" name="simplemodel_In1_1" port="simplemodel_In1_1" type="real_T"/>
+    <code file="simplemodel.c" line="124" type="init">  simplemodel_In1_1 = 0.0;
+
+</code>
+    <forward block="simplemodel_Sqrt" type="port">
+      <var line="simplemodel_In1_1" mode="extin" name="simplemodel_In1_1" port="simplemodel_Sqrt_1" type="real_T"/>
+    </forward>
+  </block>
+  <block blocktype="Math" id="2" name="simplemodel_MathFunction" peinfo="0" rate="1">
+    <input line="simplemodel_Sqrt_1" port="simplemodel_MathFunction_1">
+      <connect block="simplemodel_Sqrt" port="simplemodel_Sqrt_1"/>
+    </input>
+    <output dimensions="[1 1]" line="simplemodel_MathFunction_1" port="simplemodel_MathFunction_1" usename="true">
+      <connect block="simplemodel_Product" port="simplemodel_Product_2"/>
+    </output>
+    <var line="simplemodel_MathFunction_1" mode="output" name="simplemodel_MathFunction_1" port="simplemodel_MathFunction_1" type="real_T"/>
+    <var line="simplemodel_Sqrt_1" mode="input" name="simplemodel_Sqrt_1" port="simplemodel_MathFunction_1" type="real_T"/>
+    <code file="simplemodel.c" line="71" type="task">  /* Math: '&lt;Root&gt;/MathFunction'
+   *
+   * About '&lt;Root&gt;/MathFunction':
+   *  Operator: exp
+   */
+  simplemodel_MathFunction_1 = exp(simplemodel_Sqrt_1);
+
+</code>
+    <code file="simplemodel.c" line="115" type="init">  simplemodel_MathFunction_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="simplemodel_Product" type="data">
+      <var line="simplemodel_MathFunction_1" mode="input" name="simplemodel_MathFunction_1" port="simplemodel_Product_2" type="real_T"/>
+    </forward>
+    <backward block="simplemodel_Sqrt" type="data">
+      <var line="simplemodel_Sqrt_1" mode="output" name="simplemodel_Sqrt_1" port="simplemodel_Sqrt_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Product" id="3" name="simplemodel_Product" peinfo="0" rate="1">
+    <input line="simplemodel_ud2_1" port="simplemodel_Product_1">
+      <connect block="simplemodel_ud2" port="simplemodel_ud2_1"/>
+    </input>
+    <input line="simplemodel_MathFunction_1" port="simplemodel_Product_2">
+      <connect block="simplemodel_MathFunction" port="simplemodel_MathFunction_1"/>
+    </input>
+    <output dimensions="[1 1]" line="simplemodel_Product_1" port="simplemodel_Product_1" usename="true">
+      <connect block="simplemodel_Out1" port="simplemodel_Out1_1"/>
+    </output>
+    <var line="simplemodel_Product_1" mode="output" name="simplemodel_Product_1" port="simplemodel_Product_1" type="real_T"/>
+    <var line="simplemodel_MathFunction_1" mode="input" name="simplemodel_MathFunction_1" port="simplemodel_Product_2" type="real_T"/>
+    <var line="simplemodel_ud2_1" mode="input" name="simplemodel_ud2_1" port="simplemodel_Product_1" type="real_T"/>
+    <code file="simplemodel.c" line="78" type="task">  /* Product: '&lt;Root&gt;/Product' */
+  simplemodel_Product_1 = simplemodel_ud2_1 * simplemodel_MathFunction_1;
+</code>
+    <code file="simplemodel.c" line="116" type="init">  simplemodel_Product_1 = 0.0;
+</code>
+    <performance best="179" type="task" typical="179" worst="179"/>
+    <performance best="103" type="init" typical="103" worst="103"/>
+    <forward block="simplemodel_Out1" type="port">
+      <var line="simplemodel_Product_1" mode="input" name="simplemodel_Product_1" port="simplemodel_Out1_1" type="real_T"/>
+    </forward>
+    <backward block="simplemodel_MathFunction" type="data">
+      <var line="simplemodel_MathFunction_1" mode="output" name="simplemodel_MathFunction_1" port="simplemodel_MathFunction_1" type="real_T"/>
+    </backward>
+    <backward block="simplemodel_ud2" type="data">
+      <var line="simplemodel_ud2_1" mode="output" name="simplemodel_ud2_1" port="simplemodel_ud2_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Sqrt" id="4" name="simplemodel_Sqrt" peinfo="0" rate="1">
+    <input line="simplemodel_In1_1" port="simplemodel_Sqrt_1">
+      <connect block="simplemodel_In1" port="simplemodel_In1_1"/>
+    </input>
+    <output dimensions="[1 1]" line="simplemodel_Sqrt_1" port="simplemodel_Sqrt_1" usename="true">
+      <connect block="simplemodel_MathFunction" port="simplemodel_MathFunction_1"/>
+      <connect block="simplemodel_ud1" port="simplemodel_ud1_1"/>
+    </output>
+    <var line="simplemodel_Sqrt_1" mode="output" name="simplemodel_Sqrt_1" port="simplemodel_Sqrt_1" type="real_T"/>
+    <var line="simplemodel_In1_1" mode="extin" name="simplemodel_In1_1" port="simplemodel_Sqrt_1" type="real_T"/>
+    <code file="simplemodel.c" line="66" type="task">  /* Sqrt: '&lt;Root&gt;/Sqrt' incorporates:
+   *  Inport: '&lt;Root&gt;/In1'
+   */
+  simplemodel_Sqrt_1 = sqrt(simplemodel_In1_1);
+
+</code>
+    <code file="simplemodel.c" line="114" type="init">  simplemodel_Sqrt_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="simplemodel_MathFunction" type="data">
+      <var line="simplemodel_Sqrt_1" mode="input" name="simplemodel_Sqrt_1" port="simplemodel_MathFunction_1" type="real_T"/>
+    </forward>
+    <forward block="simplemodel_ud1" type="data">
+      <var line="simplemodel_Sqrt_1" mode="input" name="simplemodel_Sqrt_1" port="simplemodel_ud1_1" type="real_T"/>
+    </forward>
+    <backward block="simplemodel_In1" type="port">
+      <var line="simplemodel_In1_1" mode="output" name="simplemodel_In1_1" port="simplemodel_In1_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="5" name="simplemodel_a" peinfo="1" priority="2" rate="2">
+    <input line="simplemodel_ud1_1" port="simplemodel_a_1">
+      <connect block="simplemodel_ud1" port="simplemodel_ud1_1"/>
+    </input>
+    <output dimensions="[1 1]" line="simplemodel_a_1" port="simplemodel_a_1" usename="true">
+      <connect block="simplemodel_b" port="simplemodel_b_1"/>
+    </output>
+    <var line="simplemodel_a_1" mode="output" name="simplemodel_a_1" port="simplemodel_a_1" type="real_T"/>
+    <var line="simplemodel_ud1_1" mode="input" name="simplemodel_ud1_1" port="simplemodel_a_1" type="real_T"/>
+    <param name="a_Gain" storage="simplemodel_P" type="real_T" value="3.0">
+      <initcode file="simplemodel_data.c" line="30" type="param">  3.0,                                 /* Expression: 3
+                                        * Referenced by: '&lt;Root&gt;/a'
+                                        */
+</initcode>
+    </param>
+    <code file="simplemodel.c" line="84" type="task">/*&lt;&lt;&lt; S 1 none &lt;&lt;&lt;*/
+  if (simplemodel_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 1 none &gt;&gt;&gt;*/
+    /* Gain: '&lt;Root&gt;/a' */
+    simplemodel_a_1 = simplemodel_P.a_Gain * simplemodel_ud1_1;
+
+/*&lt;&lt;&lt; E 1 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 1 none &gt;&gt;&gt;*/
+</code>
+    <code file="simplemodel.c" line="112" type="init">  simplemodel_a_1 = 0.0;
+</code>
+    <performance best="177" type="task" typical="241.5" worst="306"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="simplemodel_b" type="data">
+      <var line="simplemodel_a_1" mode="input" name="simplemodel_a_1" port="simplemodel_b_1" type="real_T"/>
+    </forward>
+    <backward block="simplemodel_ud1" type="data">
+      <var line="simplemodel_ud1_1" mode="output" name="simplemodel_ud1_1" port="simplemodel_ud1_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="6" name="simplemodel_b" peinfo="1" priority="4" rate="2">
+    <input line="simplemodel_a_1" port="simplemodel_b_1">
+      <connect block="simplemodel_a" port="simplemodel_a_1"/>
+    </input>
+    <output dimensions="[1 1]" line="simplemodel_b_1" port="simplemodel_b_1" usename="true">
+      <connect block="simplemodel_ud2" port="simplemodel_ud2_1"/>
+    </output>
+    <var line="simplemodel_b_1" mode="output" name="simplemodel_b_1" port="simplemodel_b_1" type="real_T"/>
+    <var line="simplemodel_a_1" mode="input" name="simplemodel_a_1" port="simplemodel_b_1" type="real_T"/>
+    <param name="b_Gain" storage="simplemodel_P" type="real_T" value="3.0">
+      <initcode file="simplemodel_data.c" line="36" type="param">  3.0                                  /* Expression: 3
+                                        * Referenced by: '&lt;Root&gt;/b'
+                                        */,
+</initcode>
+    </param>
+    <code file="simplemodel.c" line="87" type="task">/*&lt;&lt;&lt; S 1 none &lt;&lt;&lt;*/
+  if (simplemodel_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 1 none &gt;&gt;&gt;*/
+    /* Gain: '&lt;Root&gt;/b' */
+    simplemodel_b_1 = simplemodel_P.b_Gain * simplemodel_a_1;
+
+/*&lt;&lt;&lt; E 1 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 1 none &gt;&gt;&gt;*/
+</code>
+    <code file="simplemodel.c" line="117" type="init">  simplemodel_b_1 = 0.0;
+
+</code>
+    <performance best="177" type="task" typical="241.5" worst="306"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="simplemodel_ud2" type="data">
+      <var line="simplemodel_b_1" mode="input" name="simplemodel_b_1" port="simplemodel_ud2_1" type="real_T"/>
+    </forward>
+    <backward block="simplemodel_a" type="data">
+      <var line="simplemodel_a_1" mode="output" name="simplemodel_a_1" port="simplemodel_a_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="UnitDelay" id="7" name="simplemodel_ud1" peinfo="1" rate="2">
+    <input line="simplemodel_Sqrt_1" port="simplemodel_ud1_1">
+      <connect block="simplemodel_Sqrt" port="simplemodel_Sqrt_1"/>
+    </input>
+    <output dimensions="[1 1]" line="simplemodel_ud1_1" port="simplemodel_ud1_1" usename="true">
+      <connect block="simplemodel_a" port="simplemodel_a_1"/>
+    </output>
+    <var line="simplemodel_ud1_1" mode="output" name="simplemodel_ud1_1" port="simplemodel_ud1_1" type="real_T"/>
+    <var line="simplemodel_Sqrt_1" mode="input" name="simplemodel_Sqrt_1" port="simplemodel_ud1_1" type="real_T"/>
+    <state name="ud1_DSTATE" storage="simplemodel_DW" type="real_T"/>
+    <param name="ud1_InitialCondition" storage="simplemodel_P" type="real_T" value="1.0">
+      <initcode file="simplemodel_data.c" line="27" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/ud1'
+                                        */
+</initcode>
+    </param>
+    <code file="simplemodel.c" line="81" type="task">/*&lt;&lt;&lt; S 1 none &lt;&lt;&lt;*/
+  if (simplemodel_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 1 none &gt;&gt;&gt;*/
+    /* UnitDelay: '&lt;Root&gt;/ud1' */
+    simplemodel_ud1_1 = simplemodel_DW.ud1_DSTATE;
+
+/*&lt;&lt;&lt; E 1 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 1 none &gt;&gt;&gt;*/
+</code>
+    <code file="simplemodel.c" line="90" type="update">/*&lt;&lt;&lt; S 1 none &lt;&lt;&lt;*/
+  if (simplemodel_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 1 none &gt;&gt;&gt;*/
+    /* Update for UnitDelay: '&lt;Root&gt;/ud1' */
+    simplemodel_DW.ud1_DSTATE = simplemodel_Sqrt_1;
+/*&lt;&lt;&lt; E 1 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 1 none &gt;&gt;&gt;*/
+</code>
+    <code file="simplemodel.c" line="111" type="init">  simplemodel_ud1_1 = 0.0;
+</code>
+    <code file="simplemodel.c" line="126" type="state">  /* InitializeConditions for UnitDelay: '&lt;Root&gt;/ud1' */
+  simplemodel_DW.ud1_DSTATE = simplemodel_P.ud1_InitialCondition;
+
+</code>
+    <performance best="177" type="task" typical="219.5" worst="262"/>
+    <performance best="177" type="update" typical="203.5" worst="230"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="simplemodel_a" type="data">
+      <var line="simplemodel_ud1_1" mode="input" name="simplemodel_ud1_1" port="simplemodel_a_1" type="real_T"/>
+    </forward>
+    <backward block="simplemodel_Sqrt" type="data">
+      <var line="simplemodel_Sqrt_1" mode="output" name="simplemodel_Sqrt_1" port="simplemodel_Sqrt_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="UnitDelay" id="8" name="simplemodel_ud2" peinfo="0" rate="1">
+    <input line="simplemodel_b_1" port="simplemodel_ud2_1">
+      <connect block="simplemodel_b" port="simplemodel_b_1"/>
+    </input>
+    <output dimensions="[1 1]" line="simplemodel_ud2_1" port="simplemodel_ud2_1" usename="true">
+      <connect block="simplemodel_Product" port="simplemodel_Product_1"/>
+    </output>
+    <var line="simplemodel_ud2_1" mode="output" name="simplemodel_ud2_1" port="simplemodel_ud2_1" type="real_T"/>
+    <var line="simplemodel_b_1" mode="input" name="simplemodel_b_1" port="simplemodel_ud2_1" type="real_T"/>
+    <state name="ud2_DSTATE" storage="simplemodel_DW" type="real_T"/>
+    <param name="ud2_InitialCondition" storage="simplemodel_P" type="real_T" value="1.0">
+      <initcode file="simplemodel_data.c" line="33" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/ud2'
+                                        */
+</initcode>
+    </param>
+    <code file="simplemodel.c" line="63" type="task">  /* UnitDelay: '&lt;Root&gt;/ud2' */
+  simplemodel_ud2_1 = simplemodel_DW.ud2_DSTATE;
+
+</code>
+    <code file="simplemodel.c" line="94" type="update">  /* Update for UnitDelay: '&lt;Root&gt;/ud2' */
+  simplemodel_DW.ud2_DSTATE = simplemodel_b_1;
+</code>
+    <code file="simplemodel.c" line="113" type="init">  simplemodel_ud2_1 = 0.0;
+</code>
+    <code file="simplemodel.c" line="129" type="state">  /* InitializeConditions for UnitDelay: '&lt;Root&gt;/ud2' */
+  simplemodel_DW.ud2_DSTATE = simplemodel_P.ud2_InitialCondition;
+</code>
+    <performance best="124" type="task" typical="124" worst="124"/>
+    <performance best="92" type="update" typical="92" worst="92"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="simplemodel_Product" type="data">
+      <var line="simplemodel_ud2_1" mode="input" name="simplemodel_ud2_1" port="simplemodel_Product_1" type="real_T"/>
+    </forward>
+    <backward block="simplemodel_b" type="data">
+      <var line="simplemodel_b_1" mode="output" name="simplemodel_b_1" port="simplemodel_b_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Outport" id="9" name="simplemodel_Out1" peinfo="0" rate="1">
+    <input line="simplemodel_Product_1" port="simplemodel_Out1_1">
+      <connect block="simplemodel_Product" port="simplemodel_Product_1"/>
+    </input>
+    <var line="simplemodel_Product_1" mode="input" name="simplemodel_Product_1" port="simplemodel_Out1_1" type="real_T"/>
+    <backward block="simplemodel_Product" type="port">
+      <var line="simplemodel_Product_1" mode="output" name="simplemodel_Product_1" port="simplemodel_Product_1" type="real_T"/>
+    </backward>
+  </block>
+  <code type="preamble">#ifndef RTW_HEADER_simplemodel_h_
+#define RTW_HEADER_simplemodel_h_
+</code>
+  <code type="rt-macro">/* Macros for accessing real-time model data structure */
+#ifndef rtmGetErrorStatus
+# define rtmGetErrorStatus(rtm)        ((rtm)-&gt;errorStatus)
+#endif
+
+#ifndef rtmSetErrorStatus
+# define rtmSetErrorStatus(rtm, val)   ((rtm)-&gt;errorStatus = (val))
+#endif
+
+</code>
+  <code type="rt-type">/* Real-time Model Data Structure */
+struct tag_RTM_simplemodel_T {
+  const char_T * volatile errorStatus;
+
+  /*
+   * Timing:
+   * The following substructure contains information regarding
+   * the timing information for the model.
+   */
+  struct {
+    struct {
+      uint8_T TID[2];
+    } TaskCounters;
+  } Timing;
+};
+</code>
+  <code type="rt-code">  rate_scheduler();
+</code>
+  <code type="rt-init">  /* initialize real-time model */
+  (void) memset((void *)simplemodel_M, 0,
+                sizeof(RT_MODEL_simplemodel_T));
+</code>
+  <object kind="rtm-extern" name="simplemodel_M" type="extern RT_MODEL_simplemodel_T * const"/>
+  <object kind="rtm-object" name="simplemodel_M_" type="RT_MODEL_simplemodel_T"/>
+  <object kind="rtm-pointer" name="simplemodel_M" type="RT_MODEL_simplemodel_T * const" value="&amp;simplemodel_M_"/>
+  <includes file="&lt;math.h>" from="simplemodel.h" index="0"/>
+  <includes file="&lt;string.h>" from="simplemodel.h" index="1"/>
+  <includes file="&quot;rtwtypes.h&quot;" from="simplemodel.h" index="2"/>
+  <includes file="&quot;simplemodel_types.h&quot;" from="simplemodel.h" index="3"/>
+  <includes file="&quot;simplemodel.h&quot;" from="simplemodel.c" index="4" mark="true"/>
+  <includes file="&quot;simplemodel_private.h&quot;" from="simplemodel.c" index="5"/>
+  <function name="rate_scheduler" type="decl">
+    <code line="41" type="func">static void rate_scheduler(void);
+</code>
+  </function>
+  <function name="rate_scheduler" type="defn">
+    <code line="43" type="func">/*
+ *   This function updates active task flag for each subrate.
+ * The function is called at model base rate, hence the
+ * generated code self-manages all its subrates.
+ */
+static void rate_scheduler(void)
+{
+  /* Compute which subrates run during the next base time step.  Subrates
+   * are an integer multiple of the base rate counter.  Therefore, the subtask
+   * counter is reset when it reaches its limit (zero means run).
+   */
+  (simplemodel_M-&gt;Timing.TaskCounters.TID[1])++;
+  if ((simplemodel_M-&gt;Timing.TaskCounters.TID[1]) &gt; 1) {/* Sample time: [2.0s, 0.0s] */
+    simplemodel_M-&gt;Timing.TaskCounters.TID[1] = 0;
+  }
+}
+</code>
+  </function>
+</sm:blocks>

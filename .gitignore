@@ -1,4 +1,2 @@
-*.xml
-*.yaml
 *.m
 lib/__pycache__

@@ -1,0 +1,3 @@
+# copy this file, rename setting.yaml
+input: examples/simple_model.xml
+plot: True

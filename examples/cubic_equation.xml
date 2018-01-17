@@ -1,0 +1,2247 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SM:blocks xmlns:SM="http://example.com/SimulinkModel" name="offset_fibonacciCubicEquation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://example.com/SimulinkModel SimulinkModel.xsd">
+  <file name="offset_fibonacciCubicEquation.h" size="13550" timestamp="2017-09-03T00:40:12+0900" type="c-header"/>
+  <file name="offset_fibonacciCubicEquation.xml" size="65802" timestamp="2017-09-03T00:39:19+0900" type="xml"/>
+  <file name="offset_fibonacciCubicEquation.c" size="29863" timestamp="2017-09-03T00:40:12+0900" type="c-source"/>
+  <file name="offset_fibonacciCubicEquation_data.c" size="4876" timestamp="2017-09-03T00:40:12+0900" type="c-data"/>
+  <block blocktype="Display" id="1" name="offset_fibonacciCubicEquation_Display" peinfo="1" rate="[4,3]">
+    <input line="offset_fibonacciCubicEquation_solvedCubicEquation_1" port="offset_fibonacciCubicEquation_Display_1">
+      <connect block="offset_fibonacciCubicEquation_solvedCubicEquation" port="offset_fibonacciCubicEquation_solvedCubicEquation_kai"/>
+    </input>
+    <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" port="offset_fibonacciCubicEquation_Display_1" type="real_T"/>
+    <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="SubSystem" id="2" name="offset_fibonacciCubicEquation_Fibonacci" peinfo="0" rate="1">
+    <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_Fibonacci_1" port="offset_fibonacciCubicEquation_Fibonacci_Out1" usename="false">
+      <connect block="offset_fibonacciCubicEquation_RateTransition3" port="offset_fibonacciCubicEquation_RateTransition3_1"/>
+      <connect block="offset_fibonacciCubicEquation_UnitDelay2" port="offset_fibonacciCubicEquation_UnitDelay2_1"/>
+      <connect block="offset_fibonacciCubicEquation_calcGoldenratio" port="offset_fibonacciCubicEquation_calcGoldenratio_In1"/>
+      <connect block="offset_fibonacciCubicEquation_calcGoldenratio" port="offset_fibonacciCubicEquation_calcGoldenratio_In2"/>
+    </output>
+    <SM:blocks>
+      <block blocktype="Sum" id="3" name="offset_fibonacciCubicEquation_Fibonacci_Add" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_Fibonacci_Fn_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_1">
+          <connect block="offset_fibonacciCubicEquation_Fibonacci_Fn" port="offset_fibonacciCubicEquation_Fibonacci_Fn_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_2">
+          <connect block="offset_fibonacciCubicEquation_Fibonacci_Fnm1" port="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_Fibonacci_Fn" port="offset_fibonacciCubicEquation_Fibonacci_Fn_1"/>
+          <connect block="offset_fibonacciCubicEquation_Fibonacci_Out1" port="offset_fibonacciCubicEquation_Fibonacci_Out1_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_Fibonacci_Add_1" mode="output" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_Fibonacci_Fn_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Fn_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_2" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="201" type="task">  /* Sum: '&lt;S1&gt;/Add' */
+  offset_fibonacciCubicEquation_Fibonacci_Add_1 =
+    offset_fibonacciCubicEquation_Fibonacci_Fn_1 +
+    offset_fibonacciCubicEquation_Fibonacci_Fnm1_1;
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="609" type="init">  offset_fibonacciCubicEquation_Fibonacci_Add_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_Fibonacci_Fn" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_Add_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_Fibonacci_Fn_1" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_RateTransition3" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_RateTransition3_1" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_UnitDelay2" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_UnitDelay2_1" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_calcGoldenratio_Divide" type="data">
+          <var line="offset_fibonacciCubicEquation_calcGoldenratio_In1_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3" type="data">
+          <var line="offset_fibonacciCubicEquation_calcGoldenratio_In2_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_Fibonacci_Fn" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_Fn_1" mode="output" name="offset_fibonacciCubicEquation_Fibonacci_Fn_1" port="offset_fibonacciCubicEquation_Fibonacci_Fn_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_Fibonacci_Fnm1" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" mode="output" name="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" port="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="UnitDelay" id="4" name="offset_fibonacciCubicEquation_Fibonacci_Fn" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_Fibonacci_Fn_1">
+          <connect block="offset_fibonacciCubicEquation_Fibonacci_Add" port="offset_fibonacciCubicEquation_Fibonacci_Add_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_Fibonacci_Fn_1" port="offset_fibonacciCubicEquation_Fibonacci_Fn_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_Fibonacci_Add" port="offset_fibonacciCubicEquation_Fibonacci_Add_1"/>
+          <connect block="offset_fibonacciCubicEquation_Fibonacci_Fnm1" port="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_Fibonacci_Fn_1" mode="output" name="offset_fibonacciCubicEquation_Fibonacci_Fn_1" port="offset_fibonacciCubicEquation_Fibonacci_Fn_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_Fibonacci_Add_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_Fibonacci_Fn_1" type="real_T"/>
+        <state name="Fn_DSTATE" storage="offset_fibonacciCubicEquatio_DW" type="real_T"/>
+        <param name="Fn_InitialCondition" storage="offset_fibonacciCubicEquation_P" type="real_T" value="1.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="24" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;S1&gt;/Fn'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="193" type="task">  /* UnitDelay: '&lt;S1&gt;/Fn' */
+  offset_fibonacciCubicEquation_Fibonacci_Fn_1 =
+    offset_fibonacciCubicEquatio_DW.Fn_DSTATE;
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="543" type="update">  /* Update for UnitDelay: '&lt;S1&gt;/Fn' */
+  offset_fibonacciCubicEquatio_DW.Fn_DSTATE =
+    offset_fibonacciCubicEquation_Fibonacci_Add_1;
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="607" type="init">  offset_fibonacciCubicEquation_Fibonacci_Fn_1 = 0.0;
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="661" type="state">  /* InitializeConditions for UnitDelay: '&lt;S1&gt;/Fn' */
+  offset_fibonacciCubicEquatio_DW.Fn_DSTATE =
+    offset_fibonacciCubicEquation_P.Fn_InitialCondition;
+
+</code>
+        <forward block="offset_fibonacciCubicEquation_Fibonacci_Add" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_Fn_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Fn_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_1" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_Fibonacci_Fnm1" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_Fn_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Fn_1" port="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_Fibonacci_Add" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_Add_1" mode="output" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="UnitDelay" id="5" name="offset_fibonacciCubicEquation_Fibonacci_Fnm1" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_Fibonacci_Fn_1" port="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1">
+          <connect block="offset_fibonacciCubicEquation_Fibonacci_Fn" port="offset_fibonacciCubicEquation_Fibonacci_Fn_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" port="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_Fibonacci_Add" port="offset_fibonacciCubicEquation_Fibonacci_Add_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" mode="output" name="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" port="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_Fibonacci_Fn_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Fn_1" port="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" type="real_T"/>
+        <state name="Fnm1_DSTATE" storage="offset_fibonacciCubicEquatio_DW" type="real_T"/>
+        <param name="Fnm1_InitialCondition" storage="offset_fibonacciCubicEquation_P" type="real_T" value="0.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="27" type="param">  0.0,                                 /* Expression: 0
+                                        * Referenced by: '&lt;S1&gt;/Fnm1'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="197" type="task">  /* UnitDelay: '&lt;S1&gt;/Fnm1' */
+  offset_fibonacciCubicEquation_Fibonacci_Fnm1_1 =
+    offset_fibonacciCubicEquatio_DW.Fnm1_DSTATE;
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="547" type="update">  /* Update for UnitDelay: '&lt;S1&gt;/Fnm1' */
+  offset_fibonacciCubicEquatio_DW.Fnm1_DSTATE =
+    offset_fibonacciCubicEquation_Fibonacci_Fn_1;
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="608" type="init">  offset_fibonacciCubicEquation_Fibonacci_Fnm1_1 = 0.0;
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="665" type="state">  /* InitializeConditions for UnitDelay: '&lt;S1&gt;/Fnm1' */
+  offset_fibonacciCubicEquatio_DW.Fnm1_DSTATE =
+    offset_fibonacciCubicEquation_P.Fnm1_InitialCondition;
+
+</code>
+        <forward block="offset_fibonacciCubicEquation_Fibonacci_Add" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Fnm1_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_2" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_Fibonacci_Fn" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_Fn_1" mode="output" name="offset_fibonacciCubicEquation_Fibonacci_Fn_1" port="offset_fibonacciCubicEquation_Fibonacci_Fn_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Outport" id="6" name="offset_fibonacciCubicEquation_Fibonacci_Out1" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_Fibonacci_Out1_1">
+          <connect block="offset_fibonacciCubicEquation_Fibonacci_Add" port="offset_fibonacciCubicEquation_Fibonacci_Add_1"/>
+        </input>
+      </block>
+    </SM:blocks>
+  </block>
+  <block blocktype="RateTransition" id="7" name="offset_fibonacciCubicEquation_RateTransition" peinfo="0" rate="1">
+    <input line="offset_fibonacciCubicEquation_UnitDelay_1" port="offset_fibonacciCubicEquation_RateTransition_1">
+      <connect block="offset_fibonacciCubicEquation_UnitDelay" port="offset_fibonacciCubicEquation_UnitDelay_1"/>
+    </input>
+    <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_RateTransition_1" usename="true">
+      <connect block="offset_fibonacciCubicEquation_solvedCubicEquation" port="offset_fibonacciCubicEquation_solvedCubicEquation_a"/>
+    </output>
+    <var line="offset_fibonacciCubicEquation_RateTransition_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_RateTransition_1" type="real_T"/>
+    <var line="offset_fibonacciCubicEquation_UnitDelay_1" mode="input" name="offset_fibonacciCubicEquation_UnitDelay_1" port="offset_fibonacciCubicEquation_RateTransition_1" type="real_T"/>
+    <state name="RateTransition_Buffer0" storage="offset_fibonacciCubicEquatio_DW" type="real_T"/>
+    <state name="RateTransition_semaphoreTaken" storage="offset_fibonacciCubicEquatio_DW" type="int8_T"/>
+    <code file="offset_fibonacciCubicEquation.c" line="173" type="task">  /* RateTransition: '&lt;Root&gt;/RateTransition' */
+  if (!(offset_fibonacciCubicEquatio_DW.RateTransition_semaphoreTaken != 0)) {
+    offset_fibonacciCubicEquatio_DW.RateTransition_Buffer0 =
+      offset_fibonacciCubicEquation_UnitDelay_1;
+  }
+
+/*&lt;&lt;&lt; S 1 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 1 none &gt;&gt;&gt;*/
+    offset_fibonacciCubicEquatio_DW.RateTransition_semaphoreTaken = 1;
+    offset_fibonacciCubicEquation_RateTransition_1 =
+      offset_fibonacciCubicEquatio_DW.RateTransition_Buffer0;
+    offset_fibonacciCubicEquatio_DW.RateTransition_semaphoreTaken = 0;
+
+/*&lt;&lt;&lt; E 1 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 1 none &gt;&gt;&gt;*/
+  /* End of RateTransition: '&lt;Root&gt;/RateTransition' */
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="605" type="init">  offset_fibonacciCubicEquation_RateTransition_1 = 0.0;
+</code>
+    <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_3a" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" type="real_T"/>
+    </forward>
+    <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_a2" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2_2" type="real_T"/>
+    </forward>
+    <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_abc" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" type="real_T"/>
+    </forward>
+    <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_ac" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" type="real_T"/>
+    </forward>
+    <backward block="offset_fibonacciCubicEquation_UnitDelay" type="data">
+      <var line="offset_fibonacciCubicEquation_UnitDelay_1" mode="output" name="offset_fibonacciCubicEquation_UnitDelay_1" port="offset_fibonacciCubicEquation_UnitDelay_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="RateTransition" id="8" name="offset_fibonacciCubicEquation_RateTransition1" peinfo="0" rate="1">
+    <input line="offset_fibonacciCubicEquation_UnitDelay1_1" port="offset_fibonacciCubicEquation_RateTransition1_1">
+      <connect block="offset_fibonacciCubicEquation_UnitDelay1" port="offset_fibonacciCubicEquation_UnitDelay1_1"/>
+    </input>
+    <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_RateTransition1_1" usename="true">
+      <connect block="offset_fibonacciCubicEquation_solvedCubicEquation" port="offset_fibonacciCubicEquation_solvedCubicEquation_b"/>
+    </output>
+    <var line="offset_fibonacciCubicEquation_RateTransition1_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_RateTransition1_1" type="real_T"/>
+    <var line="offset_fibonacciCubicEquation_UnitDelay1_1" mode="input" name="offset_fibonacciCubicEquation_UnitDelay1_1" port="offset_fibonacciCubicEquation_RateTransition1_1" type="real_T"/>
+    <state name="RateTransition1_Buffer0" storage="offset_fibonacciCubicEquatio_DW" type="real_T"/>
+    <state name="RateTransition1_semaphoreTaken" storage="offset_fibonacciCubicEquatio_DW" type="int8_T"/>
+    <code file="offset_fibonacciCubicEquation.c" line="238" type="task">  /* RateTransition: '&lt;Root&gt;/RateTransition1' */
+  if (!(offset_fibonacciCubicEquatio_DW.RateTransition1_semaphoreTaken != 0)) {
+    offset_fibonacciCubicEquatio_DW.RateTransition1_Buffer0 =
+      offset_fibonacciCubicEquation_UnitDelay1_1;
+  }
+
+/*&lt;&lt;&lt; S 9 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 9 none &gt;&gt;&gt;*/
+    offset_fibonacciCubicEquatio_DW.RateTransition1_semaphoreTaken = 1;
+    offset_fibonacciCubicEquation_RateTransition1_1 =
+      offset_fibonacciCubicEquatio_DW.RateTransition1_Buffer0;
+    offset_fibonacciCubicEquatio_DW.RateTransition1_semaphoreTaken = 0;
+/*&lt;&lt;&lt; E 9 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 9 none &gt;&gt;&gt;*/
+  /* End of RateTransition: '&lt;Root&gt;/RateTransition1' */
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="614" type="init">  offset_fibonacciCubicEquation_RateTransition1_1 = 0.0;
+</code>
+    <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_3koume" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" type="real_T"/>
+    </forward>
+    <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_abc" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_2" type="real_T"/>
+    </forward>
+    <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_b2" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b2_2" type="real_T"/>
+    </forward>
+    <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_b3" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_3" type="real_T"/>
+    </forward>
+    <backward block="offset_fibonacciCubicEquation_UnitDelay1" type="data">
+      <var line="offset_fibonacciCubicEquation_UnitDelay1_1" mode="output" name="offset_fibonacciCubicEquation_UnitDelay1_1" port="offset_fibonacciCubicEquation_UnitDelay1_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="RateTransition" id="9" name="offset_fibonacciCubicEquation_RateTransition2" peinfo="0" rate="1">
+    <input line="offset_fibonacciCubicEquation_UnitDelay2_1" port="offset_fibonacciCubicEquation_RateTransition2_1">
+      <connect block="offset_fibonacciCubicEquation_UnitDelay2" port="offset_fibonacciCubicEquation_UnitDelay2_1"/>
+    </input>
+    <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_RateTransition2_1" port="offset_fibonacciCubicEquation_RateTransition2_1" usename="true">
+      <connect block="offset_fibonacciCubicEquation_solvedCubicEquation" port="offset_fibonacciCubicEquation_solvedCubicEquation_c"/>
+    </output>
+    <var line="offset_fibonacciCubicEquation_RateTransition2_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition2_1" port="offset_fibonacciCubicEquation_RateTransition2_1" type="real_T"/>
+    <var line="offset_fibonacciCubicEquation_UnitDelay2_1" mode="input" name="offset_fibonacciCubicEquation_UnitDelay2_1" port="offset_fibonacciCubicEquation_RateTransition2_1" type="real_T"/>
+    <state name="RateTransition2_Buffer0" storage="offset_fibonacciCubicEquatio_DW" type="real_T"/>
+    <state name="RateTransition2_semaphoreTaken" storage="offset_fibonacciCubicEquatio_DW" type="int8_T"/>
+    <code file="offset_fibonacciCubicEquation.c" line="257" type="task">  /* RateTransition: '&lt;Root&gt;/RateTransition2' */
+  if (!(offset_fibonacciCubicEquatio_DW.RateTransition2_semaphoreTaken != 0)) {
+    offset_fibonacciCubicEquatio_DW.RateTransition2_Buffer0 =
+      offset_fibonacciCubicEquation_UnitDelay2_1;
+  }
+
+/*&lt;&lt;&lt; S 11 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 11 none &gt;&gt;&gt;*/
+    offset_fibonacciCubicEquatio_DW.RateTransition2_semaphoreTaken = 1;
+    offset_fibonacciCubicEquation_RateTransition2_1 =
+      offset_fibonacciCubicEquatio_DW.RateTransition2_Buffer0;
+    offset_fibonacciCubicEquatio_DW.RateTransition2_semaphoreTaken = 0;
+
+/*&lt;&lt;&lt; E 11 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 11 none &gt;&gt;&gt;*/
+  /* End of RateTransition: '&lt;Root&gt;/RateTransition2' */
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="616" type="init">  offset_fibonacciCubicEquation_RateTransition2_1 = 0.0;
+</code>
+    <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_abc" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_c_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_3" type="real_T"/>
+    </forward>
+    <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_ac" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_c_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_2" type="real_T"/>
+    </forward>
+    <backward block="offset_fibonacciCubicEquation_UnitDelay2" type="data">
+      <var line="offset_fibonacciCubicEquation_UnitDelay2_1" mode="output" name="offset_fibonacciCubicEquation_UnitDelay2_1" port="offset_fibonacciCubicEquation_UnitDelay2_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="RateTransition" id="10" name="offset_fibonacciCubicEquation_RateTransition3" peinfo="0" rate="1">
+    <input line="offset_fibonacciCubicEquation_Fibonacci_1" port="offset_fibonacciCubicEquation_RateTransition3_1">
+      <connect block="offset_fibonacciCubicEquation_Fibonacci" port="offset_fibonacciCubicEquation_Fibonacci_Out1"/>
+    </input>
+    <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_RateTransition3_1" port="offset_fibonacciCubicEquation_RateTransition3_1" usename="true">
+      <connect block="offset_fibonacciCubicEquation_solvedCubicEquation" port="offset_fibonacciCubicEquation_solvedCubicEquation_d"/>
+    </output>
+    <var line="offset_fibonacciCubicEquation_RateTransition3_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition3_1" port="offset_fibonacciCubicEquation_RateTransition3_1" type="real_T"/>
+    <var line="offset_fibonacciCubicEquation_Fibonacci_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_RateTransition3_1" type="real_T"/>
+    <state name="RateTransition3_Buffer0" storage="offset_fibonacciCubicEquatio_DW" type="real_T"/>
+    <state name="RateTransition3_semaphoreTaken" storage="offset_fibonacciCubicEquatio_DW" type="int8_T"/>
+    <code file="offset_fibonacciCubicEquation.c" line="206" type="task">  /* RateTransition: '&lt;Root&gt;/RateTransition3' */
+  if (!(offset_fibonacciCubicEquatio_DW.RateTransition3_semaphoreTaken != 0)) {
+    offset_fibonacciCubicEquatio_DW.RateTransition3_Buffer0 =
+      offset_fibonacciCubicEquation_Fibonacci_Add_1;
+  }
+
+/*&lt;&lt;&lt; S 3 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 3 none &gt;&gt;&gt;*/
+    offset_fibonacciCubicEquatio_DW.RateTransition3_semaphoreTaken = 1;
+    offset_fibonacciCubicEquation_RateTransition3_1 =
+      offset_fibonacciCubicEquatio_DW.RateTransition3_Buffer0;
+    offset_fibonacciCubicEquatio_DW.RateTransition3_semaphoreTaken = 0;
+/*&lt;&lt;&lt; E 3 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 3 none &gt;&gt;&gt;*/
+  /* End of RateTransition: '&lt;Root&gt;/RateTransition3' */
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="610" type="init">  offset_fibonacciCubicEquation_RateTransition3_1 = 0.0;
+</code>
+    <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_a2d" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_d_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_2" type="real_T"/>
+    </forward>
+    <backward block="offset_fibonacciCubicEquation_Fibonacci_Add" type="data">
+      <var line="offset_fibonacciCubicEquation_Fibonacci_Add_1" mode="output" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="RateTransition" id="11" name="offset_fibonacciCubicEquation_RateTransition4" peinfo="1" rate="[4,3]">
+    <input line="offset_fibonacciCubicEquation_solvedCubicEquation_1" port="offset_fibonacciCubicEquation_RateTransition4_1">
+      <connect block="offset_fibonacciCubicEquation_solvedCubicEquation" port="offset_fibonacciCubicEquation_solvedCubicEquation_kai"/>
+    </input>
+    <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_RateTransition4_1" port="offset_fibonacciCubicEquation_RateTransition4_1" usename="true">
+      <connect block="offset_fibonacciCubicEquation_result" port="offset_fibonacciCubicEquation_result_kai"/>
+    </output>
+    <var line="offset_fibonacciCubicEquation_RateTransition4_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition4_1" port="offset_fibonacciCubicEquation_RateTransition4_1" type="real_T"/>
+    <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" port="offset_fibonacciCubicEquation_RateTransition4_1" type="real_T"/>
+    <state name="RateTransition4_Buffer" size="2" storage="offset_fibonacciCubicEquatio_DW" type="real_T"/>
+    <state name="RateTransition4_ActiveBufIdx" storage="offset_fibonacciCubicEquatio_DW" type="int8_T"/>
+    <param name="RateTransition4_X0" storage="offset_fibonacciCubicEquation_P" type="real_T" value="-4.0">
+      <initcode file="offset_fibonacciCubicEquation_data.c" line="69" type="param">  -4.0,                                /* Expression: -4
+                                        * Referenced by: '&lt;Root&gt;/RateTransition4'
+                                        */
+</initcode>
+    </param>
+    <code file="offset_fibonacciCubicEquation.c" line="475" type="task">  /* RateTransition: '&lt;Root&gt;/RateTransition4' */
+  offset_fibonacciCubicEquation_RateTransition4_1 =
+    offset_fibonacciCubicEquatio_DW.RateTransition4_Buffer[offset_fibonacciCubicEquatio_DW.RateTransition4_ActiveBufIdx];
+
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="559" type="update">  /* Update for RateTransition: '&lt;Root&gt;/RateTransition4' */
+/*&lt;&lt;&lt; S 49 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4] == 0) {
+/*&gt;&gt;&gt; S 49 none &gt;&gt;&gt;*/
+    offset_fibonacciCubicEquatio_DW.RateTransition4_Buffer[offset_fibonacciCubicEquatio_DW.RateTransition4_ActiveBufIdx
+      == 0] = offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1;
+    offset_fibonacciCubicEquatio_DW.RateTransition4_ActiveBufIdx = (int8_T)
+      (offset_fibonacciCubicEquatio_DW.RateTransition4_ActiveBufIdx == 0);
+/*&lt;&lt;&lt; E 49 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 49 none &gt;&gt;&gt;*/
+  /* End of Update for RateTransition: '&lt;Root&gt;/RateTransition4' */
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="643" type="init">  offset_fibonacciCubicEquation_RateTransition4_1 = 0.0;
+  /* InitializeConditions for RateTransition: '&lt;Root&gt;/RateTransition4' */
+  offset_fibonacciCubicEquatio_DW.RateTransition4_Buffer[0] =
+    offset_fibonacciCubicEquation_P.RateTransition4_X0;
+
+</code>
+    <forward block="offset_fibonacciCubicEquation_result_Gain2" type="data">
+      <var line="offset_fibonacciCubicEquation_result_kai_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition4_1" port="offset_fibonacciCubicEquation_result_Gain2_1" type="real_T"/>
+    </forward>
+    <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai" type="data">
+      <var line="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="UnitDelay" id="12" name="offset_fibonacciCubicEquation_UnitDelay" peinfo="0" rate="1">
+    <input line="offset_fibonacciCubicEquation_UnitDelay1_1" port="offset_fibonacciCubicEquation_UnitDelay_1">
+      <connect block="offset_fibonacciCubicEquation_UnitDelay1" port="offset_fibonacciCubicEquation_UnitDelay1_1"/>
+    </input>
+    <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_UnitDelay_1" port="offset_fibonacciCubicEquation_UnitDelay_1" usename="true">
+      <connect block="offset_fibonacciCubicEquation_RateTransition" port="offset_fibonacciCubicEquation_RateTransition_1"/>
+    </output>
+    <var line="offset_fibonacciCubicEquation_UnitDelay_1" mode="output" name="offset_fibonacciCubicEquation_UnitDelay_1" port="offset_fibonacciCubicEquation_UnitDelay_1" type="real_T"/>
+    <var line="offset_fibonacciCubicEquation_UnitDelay1_1" mode="input" name="offset_fibonacciCubicEquation_UnitDelay1_1" port="offset_fibonacciCubicEquation_UnitDelay_1" type="real_T"/>
+    <state name="UnitDelay_DSTATE" storage="offset_fibonacciCubicEquatio_DW" type="real_T"/>
+    <param name="UnitDelay_InitialCondition" storage="offset_fibonacciCubicEquation_P" type="real_T" value="1.0">
+      <initcode file="offset_fibonacciCubicEquation_data.c" line="21" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/UnitDelay'
+                                        */
+</initcode>
+    </param>
+    <code file="offset_fibonacciCubicEquation.c" line="169" type="task">  /* UnitDelay: '&lt;Root&gt;/UnitDelay' */
+  offset_fibonacciCubicEquation_UnitDelay_1 =
+    offset_fibonacciCubicEquatio_DW.UnitDelay_DSTATE;
+
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="539" type="update">  /* Update for UnitDelay: '&lt;Root&gt;/UnitDelay' */
+  offset_fibonacciCubicEquatio_DW.UnitDelay_DSTATE =
+    offset_fibonacciCubicEquation_UnitDelay1_1;
+
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="604" type="init">  offset_fibonacciCubicEquation_UnitDelay_1 = 0.0;
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="657" type="state">  /* InitializeConditions for UnitDelay: '&lt;Root&gt;/UnitDelay' */
+  offset_fibonacciCubicEquatio_DW.UnitDelay_DSTATE =
+    offset_fibonacciCubicEquation_P.UnitDelay_InitialCondition;
+
+</code>
+    <forward block="offset_fibonacciCubicEquation_RateTransition" type="data">
+      <var line="offset_fibonacciCubicEquation_UnitDelay_1" mode="input" name="offset_fibonacciCubicEquation_UnitDelay_1" port="offset_fibonacciCubicEquation_RateTransition_1" type="real_T"/>
+    </forward>
+    <backward block="offset_fibonacciCubicEquation_UnitDelay1" type="data">
+      <var line="offset_fibonacciCubicEquation_UnitDelay1_1" mode="output" name="offset_fibonacciCubicEquation_UnitDelay1_1" port="offset_fibonacciCubicEquation_UnitDelay1_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="UnitDelay" id="13" name="offset_fibonacciCubicEquation_UnitDelay1" peinfo="0" rate="1">
+    <input line="offset_fibonacciCubicEquation_UnitDelay2_1" port="offset_fibonacciCubicEquation_UnitDelay1_1">
+      <connect block="offset_fibonacciCubicEquation_UnitDelay2" port="offset_fibonacciCubicEquation_UnitDelay2_1"/>
+    </input>
+    <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_UnitDelay1_1" port="offset_fibonacciCubicEquation_UnitDelay1_1" usename="true">
+      <connect block="offset_fibonacciCubicEquation_RateTransition1" port="offset_fibonacciCubicEquation_RateTransition1_1"/>
+      <connect block="offset_fibonacciCubicEquation_UnitDelay" port="offset_fibonacciCubicEquation_UnitDelay_1"/>
+    </output>
+    <var line="offset_fibonacciCubicEquation_UnitDelay1_1" mode="output" name="offset_fibonacciCubicEquation_UnitDelay1_1" port="offset_fibonacciCubicEquation_UnitDelay1_1" type="real_T"/>
+    <var line="offset_fibonacciCubicEquation_UnitDelay2_1" mode="input" name="offset_fibonacciCubicEquation_UnitDelay2_1" port="offset_fibonacciCubicEquation_UnitDelay1_1" type="real_T"/>
+    <state name="UnitDelay1_DSTATE" storage="offset_fibonacciCubicEquatio_DW" type="real_T"/>
+    <param name="UnitDelay1_InitialCondition" storage="offset_fibonacciCubicEquation_P" type="real_T" value="1.0">
+      <initcode file="offset_fibonacciCubicEquation_data.c" line="33" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/UnitDelay1'
+                                        */
+</initcode>
+    </param>
+    <code file="offset_fibonacciCubicEquation.c" line="234" type="task">  /* UnitDelay: '&lt;Root&gt;/UnitDelay1' */
+  offset_fibonacciCubicEquation_UnitDelay1_1 =
+    offset_fibonacciCubicEquatio_DW.UnitDelay1_DSTATE;
+
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="551" type="update">  /* Update for UnitDelay: '&lt;Root&gt;/UnitDelay1' */
+  offset_fibonacciCubicEquatio_DW.UnitDelay1_DSTATE =
+    offset_fibonacciCubicEquation_UnitDelay2_1;
+
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="613" type="init">  offset_fibonacciCubicEquation_UnitDelay1_1 = 0.0;
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="669" type="state">  /* InitializeConditions for UnitDelay: '&lt;Root&gt;/UnitDelay1' */
+  offset_fibonacciCubicEquatio_DW.UnitDelay1_DSTATE =
+    offset_fibonacciCubicEquation_P.UnitDelay1_InitialCondition;
+
+</code>
+    <forward block="offset_fibonacciCubicEquation_RateTransition1" type="data">
+      <var line="offset_fibonacciCubicEquation_UnitDelay1_1" mode="input" name="offset_fibonacciCubicEquation_UnitDelay1_1" port="offset_fibonacciCubicEquation_RateTransition1_1" type="real_T"/>
+    </forward>
+    <forward block="offset_fibonacciCubicEquation_UnitDelay" type="data">
+      <var line="offset_fibonacciCubicEquation_UnitDelay1_1" mode="input" name="offset_fibonacciCubicEquation_UnitDelay1_1" port="offset_fibonacciCubicEquation_UnitDelay_1" type="real_T"/>
+    </forward>
+    <backward block="offset_fibonacciCubicEquation_UnitDelay2" type="data">
+      <var line="offset_fibonacciCubicEquation_UnitDelay2_1" mode="output" name="offset_fibonacciCubicEquation_UnitDelay2_1" port="offset_fibonacciCubicEquation_UnitDelay2_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="UnitDelay" id="14" name="offset_fibonacciCubicEquation_UnitDelay2" peinfo="0" rate="1">
+    <input line="offset_fibonacciCubicEquation_Fibonacci_1" port="offset_fibonacciCubicEquation_UnitDelay2_1">
+      <connect block="offset_fibonacciCubicEquation_Fibonacci" port="offset_fibonacciCubicEquation_Fibonacci_Out1"/>
+    </input>
+    <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_UnitDelay2_1" port="offset_fibonacciCubicEquation_UnitDelay2_1" usename="true">
+      <connect block="offset_fibonacciCubicEquation_RateTransition2" port="offset_fibonacciCubicEquation_RateTransition2_1"/>
+      <connect block="offset_fibonacciCubicEquation_UnitDelay1" port="offset_fibonacciCubicEquation_UnitDelay1_1"/>
+    </output>
+    <var line="offset_fibonacciCubicEquation_UnitDelay2_1" mode="output" name="offset_fibonacciCubicEquation_UnitDelay2_1" port="offset_fibonacciCubicEquation_UnitDelay2_1" type="real_T"/>
+    <var line="offset_fibonacciCubicEquation_Fibonacci_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_UnitDelay2_1" type="real_T"/>
+    <state name="UnitDelay2_DSTATE" storage="offset_fibonacciCubicEquatio_DW" type="real_T"/>
+    <param name="UnitDelay2_InitialCondition" storage="offset_fibonacciCubicEquation_P" type="real_T" value="2.0">
+      <initcode file="offset_fibonacciCubicEquation_data.c" line="36" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/UnitDelay2'
+                                        */
+</initcode>
+    </param>
+    <code file="offset_fibonacciCubicEquation.c" line="253" type="task">  /* UnitDelay: '&lt;Root&gt;/UnitDelay2' */
+  offset_fibonacciCubicEquation_UnitDelay2_1 =
+    offset_fibonacciCubicEquatio_DW.UnitDelay2_DSTATE;
+
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="555" type="update">  /* Update for UnitDelay: '&lt;Root&gt;/UnitDelay2' */
+  offset_fibonacciCubicEquatio_DW.UnitDelay2_DSTATE =
+    offset_fibonacciCubicEquation_Fibonacci_Add_1;
+
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="615" type="init">  offset_fibonacciCubicEquation_UnitDelay2_1 = 0.0;
+</code>
+    <code file="offset_fibonacciCubicEquation.c" line="673" type="state">  /* InitializeConditions for UnitDelay: '&lt;Root&gt;/UnitDelay2' */
+  offset_fibonacciCubicEquatio_DW.UnitDelay2_DSTATE =
+    offset_fibonacciCubicEquation_P.UnitDelay2_InitialCondition;
+
+</code>
+    <forward block="offset_fibonacciCubicEquation_RateTransition2" type="data">
+      <var line="offset_fibonacciCubicEquation_UnitDelay2_1" mode="input" name="offset_fibonacciCubicEquation_UnitDelay2_1" port="offset_fibonacciCubicEquation_RateTransition2_1" type="real_T"/>
+    </forward>
+    <forward block="offset_fibonacciCubicEquation_UnitDelay1" type="data">
+      <var line="offset_fibonacciCubicEquation_UnitDelay2_1" mode="input" name="offset_fibonacciCubicEquation_UnitDelay2_1" port="offset_fibonacciCubicEquation_UnitDelay1_1" type="real_T"/>
+    </forward>
+    <backward block="offset_fibonacciCubicEquation_Fibonacci_Add" type="data">
+      <var line="offset_fibonacciCubicEquation_Fibonacci_Add_1" mode="output" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="SubSystem" id="15" name="offset_fibonacciCubicEquation_calcGoldenratio" peinfo="0" rate="1">
+    <input line="offset_fibonacciCubicEquation_Fibonacci_1" port="offset_fibonacciCubicEquation_calcGoldenratio_In1">
+      <connect block="offset_fibonacciCubicEquation_Fibonacci" port="offset_fibonacciCubicEquation_Fibonacci_Out1"/>
+    </input>
+    <input line="offset_fibonacciCubicEquation_Fibonacci_1" port="offset_fibonacciCubicEquation_calcGoldenratio_In2">
+      <connect block="offset_fibonacciCubicEquation_Fibonacci" port="offset_fibonacciCubicEquation_Fibonacci_Out1"/>
+    </input>
+    <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_calcGoldenratio_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Out1" usename="false">
+      <connect block="offset_fibonacciCubicEquation_result" port="offset_fibonacciCubicEquation_result_FnwaruFnm1"/>
+    </output>
+    <SM:blocks>
+      <block blocktype="Inport" id="16" name="offset_fibonacciCubicEquation_calcGoldenratio_In1" peinfo="0" rate="1">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_calcGoldenratio_In1_1" port="offset_fibonacciCubicEquation_calcGoldenratio_In1_1" usename="false">
+          <connect block="offset_fibonacciCubicEquation_calcGoldenratio_Divide" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1"/>
+        </output>
+      </block>
+      <block blocktype="Inport" id="17" name="offset_fibonacciCubicEquation_calcGoldenratio_In2" peinfo="0" rate="1">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_calcGoldenratio_In2_1" port="offset_fibonacciCubicEquation_calcGoldenratio_In2_1" usename="false">
+          <connect block="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3" port="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1"/>
+        </output>
+      </block>
+      <block blocktype="Product" id="18" name="offset_fibonacciCubicEquation_calcGoldenratio_Divide" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_calcGoldenratio_In1_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1">
+          <connect block="offset_fibonacciCubicEquation_calcGoldenratio_In1" port="offset_fibonacciCubicEquation_calcGoldenratio_In1_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_2">
+          <connect block="offset_fibonacciCubicEquation_calcGoldenratio_Saturation" port="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_calcGoldenratio_Out1" port="offset_fibonacciCubicEquation_calcGoldenratio_Out1_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" mode="output" name="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_calcGoldenratio_In1_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" mode="input" name="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_2" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="518" type="task">  /* Product: '&lt;S2&gt;/Divide' */
+  offset_fibonacciCubicEquation_calcGoldenratio_Divide_1 =
+    offset_fibonacciCubicEquation_Fibonacci_Add_1 /
+    offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1;
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="649" type="init">  offset_fibonacciCubicEquation_calcGoldenratio_Divide_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_result_Subtract1" type="data">
+          <var line="offset_fibonacciCubicEquation_result_FnwaruFnm1_1" mode="input" name="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" port="offset_fibonacciCubicEquation_result_Subtract1_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_Fibonacci_Add" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_Add_1" mode="output" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_calcGoldenratio_Saturation" type="data">
+          <var line="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" mode="output" name="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Saturate" id="19" name="offset_fibonacciCubicEquation_calcGoldenratio_Saturation" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1">
+          <connect block="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3" port="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_calcGoldenratio_Divide" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" mode="output" name="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" mode="input" name="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" type="real_T"/>
+        <param name="Saturation_UpperSat" storage="offset_fibonacciCubicEquation_P" type="real_T" value="0.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="84" type="param">  0.0,                                 /* Expression: inf
+                                        * Referenced by: '&lt;S2&gt;/Saturation'
+                                        */
+</initcode>
+        </param>
+        <param name="Saturation_LowerSat" storage="offset_fibonacciCubicEquation_P" type="real_T" value="1.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="87" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;S2&gt;/Saturation'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="504" type="task">  /* Saturate: '&lt;S2&gt;/Saturation' */
+  u0 = offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1;
+  u1 = offset_fibonacciCubicEquation_P.Saturation_LowerSat;
+  u2 = offset_fibonacciCubicEquation_P.Saturation_UpperSat;
+  if (u0 &gt; u2) {
+    offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1 = u2;
+  } else if (u0 &lt; u1) {
+    offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1 = u1;
+  } else {
+    offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1 = u0;
+  }
+
+  /* End of Saturate: '&lt;S2&gt;/Saturation' */
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="584" type="init">  offset_fibonacciCubicEquation_P.Saturation_UpperSat = rtInf;
+
+  offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_calcGoldenratio_Divide" type="data">
+          <var line="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" mode="input" name="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_2" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3" type="data">
+          <var line="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" mode="output" name="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" port="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="UnitDelay" id="20" name="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_calcGoldenratio_In2_1" port="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1">
+          <connect block="offset_fibonacciCubicEquation_calcGoldenratio_In2" port="offset_fibonacciCubicEquation_calcGoldenratio_In2_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" port="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_calcGoldenratio_Saturation" port="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" mode="output" name="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" port="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_calcGoldenratio_In2_1" mode="input" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" type="real_T"/>
+        <state name="UnitDelay3_DSTATE" storage="offset_fibonacciCubicEquatio_DW" type="real_T"/>
+        <param name="UnitDelay3_InitialCondition" storage="offset_fibonacciCubicEquation_P" type="real_T" value="0.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="81" type="param">  0.0,                                 /* Expression: 0
+                                        * Referenced by: '&lt;S2&gt;/UnitDelay3'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="500" type="task">  /* UnitDelay: '&lt;S2&gt;/UnitDelay3' */
+  offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1 =
+    offset_fibonacciCubicEquatio_DW.UnitDelay3_DSTATE;
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="569" type="update">  /* Update for UnitDelay: '&lt;S2&gt;/UnitDelay3' */
+  offset_fibonacciCubicEquatio_DW.UnitDelay3_DSTATE =
+    offset_fibonacciCubicEquation_Fibonacci_Add_1;
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="647" type="init">  offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1 = 0.0;
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="681" type="state">  /* InitializeConditions for UnitDelay: '&lt;S2&gt;/UnitDelay3' */
+  offset_fibonacciCubicEquatio_DW.UnitDelay3_DSTATE =
+    offset_fibonacciCubicEquation_P.UnitDelay3_InitialCondition;
+</code>
+        <forward block="offset_fibonacciCubicEquation_calcGoldenratio_Saturation" type="data">
+          <var line="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" mode="input" name="offset_fibonacciCubicEquation_calcGoldenratio_UnitDelay3_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Saturation_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_Fibonacci_Add" type="data">
+          <var line="offset_fibonacciCubicEquation_Fibonacci_Add_1" mode="output" name="offset_fibonacciCubicEquation_Fibonacci_Add_1" port="offset_fibonacciCubicEquation_Fibonacci_Add_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Outport" id="21" name="offset_fibonacciCubicEquation_calcGoldenratio_Out1" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Out1_1">
+          <connect block="offset_fibonacciCubicEquation_calcGoldenratio_Divide" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1"/>
+        </input>
+      </block>
+    </SM:blocks>
+  </block>
+  <block blocktype="SubSystem" id="22" name="offset_fibonacciCubicEquation_result" peinfo="0" rate="1">
+    <input line="offset_fibonacciCubicEquation_RateTransition4_1" port="offset_fibonacciCubicEquation_result_kai">
+      <connect block="offset_fibonacciCubicEquation_RateTransition4" port="offset_fibonacciCubicEquation_RateTransition4_1"/>
+    </input>
+    <input line="offset_fibonacciCubicEquation_calcGoldenratio_1" port="offset_fibonacciCubicEquation_result_FnwaruFnm1">
+      <connect block="offset_fibonacciCubicEquation_calcGoldenratio" port="offset_fibonacciCubicEquation_calcGoldenratio_Out1"/>
+    </input>
+    <SM:blocks>
+      <block blocktype="Inport" id="23" name="offset_fibonacciCubicEquation_result_kai" peinfo="0" rate="1">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_result_kai_1" port="offset_fibonacciCubicEquation_result_kai_1" usename="false">
+          <connect block="offset_fibonacciCubicEquation_result_Gain2" port="offset_fibonacciCubicEquation_result_Gain2_1"/>
+        </output>
+      </block>
+      <block blocktype="Inport" id="24" name="offset_fibonacciCubicEquation_result_FnwaruFnm1" peinfo="0" rate="1">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_result_FnwaruFnm1_1" port="offset_fibonacciCubicEquation_result_FnwaruFnm1_1" usename="false">
+          <connect block="offset_fibonacciCubicEquation_result_Subtract1" port="offset_fibonacciCubicEquation_result_Subtract1_1"/>
+        </output>
+      </block>
+      <block blocktype="Abs" id="25" name="offset_fibonacciCubicEquation_result_Abs" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_result_Subtract_1" port="offset_fibonacciCubicEquation_result_Abs_1">
+          <connect block="offset_fibonacciCubicEquation_result_Subtract" port="offset_fibonacciCubicEquation_result_Subtract_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_result_Abs_1" port="offset_fibonacciCubicEquation_result_Abs_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_result_Gain" port="offset_fibonacciCubicEquation_result_Gain_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_result_Abs_1" mode="output" name="offset_fibonacciCubicEquation_result_Abs_1" port="offset_fibonacciCubicEquation_result_Abs_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_result_Subtract_1" mode="input" name="offset_fibonacciCubicEquation_result_Subtract_1" port="offset_fibonacciCubicEquation_result_Abs_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="491" type="task">  /* Abs: '&lt;S3&gt;/Abs' */
+  offset_fibonacciCubicEquation_result_Abs_1 = fabs
+    (offset_fibonacciCubicEquation_result_Subtract_1);
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="646" type="init">  offset_fibonacciCubicEquation_result_Abs_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_result_Gain" type="data">
+          <var line="offset_fibonacciCubicEquation_result_Abs_1" mode="input" name="offset_fibonacciCubicEquation_result_Abs_1" port="offset_fibonacciCubicEquation_result_Gain_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_result_Subtract" type="data">
+          <var line="offset_fibonacciCubicEquation_result_Subtract_1" mode="output" name="offset_fibonacciCubicEquation_result_Subtract_1" port="offset_fibonacciCubicEquation_result_Subtract_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Abs" id="26" name="offset_fibonacciCubicEquation_result_Abs1" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_result_Subtract1_1" port="offset_fibonacciCubicEquation_result_Abs1_1">
+          <connect block="offset_fibonacciCubicEquation_result_Subtract1" port="offset_fibonacciCubicEquation_result_Subtract1_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_result_Abs1_1" port="offset_fibonacciCubicEquation_result_Abs1_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_result_Gain1" port="offset_fibonacciCubicEquation_result_Gain1_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_result_Abs1_1" mode="output" name="offset_fibonacciCubicEquation_result_Abs1_1" port="offset_fibonacciCubicEquation_result_Abs1_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_result_Subtract1_1" mode="input" name="offset_fibonacciCubicEquation_result_Subtract1_1" port="offset_fibonacciCubicEquation_result_Abs1_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="530" type="task">  /* Abs: '&lt;S3&gt;/Abs1' */
+  offset_fibonacciCubicEquation_result_Abs1_1 = fabs
+    (offset_fibonacciCubicEquation_result_Subtract1_1);
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="651" type="init">  offset_fibonacciCubicEquation_result_Abs1_1 = 0.0;
+
+</code>
+        <forward block="offset_fibonacciCubicEquation_result_Gain1" type="data">
+          <var line="offset_fibonacciCubicEquation_result_Abs1_1" mode="input" name="offset_fibonacciCubicEquation_result_Abs1_1" port="offset_fibonacciCubicEquation_result_Gain1_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_result_Subtract1" type="data">
+          <var line="offset_fibonacciCubicEquation_result_Subtract1_1" mode="output" name="offset_fibonacciCubicEquation_result_Subtract1_1" port="offset_fibonacciCubicEquation_result_Subtract1_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Gain" id="27" name="offset_fibonacciCubicEquation_result_Gain" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_result_Abs_1" port="offset_fibonacciCubicEquation_result_Gain_1">
+          <connect block="offset_fibonacciCubicEquation_result_Abs" port="offset_fibonacciCubicEquation_result_Abs_1"/>
+        </input>
+        <output dimensions="" line="" port="offset_fibonacciCubicEquation_result_Gain_1" type="none"/>
+        <var line="offset_fibonacciCubicEquation_result_Abs_1" mode="input" name="offset_fibonacciCubicEquation_result_Abs_1" port="offset_fibonacciCubicEquation_result_Gain_1" type="real_T"/>
+        <signal name="Gain" storage="offset_fibonacciCubicEquation_B" type="real_T"/>
+        <param name="Gain_Gain" storage="offset_fibonacciCubicEquation_P" type="real_T" value="0.61803398874989479">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="78" type="param">  0.61803398874989479,                 /* Expression: 2/(1+sqrt(5))
+                                        * Referenced by: '&lt;S3&gt;/Gain'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="495" type="task">  /* Gain: '&lt;S3&gt;/Gain' */
+  offset_fibonacciCubicEquation_B.Gain =
+    offset_fibonacciCubicEquation_P.Gain_Gain *
+    offset_fibonacciCubicEquation_result_Abs_1;
+
+</code>
+        <backward block="offset_fibonacciCubicEquation_result_Abs" type="data">
+          <var line="offset_fibonacciCubicEquation_result_Abs_1" mode="output" name="offset_fibonacciCubicEquation_result_Abs_1" port="offset_fibonacciCubicEquation_result_Abs_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Gain" id="28" name="offset_fibonacciCubicEquation_result_Gain1" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_result_Abs1_1" port="offset_fibonacciCubicEquation_result_Gain1_1">
+          <connect block="offset_fibonacciCubicEquation_result_Abs1" port="offset_fibonacciCubicEquation_result_Abs1_1"/>
+        </input>
+        <output dimensions="" line="" port="offset_fibonacciCubicEquation_result_Gain1_1" type="none"/>
+        <var line="offset_fibonacciCubicEquation_result_Abs1_1" mode="input" name="offset_fibonacciCubicEquation_result_Abs1_1" port="offset_fibonacciCubicEquation_result_Gain1_1" type="real_T"/>
+        <signal name="Gain1" storage="offset_fibonacciCubicEquation_B" type="real_T"/>
+        <param name="Gain1_Gain" storage="offset_fibonacciCubicEquation_P" type="real_T" value="0.61803398874989479">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="90" type="param">  0.61803398874989479                  /* Expression: 2/(1+sqrt(5))
+                                        * Referenced by: '&lt;S3&gt;/Gain1'
+                                        */,
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="534" type="task">  /* Gain: '&lt;S3&gt;/Gain1' */
+  offset_fibonacciCubicEquation_B.Gain1 =
+    offset_fibonacciCubicEquation_P.Gain1_Gain *
+    offset_fibonacciCubicEquation_result_Abs1_1;
+
+</code>
+        <backward block="offset_fibonacciCubicEquation_result_Abs1" type="data">
+          <var line="offset_fibonacciCubicEquation_result_Abs1_1" mode="output" name="offset_fibonacciCubicEquation_result_Abs1_1" port="offset_fibonacciCubicEquation_result_Abs1_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Gain" id="29" name="offset_fibonacciCubicEquation_result_Gain2" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_result_kai_1" port="offset_fibonacciCubicEquation_result_Gain2_1">
+          <connect block="offset_fibonacciCubicEquation_result_kai" port="offset_fibonacciCubicEquation_result_kai_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_result_Gain2_1" port="offset_fibonacciCubicEquation_result_Gain2_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_result_Subtract" port="offset_fibonacciCubicEquation_result_Subtract_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_result_Gain2_1" mode="output" name="offset_fibonacciCubicEquation_result_Gain2_1" port="offset_fibonacciCubicEquation_result_Gain2_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_result_kai_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition4_1" port="offset_fibonacciCubicEquation_result_Gain2_1" type="real_T"/>
+        <param name="Gain2_Gain" storage="offset_fibonacciCubicEquation_P" type="real_T" value="-1.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="72" type="param">  -1.0,                                /* Expression: -1
+                                        * Referenced by: '&lt;S3&gt;/Gain2'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="479" type="task">  /* Gain: '&lt;S3&gt;/Gain2' */
+  offset_fibonacciCubicEquation_result_Gain2_1 =
+    offset_fibonacciCubicEquation_P.Gain2_Gain *
+    offset_fibonacciCubicEquation_RateTransition4_1;
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="644" type="init">  offset_fibonacciCubicEquation_result_Gain2_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_result_Subtract" type="data">
+          <var line="offset_fibonacciCubicEquation_result_Gain2_1" mode="input" name="offset_fibonacciCubicEquation_result_Gain2_1" port="offset_fibonacciCubicEquation_result_Subtract_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition4" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition4_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition4_1" port="offset_fibonacciCubicEquation_RateTransition4_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Constant" id="30" name="offset_fibonacciCubicEquation_result_Golden_ratio" peinfo="0" rate="1">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_result_Golden_ratio_1" port="offset_fibonacciCubicEquation_result_Golden_ratio_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_result_Subtract" port="offset_fibonacciCubicEquation_result_Subtract_2"/>
+          <connect block="offset_fibonacciCubicEquation_result_Subtract1" port="offset_fibonacciCubicEquation_result_Subtract1_2"/>
+        </output>
+        <param name="Golden_ratio_Value" storage="offset_fibonacciCubicEquation_P" type="real_T" value="1.6180339887498949">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="75" type="param">  1.6180339887498949,                  /* Expression: (1+sqrt(5))/2
+                                        * Referenced by: '&lt;S3&gt;/Golden_ratio'
+                                        */
+</initcode>
+        </param>
+        <merged_to block="offset_fibonacciCubicEquation_result_Subtract"/>
+        <merged_to block="offset_fibonacciCubicEquation_result_Subtract1"/>
+      </block>
+      <block blocktype="Sum" id="31" name="offset_fibonacciCubicEquation_result_Subtract" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_result_Gain2_1" port="offset_fibonacciCubicEquation_result_Subtract_1">
+          <connect block="offset_fibonacciCubicEquation_result_Gain2" port="offset_fibonacciCubicEquation_result_Gain2_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_result_Golden_ratio_1" port="offset_fibonacciCubicEquation_result_Subtract_2">
+          <connect block="offset_fibonacciCubicEquation_result_Golden_ratio" port="offset_fibonacciCubicEquation_result_Golden_ratio_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_result_Subtract_1" port="offset_fibonacciCubicEquation_result_Subtract_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_result_Abs" port="offset_fibonacciCubicEquation_result_Abs_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_result_Subtract_1" mode="output" name="offset_fibonacciCubicEquation_result_Subtract_1" port="offset_fibonacciCubicEquation_result_Subtract_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_result_Gain2_1" mode="input" name="offset_fibonacciCubicEquation_result_Gain2_1" port="offset_fibonacciCubicEquation_result_Subtract_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="484" type="task">  /* Sum: '&lt;S3&gt;/Subtract' incorporates:
+   *  Constant: '&lt;S3&gt;/Golden_ratio'
+   */
+  offset_fibonacciCubicEquation_result_Subtract_1 =
+    offset_fibonacciCubicEquation_result_Gain2_1 -
+    offset_fibonacciCubicEquation_P.Golden_ratio_Value;
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="645" type="init">  offset_fibonacciCubicEquation_result_Subtract_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_result_Abs" type="data">
+          <var line="offset_fibonacciCubicEquation_result_Subtract_1" mode="input" name="offset_fibonacciCubicEquation_result_Subtract_1" port="offset_fibonacciCubicEquation_result_Abs_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_result_Gain2" type="data">
+          <var line="offset_fibonacciCubicEquation_result_Gain2_1" mode="output" name="offset_fibonacciCubicEquation_result_Gain2_1" port="offset_fibonacciCubicEquation_result_Gain2_1" type="real_T"/>
+        </backward>
+        <merge_block block="offset_fibonacciCubicEquation_result_Golden_ratio"/>
+      </block>
+      <block blocktype="Sum" id="32" name="offset_fibonacciCubicEquation_result_Subtract1" peinfo="0" rate="1">
+        <input line="offset_fibonacciCubicEquation_result_FnwaruFnm1_1" port="offset_fibonacciCubicEquation_result_Subtract1_1">
+          <connect block="offset_fibonacciCubicEquation_result_FnwaruFnm1" port="offset_fibonacciCubicEquation_result_FnwaruFnm1_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_result_Golden_ratio_1" port="offset_fibonacciCubicEquation_result_Subtract1_2">
+          <connect block="offset_fibonacciCubicEquation_result_Golden_ratio" port="offset_fibonacciCubicEquation_result_Golden_ratio_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_result_Subtract1_1" port="offset_fibonacciCubicEquation_result_Subtract1_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_result_Abs1" port="offset_fibonacciCubicEquation_result_Abs1_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_result_Subtract1_1" mode="output" name="offset_fibonacciCubicEquation_result_Subtract1_1" port="offset_fibonacciCubicEquation_result_Subtract1_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_result_FnwaruFnm1_1" mode="input" name="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" port="offset_fibonacciCubicEquation_result_Subtract1_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="523" type="task">  /* Sum: '&lt;S3&gt;/Subtract1' incorporates:
+   *  Constant: '&lt;S3&gt;/Golden_ratio'
+   */
+  offset_fibonacciCubicEquation_result_Subtract1_1 =
+    offset_fibonacciCubicEquation_calcGoldenratio_Divide_1 -
+    offset_fibonacciCubicEquation_P.Golden_ratio_Value;
+
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="650" type="init">  offset_fibonacciCubicEquation_result_Subtract1_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_result_Abs1" type="data">
+          <var line="offset_fibonacciCubicEquation_result_Subtract1_1" mode="input" name="offset_fibonacciCubicEquation_result_Subtract1_1" port="offset_fibonacciCubicEquation_result_Abs1_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_calcGoldenratio_Divide" type="data">
+          <var line="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" mode="output" name="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" port="offset_fibonacciCubicEquation_calcGoldenratio_Divide_1" type="real_T"/>
+        </backward>
+        <merge_block block="offset_fibonacciCubicEquation_result_Golden_ratio"/>
+      </block>
+    </SM:blocks>
+  </block>
+  <block blocktype="SubSystem" id="33" name="offset_fibonacciCubicEquation_solvedCubicEquation" peinfo="1" rate="[-,1]">
+    <input line="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a">
+      <connect block="offset_fibonacciCubicEquation_RateTransition" port="offset_fibonacciCubicEquation_RateTransition_1"/>
+    </input>
+    <input line="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b">
+      <connect block="offset_fibonacciCubicEquation_RateTransition1" port="offset_fibonacciCubicEquation_RateTransition1_1"/>
+    </input>
+    <input line="offset_fibonacciCubicEquation_RateTransition2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_c">
+      <connect block="offset_fibonacciCubicEquation_RateTransition2" port="offset_fibonacciCubicEquation_RateTransition2_1"/>
+    </input>
+    <input line="offset_fibonacciCubicEquation_RateTransition3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_d">
+      <connect block="offset_fibonacciCubicEquation_RateTransition3" port="offset_fibonacciCubicEquation_RateTransition3_1"/>
+    </input>
+    <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_kai" usename="false">
+      <connect block="offset_fibonacciCubicEquation_Display" port="offset_fibonacciCubicEquation_Display_1"/>
+      <connect block="offset_fibonacciCubicEquation_RateTransition4" port="offset_fibonacciCubicEquation_RateTransition4_1"/>
+    </output>
+    <SM:blocks>
+      <block blocktype="Inport" id="34" name="offset_fibonacciCubicEquation_solvedCubicEquation_a" peinfo="1" rate="4">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" usename="false">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3a" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_a2" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_a2" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2_2"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_abc" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_ac" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1"/>
+        </output>
+      </block>
+      <block blocktype="Inport" id="35" name="offset_fibonacciCubicEquation_solvedCubicEquation_b" peinfo="1" rate="4">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" usename="false">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3koume" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_abc" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_2"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b2" port="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b2" port="offset_fibonacciCubicEquation_solvedCubicEquation_b2_2"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_2"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_3"/>
+        </output>
+      </block>
+      <block blocktype="Inport" id="36" name="offset_fibonacciCubicEquation_solvedCubicEquation_c" peinfo="1" rate="4">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_c_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_c_1" usename="false">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_abc" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_3"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_ac" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_2"/>
+        </output>
+      </block>
+      <block blocktype="Inport" id="37" name="offset_fibonacciCubicEquation_solvedCubicEquation_d" peinfo="1" rate="4">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_d_1" usename="false">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_a2d" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_2"/>
+        </output>
+      </block>
+      <block blocktype="Product" id="38" name="offset_fibonacciCubicEquation_solvedCubicEquation_1koume" peinfo="1" rate="[4,3]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_Product" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_2" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="417" type="task">/*&lt;&lt;&lt; S 37 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4] == 0) {
+/*&gt;&gt;&gt; S 37 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/1koume' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1 =
+      offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1 /
+      offset_fibonacciCubicEquation_solvedCubicEquation_Product_1;
+/*&lt;&lt;&lt; E 37 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 37 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="636" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_Product" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Math" id="39" name="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita" peinfo="1" rate="[4,1]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_constant4_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_constant4" port="offset_fibonacciCubicEquation_solvedCubicEquation_constant4_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_constant3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_constant3" port="offset_fibonacciCubicEquation_solvedCubicEquation_constant3_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_Product" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="385" type="task">/*&lt;&lt;&lt; S 31 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[2] == 0) {
+/*&gt;&gt;&gt; S 31 none &gt;&gt;&gt;*/
+    /* Math: '&lt;S4&gt;/1koumesita' incorporates:
+     *  Constant: '&lt;S4&gt;/constant3'
+     *  Constant: '&lt;S4&gt;/constant4'
+     */
+    u0 = offset_fibonacciCubicEquation_P.constant4_Value;
+    u1 = offset_fibonacciCubicEquation_P.constant3_Value;
+    if ((u0 &lt; 0.0) &amp;&amp; (u1 &gt; floor(u1))) {
+      offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1 =
+        -rt_powd_snf(-u0, u1);
+    } else {
+      offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1 =
+        rt_powd_snf(u0, u1);
+    }
+
+    /* End of Math: '&lt;S4&gt;/1koumesita' */
+/*&lt;&lt;&lt; E 31 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 31 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="633" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_Product" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" type="real_T"/>
+        </forward>
+        <merge_block block="offset_fibonacciCubicEquation_solvedCubicEquation_constant3"/>
+        <merge_block block="offset_fibonacciCubicEquation_solvedCubicEquation_constant4"/>
+      </block>
+      <block blocktype="Product" id="40" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koume" peinfo="1" rate="[4,3]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_2" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="454" type="task">/*&lt;&lt;&lt; S 43 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4] == 0) {
+/*&gt;&gt;&gt; S 43 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/2koume' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1 =
+      offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1 /
+      offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1;
+/*&lt;&lt;&lt; E 43 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 43 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="640" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_2" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Sum" id="41" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita" peinfo="1" rate="[4,3]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1" port="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_3">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_9abc" port="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_4">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_3" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_2" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_4" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="361" type="task">/*&lt;&lt;&lt; S 29 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4] == 0) {
+/*&gt;&gt;&gt; S 29 none &gt;&gt;&gt;*/
+    /* Sum: '&lt;S4&gt;/2koumesita' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1 =
+      ((offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1 +
+        offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1) +
+       offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1) +
+      offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1;
+
+/*&lt;&lt;&lt; E 29 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 29 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="631" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_9abc" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Math" id="42" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1" peinfo="1" rate="[4,3]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_constant_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_constant" port="offset_fibonacciCubicEquation_solvedCubicEquation_constant_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_1koume" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="368" type="task">/*&lt;&lt;&lt; S 29 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4] == 0) {
+/*&gt;&gt;&gt; S 29 none &gt;&gt;&gt;*/
+    /* Math: '&lt;S4&gt;/2koumesita1' incorporates:
+     *  Constant: '&lt;S4&gt;/constant'
+     */
+    u0 = offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1;
+    u1 = offset_fibonacciCubicEquation_P.constant_Value;
+    if ((u0 &lt; 0.0) &amp;&amp; (u1 &gt; floor(u1))) {
+      offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1 =
+        -rt_powd_snf(-u0, u1);
+    } else {
+      offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1 =
+        rt_powd_snf(u0, u1);
+    }
+
+    /* End of Math: '&lt;S4&gt;/2koumesita1' */
+/*&lt;&lt;&lt; E 29 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 29 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="632" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_1koume" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_2" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" type="real_T"/>
+        </backward>
+        <merge_block block="offset_fibonacciCubicEquation_solvedCubicEquation_constant"/>
+      </block>
+      <block blocktype="Math" id="43" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2" peinfo="1" rate="[4,1]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_constant2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_constant2" port="offset_fibonacciCubicEquation_solvedCubicEquation_constant2_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_constant1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_constant1" port="offset_fibonacciCubicEquation_solvedCubicEquation_constant1_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="424" type="task">/*&lt;&lt;&lt; S 39 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[2] == 0) {
+/*&gt;&gt;&gt; S 39 none &gt;&gt;&gt;*/
+    /* Math: '&lt;S4&gt;/2koumesita2' incorporates:
+     *  Constant: '&lt;S4&gt;/constant1'
+     *  Constant: '&lt;S4&gt;/constant2'
+     */
+    u0 = offset_fibonacciCubicEquation_P.constant2_Value;
+    u1 = offset_fibonacciCubicEquation_P.constant1_Value;
+    if ((u0 &lt; 0.0) &amp;&amp; (u1 &gt; floor(u1))) {
+      offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1 =
+        -rt_powd_snf(-u0, u1);
+    } else {
+      offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1 =
+        rt_powd_snf(u0, u1);
+    }
+
+    /* End of Math: '&lt;S4&gt;/2koumesita2' */
+/*&lt;&lt;&lt; E 39 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 39 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="637" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_2" type="real_T"/>
+        </forward>
+        <merge_block block="offset_fibonacciCubicEquation_solvedCubicEquation_constant1"/>
+        <merge_block block="offset_fibonacciCubicEquation_solvedCubicEquation_constant2"/>
+      </block>
+      <block blocktype="Product" id="44" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf" peinfo="1" rate="[4,3]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3a" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koume" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_2" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="449" type="task">/*&lt;&lt;&lt; S 43 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4] == 0) {
+/*&gt;&gt;&gt; S 43 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/2koumesitaf' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1 =
+      offset_fibonacciCubicEquation_solvedCubicEquation_3a_1 *
+      offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1;
+
+/*&lt;&lt;&lt; E 43 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 43 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="639" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koume" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_2" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_3a" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Product" id="45" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef" peinfo="0" rate="[4,2]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koume" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_2" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="442" type="task">/*&lt;&lt;&lt; S 41 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3] == 0) {
+/*&gt;&gt;&gt; S 41 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/2koumeuef' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1 =
+      offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1 *
+      offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1;
+/*&lt;&lt;&lt; E 41 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 41 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="638" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koume" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Gain" id="46" name="offset_fibonacciCubicEquation_solvedCubicEquation_3a" peinfo="1" rate="4">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_a" port="offset_fibonacciCubicEquation_solvedCubicEquation_a_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3koume" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_2"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_Product" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" type="real_T"/>
+        <param name="a_Gain" storage="offset_fibonacciCubicEquation_P" type="real_T" value="3.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="60" type="param">  3.0,                                 /* Expression: 3
+                                        * Referenced by: '&lt;S4&gt;/3a'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="403" type="task">/*&lt;&lt;&lt; S 33 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 33 none &gt;&gt;&gt;*/
+    /* Gain: '&lt;S4&gt;/3a' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_3a_1 =
+      offset_fibonacciCubicEquation_P.a_Gain *
+      offset_fibonacciCubicEquation_RateTransition_1;
+/*&lt;&lt;&lt; E 33 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 33 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="634" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_3a_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesitaf_1" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_3koume" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_2" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_Product" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_2" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_RateTransition_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Gain" id="47" name="offset_fibonacciCubicEquation_solvedCubicEquation_3ac" peinfo="1" rate="[4,1]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_ac" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" type="real_T"/>
+        <param name="ac_Gain" storage="offset_fibonacciCubicEquation_P" type="real_T" value="3.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="45" type="param">  3.0,                                 /* Expression: 3
+                                        * Referenced by: '&lt;S4&gt;/3ac'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="320" type="task">/*&lt;&lt;&lt; S 23 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[2] == 0) {
+/*&gt;&gt;&gt; S 23 none &gt;&gt;&gt;*/
+    /* Gain: '&lt;S4&gt;/3ac' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1 =
+      offset_fibonacciCubicEquation_P.ac_Gain *
+      offset_fibonacciCubicEquation_solvedCubicEquation_ac_1;
+/*&lt;&lt;&lt; E 23 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 23 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="624" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_ac" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Sum" id="48" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2" peinfo="0" rate="[4,2]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3ac" port="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b2" port="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_2"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_3"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_2" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="334" type="task">/*&lt;&lt;&lt; S 27 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3] == 0) {
+/*&gt;&gt;&gt; S 27 none &gt;&gt;&gt;*/
+    /* Sum: '&lt;S4&gt;/3acmb2' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1 =
+      offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1 -
+      offset_fibonacciCubicEquation_solvedCubicEquation_b2_1;
+
+/*&lt;&lt;&lt; E 27 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 27 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="626" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumeuef_1" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_3" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_3ac" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_b2" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Product" id="49" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3" peinfo="0" rate="[4,2]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_3">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_3" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="339" type="task">/*&lt;&lt;&lt; S 27 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3] == 0) {
+/*&gt;&gt;&gt; S 27 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/3acmb2z3' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1 =
+      offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1 *
+      offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1 *
+      offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1;
+
+/*&lt;&lt;&lt; E 27 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 27 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="627" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Gain" id="50" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4" peinfo="0" rate="[4,2]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_siki1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" type="real_T"/>
+        <param name="acmb2z3z4_Gain" storage="offset_fibonacciCubicEquation_P" type="real_T" value="4.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="48" type="param">  4.0,                                 /* Expression: 4
+                                        * Referenced by: '&lt;S4&gt;/3acmb2z3z4'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="345" type="task">/*&lt;&lt;&lt; S 27 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3] == 0) {
+/*&gt;&gt;&gt; S 27 none &gt;&gt;&gt;*/
+    /* Gain: '&lt;S4&gt;/3acmb2z3z4' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1 =
+      offset_fibonacciCubicEquation_P.acmb2z3z4_Gain *
+      offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1;
+
+/*&lt;&lt;&lt; E 27 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 27 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="628" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_siki1" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_2" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Product" id="51" name="offset_fibonacciCubicEquation_solvedCubicEquation_3koume" peinfo="1" rate="4">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b" port="offset_fibonacciCubicEquation_solvedCubicEquation_b_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3a" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_3"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_2" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="461" type="task">/*&lt;&lt;&lt; S 45 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 45 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/3koume' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1 =
+      offset_fibonacciCubicEquation_RateTransition1_1 /
+      offset_fibonacciCubicEquation_solvedCubicEquation_3a_1;
+/*&lt;&lt;&lt; E 45 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 45 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="641" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_3" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition1" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition1_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_RateTransition1_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_3a" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Gain" id="52" name="offset_fibonacciCubicEquation_solvedCubicEquation_9abc" peinfo="1" rate="[4,1]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_abc" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_3"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" type="real_T"/>
+        <param name="abc_Gain" storage="offset_fibonacciCubicEquation_P" type="real_T" value="9.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="39" type="param">  9.0,                                 /* Expression: 9
+                                        * Referenced by: '&lt;S4&gt;/9abc'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="278" type="task">/*&lt;&lt;&lt; S 13 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[2] == 0) {
+/*&gt;&gt;&gt; S 13 none &gt;&gt;&gt;*/
+    /* Gain: '&lt;S4&gt;/9abc' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1 =
+      offset_fibonacciCubicEquation_P.abc_Gain *
+      offset_fibonacciCubicEquation_solvedCubicEquation_abc_1;
+/*&lt;&lt;&lt; E 13 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 13 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="618" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_3" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_2" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_abc" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Product" id="53" name="offset_fibonacciCubicEquation_solvedCubicEquation_Product" peinfo="1" rate="[4,1]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3a" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_1koume" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_Product_2" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="410" type="task">/*&lt;&lt;&lt; S 35 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[2] == 0) {
+/*&gt;&gt;&gt; S 35 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/Product' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_Product_1 =
+      offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1 *
+      offset_fibonacciCubicEquation_solvedCubicEquation_3a_1;
+/*&lt;&lt;&lt; E 35 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 35 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="635" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_Product_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_1koume" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_Product_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_2" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_3a" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3a_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Product" id="54" name="offset_fibonacciCubicEquation_solvedCubicEquation_a2" peinfo="1" rate="4">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_a" port="offset_fibonacciCubicEquation_solvedCubicEquation_a_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_a" port="offset_fibonacciCubicEquation_solvedCubicEquation_a_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_a2d" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2_2" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="185" type="task">/*&lt;&lt;&lt; S 1 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 1 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/a2' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_a2_1 =
+      offset_fibonacciCubicEquation_RateTransition_1 *
+      offset_fibonacciCubicEquation_RateTransition_1;
+/*&lt;&lt;&lt; E 1 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 1 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="606" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_a2_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_a2d" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_RateTransition_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Product" id="55" name="offset_fibonacciCubicEquation_solvedCubicEquation_a2d" peinfo="1" rate="[4,1]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_a2" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_d" port="offset_fibonacciCubicEquation_solvedCubicEquation_d_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_d_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_2" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="221" type="task">/*&lt;&lt;&lt; S 5 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[2] == 0) {
+/*&gt;&gt;&gt; S 5 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/a2d' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1 =
+      offset_fibonacciCubicEquation_solvedCubicEquation_a2_1 *
+      offset_fibonacciCubicEquation_RateTransition3_1;
+/*&lt;&lt;&lt; E 5 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 5 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="611" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition3" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition3_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition3_1" port="offset_fibonacciCubicEquation_RateTransition3_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_a2" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Product" id="56" name="offset_fibonacciCubicEquation_solvedCubicEquation_abc" peinfo="1" rate="4">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_a" port="offset_fibonacciCubicEquation_solvedCubicEquation_a_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b" port="offset_fibonacciCubicEquation_solvedCubicEquation_b_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_c_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_3">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_c" port="offset_fibonacciCubicEquation_solvedCubicEquation_c_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_9abc" port="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_2" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_c_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_abc_3" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="269" type="task">/*&lt;&lt;&lt; S 11 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 11 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/abc' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_abc_1 =
+      offset_fibonacciCubicEquation_RateTransition_1 *
+      offset_fibonacciCubicEquation_RateTransition1_1 *
+      offset_fibonacciCubicEquation_RateTransition2_1;
+/*&lt;&lt;&lt; E 11 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 11 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="617" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_abc_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_9abc" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_RateTransition_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition1" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition1_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_RateTransition1_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition2" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition2_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition2_1" port="offset_fibonacciCubicEquation_RateTransition2_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Product" id="57" name="offset_fibonacciCubicEquation_solvedCubicEquation_ac" peinfo="1" rate="4">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_a" port="offset_fibonacciCubicEquation_solvedCubicEquation_a_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_c_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_c" port="offset_fibonacciCubicEquation_solvedCubicEquation_c_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3ac" port="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_c_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_ac_2" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="313" type="task">/*&lt;&lt;&lt; S 21 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 21 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/ac' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_ac_1 =
+      offset_fibonacciCubicEquation_RateTransition_1 *
+      offset_fibonacciCubicEquation_RateTransition2_1;
+/*&lt;&lt;&lt; E 21 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 21 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="623" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_ac_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_3ac" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_ac_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3ac_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition_1" port="offset_fibonacciCubicEquation_RateTransition_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition2" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition2_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition2_1" port="offset_fibonacciCubicEquation_RateTransition2_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Product" id="58" name="offset_fibonacciCubicEquation_solvedCubicEquation_b2" peinfo="1" rate="4">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b" port="offset_fibonacciCubicEquation_solvedCubicEquation_b_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b2_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b" port="offset_fibonacciCubicEquation_solvedCubicEquation_b_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b2_2" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="327" type="task">/*&lt;&lt;&lt; S 25 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 25 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/b2' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_b2_1 =
+      offset_fibonacciCubicEquation_RateTransition1_1 *
+      offset_fibonacciCubicEquation_RateTransition1_1;
+/*&lt;&lt;&lt; E 25 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 25 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="625" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_b2_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_b2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2_2" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition1" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition1_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_RateTransition1_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Product" id="59" name="offset_fibonacciCubicEquation_solvedCubicEquation_b3" peinfo="1" rate="4">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b" port="offset_fibonacciCubicEquation_solvedCubicEquation_b_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b" port="offset_fibonacciCubicEquation_solvedCubicEquation_b_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_3">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b" port="offset_fibonacciCubicEquation_solvedCubicEquation_b_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b_1" mode="input" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_3" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="285" type="task">/*&lt;&lt;&lt; S 15 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] == 0) {
+/*&gt;&gt;&gt; S 15 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/b3' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_b3_1 =
+      offset_fibonacciCubicEquation_RateTransition1_1 *
+      offset_fibonacciCubicEquation_RateTransition1_1 *
+      offset_fibonacciCubicEquation_RateTransition1_1;
+/*&lt;&lt;&lt; E 15 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 15 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="619" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_b3_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_RateTransition1" type="data">
+          <var line="offset_fibonacciCubicEquation_RateTransition1_1" mode="output" name="offset_fibonacciCubicEquation_RateTransition1_1" port="offset_fibonacciCubicEquation_RateTransition1_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Constant" id="60" name="offset_fibonacciCubicEquation_solvedCubicEquation_constant" peinfo="1" rate="4">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_constant_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_constant_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1_2"/>
+        </output>
+        <param name="constant_Value" storage="offset_fibonacciCubicEquation_P" type="real_T" value="0.33333333333333331">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="51" type="param">  0.33333333333333331,                 /* Expression: 1/3
+                                        * Referenced by: '&lt;S4&gt;/constant'
+                                        */
+</initcode>
+        </param>
+        <merged_to block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita1"/>
+      </block>
+      <block blocktype="Constant" id="61" name="offset_fibonacciCubicEquation_solvedCubicEquation_constant1" peinfo="1" rate="4">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_constant1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_constant1_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_2"/>
+        </output>
+        <param name="constant1_Value" storage="offset_fibonacciCubicEquation_P" type="real_T" value="0.33333333333333331">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="66" type="param">  0.33333333333333331,                 /* Expression: 1/3
+                                        * Referenced by: '&lt;S4&gt;/constant1'
+                                        */
+</initcode>
+        </param>
+        <merged_to block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2"/>
+      </block>
+      <block blocktype="Constant" id="62" name="offset_fibonacciCubicEquation_solvedCubicEquation_constant2" peinfo="1" rate="4">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_constant2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_constant2_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2_1"/>
+        </output>
+        <param name="constant2_Value" storage="offset_fibonacciCubicEquation_P" type="real_T" value="2.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="63" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;S4&gt;/constant2'
+                                        */
+</initcode>
+        </param>
+        <merged_to block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita2"/>
+      </block>
+      <block blocktype="Constant" id="63" name="offset_fibonacciCubicEquation_solvedCubicEquation_constant3" peinfo="1" rate="4">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_constant3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_constant3_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_2"/>
+        </output>
+        <param name="constant3_Value" storage="offset_fibonacciCubicEquation_P" type="real_T" value="0.33333333333333331">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="57" type="param">  0.33333333333333331,                 /* Expression: 1/3
+                                        * Referenced by: '&lt;S4&gt;/constant3'
+                                        */
+</initcode>
+        </param>
+        <merged_to block="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita"/>
+      </block>
+      <block blocktype="Constant" id="64" name="offset_fibonacciCubicEquation_solvedCubicEquation_constant4" peinfo="1" rate="4">
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_constant4_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_constant4_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita_1"/>
+        </output>
+        <param name="constant4_Value" storage="offset_fibonacciCubicEquation_P" type="real_T" value="2.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="54" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;S4&gt;/constant4'
+                                        */
+</initcode>
+        </param>
+        <merged_to block="offset_fibonacciCubicEquation_solvedCubicEquation_1koumesita"/>
+      </block>
+      <block blocktype="Sum" id="65" name="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai" peinfo="1" rate="[4,3]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_1koume" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koume" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_3">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3koume" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_kai" port="offset_fibonacciCubicEquation_solvedCubicEquation_kai_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_2" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_3" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="468" type="task">/*&lt;&lt;&lt; S 47 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4] == 0) {
+/*&gt;&gt;&gt; S 47 none &gt;&gt;&gt;*/
+    /* Sum: '&lt;S4&gt;/dokuritukai' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1 =
+      (offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1 -
+       offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1) -
+      offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1;
+/*&lt;&lt;&lt; E 47 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 47 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="642" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_Display" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" port="offset_fibonacciCubicEquation_Display_1" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_RateTransition4" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" port="offset_fibonacciCubicEquation_RateTransition4_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_1koume" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_1koume_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koume" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koume_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_3koume" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3koume_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Gain" id="66" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d" peinfo="1" rate="[4,2]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_a2d" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_2"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" type="real_T"/>
+        <param name="m27a2d_Gain" storage="offset_fibonacciCubicEquation_P" type="real_T" value="-27.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="30" type="param">  -27.0,                               /* Expression: -27
+                                        * Referenced by: '&lt;S4&gt;/m27a2d'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="228" type="task">/*&lt;&lt;&lt; S 7 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3] == 0) {
+/*&gt;&gt;&gt; S 7 none &gt;&gt;&gt;*/
+    /* Gain: '&lt;S4&gt;/m27a2d' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1 =
+      offset_fibonacciCubicEquation_P.m27a2d_Gain *
+      offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1;
+/*&lt;&lt;&lt; E 7 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 7 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="612" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_2" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_a2d" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_a2d_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Sum" id="67" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3" peinfo="1" rate="[4,2]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_9abc" port="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_3">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_2"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_2" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_3" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="300" type="task">/*&lt;&lt;&lt; S 19 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3] == 0) {
+/*&gt;&gt;&gt; S 19 none &gt;&gt;&gt;*/
+    /* Sum: '&lt;S4&gt;/m27a2dp9abcm2b3' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1 =
+      (offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1 +
+       offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1) +
+      offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1;
+
+/*&lt;&lt;&lt; E 19 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 19 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="621" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_2" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_9abc" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_9abc_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2d_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Product" id="68" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2" peinfo="1" rate="[4,2]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_siki1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_2" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="306" type="task">/*&lt;&lt;&lt; S 19 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3] == 0) {
+/*&gt;&gt;&gt; S 19 none &gt;&gt;&gt;*/
+    /* Product: '&lt;S4&gt;/m27a2dp9abcm2b3z2' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1 =
+      offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1 *
+      offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1;
+/*&lt;&lt;&lt; E 19 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 19 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="622" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_siki1" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Gain" id="69" name="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3" peinfo="1" rate="[4,1]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_4"/>
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_3"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" type="real_T"/>
+        <param name="m2b3_Gain" storage="offset_fibonacciCubicEquation_P" type="real_T" value="-2.0">
+          <initcode file="offset_fibonacciCubicEquation_data.c" line="42" type="param">  -2.0,                                /* Expression: -2
+                                        * Referenced by: '&lt;S4&gt;/m2b3'
+                                        */
+</initcode>
+        </param>
+        <code file="offset_fibonacciCubicEquation.c" line="293" type="task">/*&lt;&lt;&lt; S 17 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[2] == 0) {
+/*&gt;&gt;&gt; S 17 none &gt;&gt;&gt;*/
+    /* Gain: '&lt;S4&gt;/m2b3' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1 =
+      offset_fibonacciCubicEquation_P.m2b3_Gain *
+      offset_fibonacciCubicEquation_solvedCubicEquation_b3_1;
+/*&lt;&lt;&lt; E 17 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 17 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="620" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_4" type="real_T"/>
+        </forward>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m2b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3_3" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_b3" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_b3_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Sqrt" id="70" name="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1" peinfo="1" rate="[4,3]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_siki1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="357" type="task">/*&lt;&lt;&lt; S 29 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4] == 0) {
+/*&gt;&gt;&gt; S 29 none &gt;&gt;&gt;*/
+    /* Sqrt: '&lt;S4&gt;/rsiki1' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1 = sqrt
+      (offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1);
+
+/*&lt;&lt;&lt; E 29 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 29 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="630" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_2koumesita_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_siki1" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Sum" id="71" name="offset_fibonacciCubicEquation_solvedCubicEquation_siki1" peinfo="0" rate="[4,2]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1"/>
+        </input>
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_2">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1"/>
+        </input>
+        <output dimensions="[1 1]" line="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" usename="true">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1" port="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1"/>
+        </output>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_2" type="real_T"/>
+        <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" type="real_T"/>
+        <code file="offset_fibonacciCubicEquation.c" line="350" type="task">/*&lt;&lt;&lt; S 27 none &lt;&lt;&lt;*/
+  if (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3] == 0) {
+/*&gt;&gt;&gt; S 27 none &gt;&gt;&gt;*/
+    /* Sum: '&lt;S4&gt;/siki1' */
+    offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1 =
+      offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1 +
+      offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1;
+/*&lt;&lt;&lt; E 27 none &lt;&lt;&lt;*/
+  }
+/*&gt;&gt;&gt; E 27 none &gt;&gt;&gt;*/
+</code>
+        <code file="offset_fibonacciCubicEquation.c" line="629" type="init">  offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1 = 0.0;
+</code>
+        <forward block="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" mode="input" name="offset_fibonacciCubicEquation_solvedCubicEquation_siki1_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_rsiki1_1" type="real_T"/>
+        </forward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_3acmb2z3z4_1" type="real_T"/>
+        </backward>
+        <backward block="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2" type="data">
+          <var line="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" mode="output" name="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_m27a2dp9abcm2b3z2_1" type="real_T"/>
+        </backward>
+      </block>
+      <block blocktype="Outport" id="72" name="offset_fibonacciCubicEquation_solvedCubicEquation_kai" peinfo="1" rate="[4,3]">
+        <input line="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1" port="offset_fibonacciCubicEquation_solvedCubicEquation_kai_1">
+          <connect block="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai" port="offset_fibonacciCubicEquation_solvedCubicEquation_dokuritukai_1"/>
+        </input>
+      </block>
+    </SM:blocks>
+  </block>
+  <code type="common-init">  rt_InitInfAndNaN(sizeof(real_T));
+</code>
+  <code type="rt-macro">/* Macros for accessing real-time model data structure */
+#ifndef rtmGetErrorStatus
+# define rtmGetErrorStatus(rtm)        ((rtm)-&gt;errorStatus)
+#endif
+
+#ifndef rtmSetErrorStatus
+# define rtmSetErrorStatus(rtm, val)   ((rtm)-&gt;errorStatus = (val))
+#endif
+
+</code>
+  <code type="rt-type">/* Real-time Model Data Structure */
+struct tag_RTM_offset_fibonacciCubic_T {
+  const char_T * volatile errorStatus;
+
+  /*
+   * Timing:
+   * The following substructure contains information regarding
+   * the timing information for the model.
+   */
+  struct {
+    struct {
+      uint8_T TID[5];
+    } TaskCounters;
+  } Timing;
+};
+</code>
+  <code type="rt-code">  rate_scheduler();
+</code>
+  <code type="rt-init">  /* initialize real-time model */
+  (void) memset((void *)offset_fibonacciCubicEquatio_M, 0,
+                sizeof(RT_MODEL_offset_fibonacciCubi_T));
+  /* initialize sample time offsets */
+  offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[2] = 3;/* Sample time: [4.0s, 1.0s] */
+  /* initialize sample time offsets */
+  offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3] = 2;/* Sample time: [4.0s, 2.0s] */
+  /* initialize sample time offsets */
+  offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4] = 1;/* Sample time: [4.0s, 3.0s] */
+</code>
+  <code type="autovars">  real_T u0;
+  real_T u1;
+  real_T u2;
+
+</code>
+  <object kind="rtm-extern" name="offset_fibonacciCubicEquatio_M" type="extern RT_MODEL_offset_fibonacciCubi_T * const"/>
+  <object kind="rtm-object" name="offset_fibonacciCubicEquatio_M_" type="RT_MODEL_offset_fibonacciCubi_T"/>
+  <object kind="rtm-pointer" name="offset_fibonacciCubicEquatio_M" type="RT_MODEL_offset_fibonacciCubi_T * const" value="&amp;offset_fibonacciCubicEquatio_M_"/>
+  <includes file="&lt;math.h>" from="offset_fibonacciCubicEquation.h" index="0"/>
+  <includes file="&lt;string.h>" from="offset_fibonacciCubicEquation.h" index="1"/>
+  <includes file="&quot;rtwtypes.h&quot;" from="offset_fibonacciCubicEquation.h" index="2"/>
+  <includes file="&quot;offset_fibonacciCubicEquation_types.h&quot;" from="offset_fibonacciCubicEquation.h" index="3"/>
+  <includes file="&quot;rt_nonfinite.h&quot;" from="offset_fibonacciCubicEquation.h" index="4"/>
+  <includes file="&quot;rtGetInf.h&quot;" from="offset_fibonacciCubicEquation.h" index="5"/>
+  <includes file="&quot;offset_fibonacciCubicEquation.h&quot;" from="offset_fibonacciCubicEquation.c" index="6" mark="true"/>
+  <includes file="&quot;offset_fibonacciCubicEquation_private.h&quot;" from="offset_fibonacciCubicEquation.c" index="7"/>
+  <function name="rate_scheduler" type="decl">
+    <code line="79" type="func">static void rate_scheduler(void);
+</code>
+  </function>
+  <function name="rate_scheduler" type="defn">
+    <code line="81" type="func">/*
+ *   This function updates active task flag for each subrate.
+ * The function is called at model base rate, hence the
+ * generated code self-manages all its subrates.
+ */
+static void rate_scheduler(void)
+{
+  /* Compute which subrates run during the next base time step.  Subrates
+   * are an integer multiple of the base rate counter.  Therefore, the subtask
+   * counter is reset when it reaches its limit (zero means run).
+   *
+   * Sample time offsets are handled by priming the counter with the
+   * appropriate non-zero value in the model's initialization function.
+   */
+  (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1])++;
+  if ((offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1]) &gt; 3) {/* Sample time: [4.0s, 0.0s] */
+    offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[1] = 0;
+  }
+
+  (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[2])++;
+  if ((offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[2]) &gt; 3) {/* Sample time: [4.0s, 1.0s] */
+    offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[2] = 0;
+  }
+
+  (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3])++;
+  if ((offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3]) &gt; 3) {/* Sample time: [4.0s, 2.0s] */
+    offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[3] = 0;
+  }
+
+  (offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4])++;
+  if ((offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4]) &gt; 3) {/* Sample time: [4.0s, 3.0s] */
+    offset_fibonacciCubicEquatio_M-&gt;Timing.TaskCounters.TID[4] = 0;
+  }
+}
+</code>
+  </function>
+  <function name="rt_powd_snf" type="defn">
+    <code line="116" type="func">real_T rt_powd_snf(real_T u0, real_T u1)
+{
+  real_T y;
+  real_T tmp;
+  real_T tmp_0;
+  if (rtIsNaN(u0) || rtIsNaN(u1)) {
+    y = (rtNaN);
+  } else {
+    tmp = fabs(u0);
+    tmp_0 = fabs(u1);
+    if (rtIsInf(u1)) {
+      if (tmp == 1.0) {
+        y = (rtNaN);
+      } else if (tmp &gt; 1.0) {
+        if (u1 &gt; 0.0) {
+          y = (rtInf);
+        } else {
+          y = 0.0;
+        }
+      } else if (u1 &gt; 0.0) {
+        y = 0.0;
+      } else {
+        y = (rtInf);
+      }
+    } else if (tmp_0 == 0.0) {
+      y = 1.0;
+    } else if (tmp_0 == 1.0) {
+      if (u1 &gt; 0.0) {
+        y = u0;
+      } else {
+        y = 1.0 / u0;
+      }
+    } else if (u1 == 2.0) {
+      y = u0 * u0;
+    } else if ((u1 == 0.5) &amp;&amp; (u0 &gt;= 0.0)) {
+      y = sqrt(u0);
+    } else if ((u0 &lt; 0.0) &amp;&amp; (u1 &gt; floor(u1))) {
+      y = (rtNaN);
+    } else {
+      y = pow(u0, u1);
+    }
+  }
+
+  return y;
+}
+</code>
+  </function>
+</SM:blocks>

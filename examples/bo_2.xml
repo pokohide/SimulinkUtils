@@ -1,0 +1,1727 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SM:blocks xmlns:SM="http://example.com/SimulinkModel" name="bo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://example.com/SimulinkModel SimulinkModel.xsd">
+  <file name="bo.h" size="10934" timestamp="2017-07-10T18:36:22+0900" type="c-header"/>
+  <file name="out_bo.xml" size="79882" timestamp="2017-07-10T18:36:22+0900" type="xml"/>
+  <file name="bo.c" size="11899" timestamp="2017-07-10T18:36:22+0900" type="c-source"/>
+  <file name="bo_data.c" size="5545" timestamp="2017-07-10T18:36:22+0900" type="c-data"/>
+  <file name="../../renesas.mcg4p_8core.1_0_0.gcc.4_6_2.xml" size="945056" timestamp="2017-05-18T13:42:14+0900" type="shim"/>
+  <shim-params element="componentset" name="PE_P01"/>
+  <shim-params element="mastercomponent" name="CPU_P01"/>
+  <shim-params element="commoninstructionset" name="LLVM Instructions"/>
+  <block blocktype="Inport" id="1" name="bo_In1" peinfo="1" rate="0.1">
+    <output dimensions="[1 1]" line="bo_In1_1" port="bo_In1_1" usename="true">
+      <connect block="bo_Sqrt1" port="bo_Sqrt1_1"/>
+    </output>
+    <var line="bo_In1_1" mode="output" name="bo_In1_1" port="bo_In1_1" type="real_T"/>
+    <code file="bo.c" line="398" type="init">  bo_In1_1 = 0.0;
+</code>
+    <forward block="bo_Sqrt1" type="port">
+      <var line="bo_In1_1" mode="extin" name="bo_In1_1" port="bo_Sqrt1_1" type="real_T"/>
+    </forward>
+  </block>
+  <block blocktype="Sum" id="2" name="bo_Add" peinfo="1" rate="0.1">
+    <input line="bo_Add1_1" port="bo_Add_1">
+      <connect block="bo_Add1" port="bo_Add1_1"/>
+    </input>
+    <input line="bo_MathFunction1_1" port="bo_Add_2">
+      <connect block="bo_MathFunction1" port="bo_MathFunction1_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Add_1" port="bo_Add_1" usename="true">
+      <connect block="bo_Sqrt2" port="bo_Sqrt2_1"/>
+    </output>
+    <var line="bo_Add_1" mode="output" name="bo_Add_1" port="bo_Add_1" type="real_T"/>
+    <var line="bo_Add1_1" mode="input" name="bo_Add1_1" port="bo_Add_1" type="real_T"/>
+    <var line="bo_MathFunction1_1" mode="input" name="bo_MathFunction1_1" port="bo_Add_2" type="real_T"/>
+    <code file="bo.c" line="161" type="task">  /* Sum: '&lt;Root&gt;/Add' */
+  bo_Add_1 = bo_Add1_1 + bo_MathFunction1_1;
+
+</code>
+    <code file="bo.c" line="347" type="init">  bo_Add_1 = 0.0;
+</code>
+    <performance best="178" type="task" typical="178" worst="178"/>
+    <performance best="103" type="init" typical="103" worst="103"/>
+    <forward block="bo_Sqrt2" type="data">
+      <var line="bo_Add_1" mode="input" name="bo_Add_1" port="bo_Sqrt2_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Add1" type="data">
+      <var line="bo_Add1_1" mode="output" name="bo_Add1_1" port="bo_Add1_1" type="real_T"/>
+    </backward>
+    <backward block="bo_MathFunction1" type="data">
+      <var line="bo_MathFunction1_1" mode="output" name="bo_MathFunction1_1" port="bo_MathFunction1_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Sum" id="3" name="bo_Add1" peinfo="1" rate="0.1">
+    <input line="bo_Gain11_1" port="bo_Add1_1">
+      <connect block="bo_Gain11" port="bo_Gain11_1"/>
+    </input>
+    <input line="bo_Gain2_1" port="bo_Add1_2">
+      <connect block="bo_Gain2" port="bo_Gain2_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Add1_1" port="bo_Add1_1" usename="true">
+      <connect block="bo_Add" port="bo_Add_1"/>
+    </output>
+    <var line="bo_Add1_1" mode="output" name="bo_Add1_1" port="bo_Add1_1" type="real_T"/>
+    <var line="bo_Gain11_1" mode="input" name="bo_Gain11_1" port="bo_Add1_1" type="real_T"/>
+    <var line="bo_Gain2_1" mode="input" name="bo_Gain2_1" port="bo_Add1_2" type="real_T"/>
+    <code file="bo.c" line="145" type="task">  /* Sum: '&lt;Root&gt;/Add1' */
+  bo_Add1_1 = bo_Gain11_1 + bo_Gain2_1;
+
+</code>
+    <code file="bo.c" line="343" type="init">  bo_Add1_1 = 0.0;
+</code>
+    <performance best="178" type="task" typical="178" worst="178"/>
+    <performance best="103" type="init" typical="103" worst="103"/>
+    <forward block="bo_Add" type="data">
+      <var line="bo_Add1_1" mode="input" name="bo_Add1_1" port="bo_Add_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain11" type="data">
+      <var line="bo_Gain11_1" mode="output" name="bo_Gain11_1" port="bo_Gain11_1" type="real_T"/>
+    </backward>
+    <backward block="bo_Gain2" type="data">
+      <var line="bo_Gain2_1" mode="output" name="bo_Gain2_1" port="bo_Gain2_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Sum" id="4" name="bo_Add2" peinfo="1" rate="0.1">
+    <input line="bo_Gain13_1" port="bo_Add2_1">
+      <connect block="bo_Gain13" port="bo_Gain13_1"/>
+    </input>
+    <input line="bo_Gain14_1" port="bo_Add2_2">
+      <connect block="bo_Gain14" port="bo_Gain14_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Add2_1" port="bo_Add2_1" usename="true">
+      <connect block="bo_MathFunction13" port="bo_MathFunction13_1"/>
+      <connect block="bo_MathFunction17" port="bo_MathFunction17_1"/>
+    </output>
+    <var line="bo_Add2_1" mode="output" name="bo_Add2_1" port="bo_Add2_1" type="real_T"/>
+    <var line="bo_Gain13_1" mode="input" name="bo_Gain13_1" port="bo_Add2_1" type="real_T"/>
+    <var line="bo_Gain14_1" mode="input" name="bo_Gain14_1" port="bo_Add2_2" type="real_T"/>
+    <code file="bo.c" line="176" type="task">  /* Sum: '&lt;Root&gt;/Add2' */
+  bo_Add2_1 = bo_Gain13_1 + bo_Gain14_1;
+
+</code>
+    <code file="bo.c" line="352" type="init">  bo_Add2_1 = 0.0;
+</code>
+    <performance best="178" type="task" typical="178" worst="178"/>
+    <performance best="103" type="init" typical="103" worst="103"/>
+    <forward block="bo_MathFunction13" type="data">
+      <var line="bo_Add2_1" mode="input" name="bo_Add2_1" port="bo_MathFunction13_1" type="real_T"/>
+    </forward>
+    <forward block="bo_MathFunction17" type="data">
+      <var line="bo_Add2_1" mode="input" name="bo_Add2_1" port="bo_MathFunction17_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain13" type="data">
+      <var line="bo_Gain13_1" mode="output" name="bo_Gain13_1" port="bo_Gain13_1" type="real_T"/>
+    </backward>
+    <backward block="bo_Gain14" type="data">
+      <var line="bo_Gain14_1" mode="output" name="bo_Gain14_1" port="bo_Gain14_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Sum" id="5" name="bo_Add3" peinfo="1" rate="0.1">
+    <input line="bo_Add4_1" port="bo_Add3_1">
+      <connect block="bo_Add4" port="bo_Add4_1"/>
+    </input>
+    <input line="bo_Gain8_1" port="bo_Add3_2">
+      <connect block="bo_Gain8" port="bo_Gain8_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Add3_1" port="bo_Add3_1" usename="true">
+      <connect block="bo_Sqrt5" port="bo_Sqrt5_1"/>
+    </output>
+    <var line="bo_Add3_1" mode="output" name="bo_Add3_1" port="bo_Add3_1" type="real_T"/>
+    <var line="bo_Add4_1" mode="input" name="bo_Add4_1" port="bo_Add3_1" type="real_T"/>
+    <var line="bo_Gain8_1" mode="input" name="bo_Gain8_1" port="bo_Add3_2" type="real_T"/>
+    <code file="bo.c" line="302" type="task">  /* Sum: '&lt;Root&gt;/Add3' */
+  bo_Add3_1 = bo_Add4_1 + bo_Gain8_1;
+
+</code>
+    <code file="bo.c" line="390" type="init">  bo_Add3_1 = 0.0;
+</code>
+    <performance best="178" type="task" typical="178" worst="178"/>
+    <performance best="103" type="init" typical="103" worst="103"/>
+    <forward block="bo_Sqrt5" type="data">
+      <var line="bo_Add3_1" mode="input" name="bo_Add3_1" port="bo_Sqrt5_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Add4" type="data">
+      <var line="bo_Add4_1" mode="output" name="bo_Add4_1" port="bo_Add4_1" type="real_T"/>
+    </backward>
+    <backward block="bo_Gain8" type="data">
+      <var line="bo_Gain8_1" mode="output" name="bo_Gain8_1" port="bo_Gain8_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Sum" id="6" name="bo_Add4" peinfo="0" rate="0.1">
+    <input line="bo_Gain25_1" port="bo_Add4_1">
+      <connect block="bo_Gain25" port="bo_Gain25_1"/>
+    </input>
+    <input line="bo_Gain18_1" port="bo_Add4_2">
+      <connect block="bo_Gain18" port="bo_Gain18_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Add4_1" port="bo_Add4_1" usename="true">
+      <connect block="bo_Add3" port="bo_Add3_1"/>
+    </output>
+    <var line="bo_Add4_1" mode="output" name="bo_Add4_1" port="bo_Add4_1" type="real_T"/>
+    <var line="bo_Gain18_1" mode="input" name="bo_Gain18_1" port="bo_Add4_2" type="real_T"/>
+    <var line="bo_Gain25_1" mode="input" name="bo_Gain25_1" port="bo_Add4_1" type="real_T"/>
+    <code file="bo.c" line="245" type="task">  /* Sum: '&lt;Root&gt;/Add4' */
+  bo_Add4_1 = bo_Gain25_1 + bo_Gain18_1;
+
+</code>
+    <code file="bo.c" line="375" type="init">  bo_Add4_1 = 0.0;
+</code>
+    <performance best="178" type="task" typical="178" worst="178"/>
+    <performance best="103" type="init" typical="103" worst="103"/>
+    <forward block="bo_Add3" type="data">
+      <var line="bo_Add4_1" mode="input" name="bo_Add4_1" port="bo_Add3_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain18" type="data">
+      <var line="bo_Gain18_1" mode="output" name="bo_Gain18_1" port="bo_Gain18_1" type="real_T"/>
+    </backward>
+    <backward block="bo_Gain25" type="data">
+      <var line="bo_Gain25_1" mode="output" name="bo_Gain25_1" port="bo_Gain25_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="7" name="bo_Gain" peinfo="1" rate="0.1">
+    <input line="bo_Sqrt1_1" port="bo_Gain_1">
+      <connect block="bo_Sqrt1" port="bo_Sqrt1_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain_1" port="bo_Gain_1" usename="true">
+      <connect block="bo_Gain2" port="bo_Gain2_1"/>
+    </output>
+    <var line="bo_Gain_1" mode="output" name="bo_Gain_1" port="bo_Gain_1" type="real_T"/>
+    <var line="bo_Sqrt1_1" mode="input" name="bo_Sqrt1_1" port="bo_Gain_1" type="real_T"/>
+    <param name="Gain_Gain" storage="bo_P" type="real_T" value="1.0">
+      <initcode file="bo_data.c" line="24" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/Gain'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="139" type="task">  /* Gain: '&lt;Root&gt;/Gain' */
+  bo_Gain_1 = bo_P.Gain_Gain * bo_Sqrt1_1;
+
+</code>
+    <code file="bo.c" line="341" type="init">  bo_Gain_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain2" type="data">
+      <var line="bo_Gain_1" mode="input" name="bo_Gain_1" port="bo_Gain2_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Sqrt1" type="data">
+      <var line="bo_Sqrt1_1" mode="output" name="bo_Sqrt1_1" port="bo_Sqrt1_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="8" name="bo_Gain1" peinfo="1" rate="0.1">
+    <input line="bo_MathFunction2_1" port="bo_Gain1_1">
+      <connect block="bo_MathFunction2" port="bo_MathFunction2_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain1_1" port="bo_Gain1_1" usename="true">
+      <connect block="bo_MathFunction1" port="bo_MathFunction1_1"/>
+    </output>
+    <var line="bo_Gain1_1" mode="output" name="bo_Gain1_1" port="bo_Gain1_1" type="real_T"/>
+    <var line="bo_MathFunction2_1" mode="input" name="bo_MathFunction2_1" port="bo_Gain1_1" type="real_T"/>
+    <param name="Gain1_Gain" storage="bo_P" type="real_T" value="2.0">
+      <initcode file="bo_data.c" line="30" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/Gain1'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="155" type="task">  /* Gain: '&lt;Root&gt;/Gain1' */
+  bo_Gain1_1 = bo_P.Gain1_Gain * bo_MathFunction2_1;
+
+</code>
+    <code file="bo.c" line="345" type="init">  bo_Gain1_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction1" type="data">
+      <var line="bo_Gain1_1" mode="input" name="bo_Gain1_1" port="bo_MathFunction1_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction2" type="data">
+      <var line="bo_MathFunction2_1" mode="output" name="bo_MathFunction2_1" port="bo_MathFunction2_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="9" name="bo_Gain10" peinfo="1" rate="0.1">
+    <input line="bo_MathFunction9_1" port="bo_Gain10_1">
+      <connect block="bo_MathFunction9" port="bo_MathFunction9_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain10_1" port="bo_Gain10_1" usename="true">
+      <connect block="bo_Out1" port="bo_Out1_1"/>
+    </output>
+    <var line="bo_Gain10_1" mode="output" name="bo_Gain10_1" port="bo_Gain10_1" type="real_T"/>
+    <var line="bo_MathFunction9_1" mode="input" name="bo_MathFunction9_1" port="bo_Gain10_1" type="real_T"/>
+    <param name="Gain10_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="105" type="param">  0.5                                  /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain10'
+                                        */,
+</initcode>
+    </param>
+    <code file="bo.c" line="321" type="task">  /* Gain: '&lt;Root&gt;/Gain10' */
+  bo_Gain10_1 = bo_P.Gain10_Gain * bo_MathFunction9_1;
+</code>
+    <code file="bo.c" line="395" type="init">  bo_Gain10_1 = 0.0;
+
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Out1" type="port">
+      <var line="bo_Gain10_1" mode="input" name="bo_Gain10_1" port="bo_Out1_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction9" type="data">
+      <var line="bo_MathFunction9_1" mode="output" name="bo_MathFunction9_1" port="bo_MathFunction9_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="10" name="bo_Gain11" peinfo="1" rate="0.1">
+    <input line="bo_Sqrt1_1" port="bo_Gain11_1">
+      <connect block="bo_Sqrt1" port="bo_Sqrt1_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain11_1" port="bo_Gain11_1" usename="true">
+      <connect block="bo_Add1" port="bo_Add1_1"/>
+    </output>
+    <var line="bo_Gain11_1" mode="output" name="bo_Gain11_1" port="bo_Gain11_1" type="real_T"/>
+    <var line="bo_Sqrt1_1" mode="input" name="bo_Sqrt1_1" port="bo_Gain11_1" type="real_T"/>
+    <param name="Gain11_Gain" storage="bo_P" type="real_T" value="1.0">
+      <initcode file="bo_data.c" line="21" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/Gain11'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="136" type="task">  /* Gain: '&lt;Root&gt;/Gain11' */
+  bo_Gain11_1 = bo_P.Gain11_Gain * bo_Sqrt1_1;
+
+</code>
+    <code file="bo.c" line="340" type="init">  bo_Gain11_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Add1" type="data">
+      <var line="bo_Gain11_1" mode="input" name="bo_Gain11_1" port="bo_Add1_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Sqrt1" type="data">
+      <var line="bo_Sqrt1_1" mode="output" name="bo_Sqrt1_1" port="bo_Sqrt1_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="11" name="bo_Gain12" peinfo="1" rate="0.1">
+    <input line="bo_Sqrt2_1" port="bo_Gain12_1">
+      <connect block="bo_Sqrt2" port="bo_Sqrt2_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain12_1" port="bo_Gain12_1" usename="true">
+      <connect block="bo_Gain14" port="bo_Gain14_1"/>
+    </output>
+    <var line="bo_Gain12_1" mode="output" name="bo_Gain12_1" port="bo_Gain12_1" type="real_T"/>
+    <var line="bo_Sqrt2_1" mode="input" name="bo_Sqrt2_1" port="bo_Gain12_1" type="real_T"/>
+    <param name="Gain12_Gain" storage="bo_P" type="real_T" value="1.0">
+      <initcode file="bo_data.c" line="36" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/Gain12'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="170" type="task">  /* Gain: '&lt;Root&gt;/Gain12' */
+  bo_Gain12_1 = bo_P.Gain12_Gain * bo_Sqrt2_1;
+
+</code>
+    <code file="bo.c" line="350" type="init">  bo_Gain12_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain14" type="data">
+      <var line="bo_Gain12_1" mode="input" name="bo_Gain12_1" port="bo_Gain14_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Sqrt2" type="data">
+      <var line="bo_Sqrt2_1" mode="output" name="bo_Sqrt2_1" port="bo_Sqrt2_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="12" name="bo_Gain13" peinfo="1" rate="0.1">
+    <input line="bo_Sqrt2_1" port="bo_Gain13_1">
+      <connect block="bo_Sqrt2" port="bo_Sqrt2_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain13_1" port="bo_Gain13_1" usename="true">
+      <connect block="bo_Add2" port="bo_Add2_1"/>
+    </output>
+    <var line="bo_Gain13_1" mode="output" name="bo_Gain13_1" port="bo_Gain13_1" type="real_T"/>
+    <var line="bo_Sqrt2_1" mode="input" name="bo_Sqrt2_1" port="bo_Gain13_1" type="real_T"/>
+    <param name="Gain13_Gain" storage="bo_P" type="real_T" value="1.0">
+      <initcode file="bo_data.c" line="33" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/Gain13'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="167" type="task">  /* Gain: '&lt;Root&gt;/Gain13' */
+  bo_Gain13_1 = bo_P.Gain13_Gain * bo_Sqrt2_1;
+
+</code>
+    <code file="bo.c" line="349" type="init">  bo_Gain13_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Add2" type="data">
+      <var line="bo_Gain13_1" mode="input" name="bo_Gain13_1" port="bo_Add2_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Sqrt2" type="data">
+      <var line="bo_Sqrt2_1" mode="output" name="bo_Sqrt2_1" port="bo_Sqrt2_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="13" name="bo_Gain14" peinfo="1" rate="0.1">
+    <input line="bo_Gain12_1" port="bo_Gain14_1">
+      <connect block="bo_Gain12" port="bo_Gain12_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain14_1" port="bo_Gain14_1" usename="true">
+      <connect block="bo_Add2" port="bo_Add2_2"/>
+    </output>
+    <var line="bo_Gain14_1" mode="output" name="bo_Gain14_1" port="bo_Gain14_1" type="real_T"/>
+    <var line="bo_Gain12_1" mode="input" name="bo_Gain12_1" port="bo_Gain14_1" type="real_T"/>
+    <param name="Gain14_Gain" storage="bo_P" type="real_T" value="1.0">
+      <initcode file="bo_data.c" line="39" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/Gain14'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="173" type="task">  /* Gain: '&lt;Root&gt;/Gain14' */
+  bo_Gain14_1 = bo_P.Gain14_Gain * bo_Gain12_1;
+
+</code>
+    <code file="bo.c" line="351" type="init">  bo_Gain14_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Add2" type="data">
+      <var line="bo_Gain14_1" mode="input" name="bo_Gain14_1" port="bo_Add2_2" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain12" type="data">
+      <var line="bo_Gain12_1" mode="output" name="bo_Gain12_1" port="bo_Gain12_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="14" name="bo_Gain15" peinfo="0" rate="0.1">
+    <input line="bo_Gain20_1" port="bo_Gain15_1">
+      <connect block="bo_Gain20" port="bo_Gain20_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain15_1" port="bo_Gain15_1" usename="true">
+      <connect block="bo_MathFunction14" port="bo_MathFunction14_1"/>
+    </output>
+    <var line="bo_Gain15_1" mode="output" name="bo_Gain15_1" port="bo_Gain15_1" type="real_T"/>
+    <var line="bo_Gain20_1" mode="input" name="bo_Gain20_1" port="bo_Gain15_1" type="real_T"/>
+    <param name="Gain15_Gain" storage="bo_P" type="real_T" value="2.0">
+      <initcode file="bo_data.c" line="69" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/Gain15'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="221" type="task">  /* Gain: '&lt;Root&gt;/Gain15' */
+  bo_Gain15_1 = bo_P.Gain15_Gain * bo_Gain20_1;
+
+</code>
+    <code file="bo.c" line="367" type="init">  bo_Gain15_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction14" type="data">
+      <var line="bo_Gain15_1" mode="input" name="bo_Gain15_1" port="bo_MathFunction14_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain20" type="data">
+      <var line="bo_Gain20_1" mode="output" name="bo_Gain20_1" port="bo_Gain20_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="15" name="bo_Gain16" peinfo="0" rate="0.1">
+    <input line="bo_Gain21_1" port="bo_Gain16_1">
+      <connect block="bo_Gain21" port="bo_Gain21_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain16_1" port="bo_Gain16_1" usename="true">
+      <connect block="bo_Gain17" port="bo_Gain17_1"/>
+    </output>
+    <var line="bo_Gain16_1" mode="output" name="bo_Gain16_1" port="bo_Gain16_1" type="real_T"/>
+    <var line="bo_Gain21_1" mode="input" name="bo_Gain21_1" port="bo_Gain16_1" type="real_T"/>
+    <param name="Gain16_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="75" type="param">  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain16'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="233" type="task">  /* Gain: '&lt;Root&gt;/Gain16' */
+  bo_Gain16_1 = bo_P.Gain16_Gain * bo_Gain21_1;
+
+</code>
+    <code file="bo.c" line="371" type="init">  bo_Gain16_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain17" type="data">
+      <var line="bo_Gain16_1" mode="input" name="bo_Gain16_1" port="bo_Gain17_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain21" type="data">
+      <var line="bo_Gain21_1" mode="output" name="bo_Gain21_1" port="bo_Gain21_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="16" name="bo_Gain17" peinfo="0" rate="0.1">
+    <input line="bo_Gain16_1" port="bo_Gain17_1">
+      <connect block="bo_Gain16" port="bo_Gain16_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain17_1" port="bo_Gain17_1" usename="true">
+      <connect block="bo_MathFunction12" port="bo_MathFunction12_1"/>
+    </output>
+    <var line="bo_Gain17_1" mode="output" name="bo_Gain17_1" port="bo_Gain17_1" type="real_T"/>
+    <var line="bo_Gain16_1" mode="input" name="bo_Gain16_1" port="bo_Gain17_1" type="real_T"/>
+    <param name="Gain17_Gain" storage="bo_P" type="real_T" value="2.0">
+      <initcode file="bo_data.c" line="78" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/Gain17'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="236" type="task">  /* Gain: '&lt;Root&gt;/Gain17' */
+  bo_Gain17_1 = bo_P.Gain17_Gain * bo_Gain16_1;
+
+</code>
+    <code file="bo.c" line="372" type="init">  bo_Gain17_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction12" type="data">
+      <var line="bo_Gain17_1" mode="input" name="bo_Gain17_1" port="bo_MathFunction12_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain16" type="data">
+      <var line="bo_Gain16_1" mode="output" name="bo_Gain16_1" port="bo_Gain16_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="17" name="bo_Gain18" peinfo="0" rate="0.1">
+    <input line="bo_MathFunction12_1" port="bo_Gain18_1">
+      <connect block="bo_MathFunction12" port="bo_MathFunction12_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain18_1" port="bo_Gain18_1" usename="true">
+      <connect block="bo_Add4" port="bo_Add4_2"/>
+    </output>
+    <var line="bo_Gain18_1" mode="output" name="bo_Gain18_1" port="bo_Gain18_1" type="real_T"/>
+    <var line="bo_MathFunction12_1" mode="input" name="bo_MathFunction12_1" port="bo_Gain18_1" type="real_T"/>
+    <param name="Gain18_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="81" type="param">  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain18'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="242" type="task">  /* Gain: '&lt;Root&gt;/Gain18' */
+  bo_Gain18_1 = bo_P.Gain18_Gain * bo_MathFunction12_1;
+
+</code>
+    <code file="bo.c" line="374" type="init">  bo_Gain18_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Add4" type="data">
+      <var line="bo_Gain18_1" mode="input" name="bo_Gain18_1" port="bo_Add4_2" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction12" type="data">
+      <var line="bo_MathFunction12_1" mode="output" name="bo_MathFunction12_1" port="bo_MathFunction12_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="18" name="bo_Gain19" peinfo="0" rate="0.1">
+    <input line="bo_MathFunction13_1" port="bo_Gain19_1">
+      <connect block="bo_MathFunction13" port="bo_MathFunction13_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain19_1" port="bo_Gain19_1" usename="true">
+      <connect block="bo_Gain20" port="bo_Gain20_1"/>
+    </output>
+    <var line="bo_Gain19_1" mode="output" name="bo_Gain19_1" port="bo_Gain19_1" type="real_T"/>
+    <var line="bo_MathFunction13_1" mode="input" name="bo_MathFunction13_1" port="bo_Gain19_1" type="real_T"/>
+    <param name="Gain19_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="63" type="param">  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain19'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="215" type="task">  /* Gain: '&lt;Root&gt;/Gain19' */
+  bo_Gain19_1 = bo_P.Gain19_Gain * bo_MathFunction13_1;
+
+</code>
+    <code file="bo.c" line="365" type="init">  bo_Gain19_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain20" type="data">
+      <var line="bo_Gain19_1" mode="input" name="bo_Gain19_1" port="bo_Gain20_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction13" type="data">
+      <var line="bo_MathFunction13_1" mode="output" name="bo_MathFunction13_1" port="bo_MathFunction13_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="19" name="bo_Gain2" peinfo="1" rate="0.1">
+    <input line="bo_Gain_1" port="bo_Gain2_1">
+      <connect block="bo_Gain" port="bo_Gain_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain2_1" port="bo_Gain2_1" usename="true">
+      <connect block="bo_Add1" port="bo_Add1_2"/>
+    </output>
+    <var line="bo_Gain2_1" mode="output" name="bo_Gain2_1" port="bo_Gain2_1" type="real_T"/>
+    <var line="bo_Gain_1" mode="input" name="bo_Gain_1" port="bo_Gain2_1" type="real_T"/>
+    <param name="Gain2_Gain" storage="bo_P" type="real_T" value="1.0">
+      <initcode file="bo_data.c" line="27" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/Gain2'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="142" type="task">  /* Gain: '&lt;Root&gt;/Gain2' */
+  bo_Gain2_1 = bo_P.Gain2_Gain * bo_Gain_1;
+
+</code>
+    <code file="bo.c" line="342" type="init">  bo_Gain2_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Add1" type="data">
+      <var line="bo_Gain2_1" mode="input" name="bo_Gain2_1" port="bo_Add1_2" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain" type="data">
+      <var line="bo_Gain_1" mode="output" name="bo_Gain_1" port="bo_Gain_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="20" name="bo_Gain20" peinfo="0" rate="0.1">
+    <input line="bo_Gain19_1" port="bo_Gain20_1">
+      <connect block="bo_Gain19" port="bo_Gain19_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain20_1" port="bo_Gain20_1" usename="true">
+      <connect block="bo_Gain15" port="bo_Gain15_1"/>
+    </output>
+    <var line="bo_Gain20_1" mode="output" name="bo_Gain20_1" port="bo_Gain20_1" type="real_T"/>
+    <var line="bo_Gain19_1" mode="input" name="bo_Gain19_1" port="bo_Gain20_1" type="real_T"/>
+    <param name="Gain20_Gain" storage="bo_P" type="real_T" value="2.0">
+      <initcode file="bo_data.c" line="66" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/Gain20'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="218" type="task">  /* Gain: '&lt;Root&gt;/Gain20' */
+  bo_Gain20_1 = bo_P.Gain20_Gain * bo_Gain19_1;
+
+</code>
+    <code file="bo.c" line="366" type="init">  bo_Gain20_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain15" type="data">
+      <var line="bo_Gain20_1" mode="input" name="bo_Gain20_1" port="bo_Gain15_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain19" type="data">
+      <var line="bo_Gain19_1" mode="output" name="bo_Gain19_1" port="bo_Gain19_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="21" name="bo_Gain21" peinfo="0" rate="0.1">
+    <input line="bo_MathFunction11_1" port="bo_Gain21_1">
+      <connect block="bo_MathFunction11" port="bo_MathFunction11_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain21_1" port="bo_Gain21_1" usename="true">
+      <connect block="bo_Gain16" port="bo_Gain16_1"/>
+    </output>
+    <var line="bo_Gain21_1" mode="output" name="bo_Gain21_1" port="bo_Gain21_1" type="real_T"/>
+    <var line="bo_MathFunction11_1" mode="input" name="bo_MathFunction11_1" port="bo_Gain21_1" type="real_T"/>
+    <param name="Gain21_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="72" type="param">  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain21'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="230" type="task">  /* Gain: '&lt;Root&gt;/Gain21' */
+  bo_Gain21_1 = bo_P.Gain21_Gain * bo_MathFunction11_1;
+
+</code>
+    <code file="bo.c" line="370" type="init">  bo_Gain21_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain16" type="data">
+      <var line="bo_Gain21_1" mode="input" name="bo_Gain21_1" port="bo_Gain16_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction11" type="data">
+      <var line="bo_MathFunction11_1" mode="output" name="bo_MathFunction11_1" port="bo_MathFunction11_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="22" name="bo_Gain22" peinfo="0" rate="0.1">
+    <input line="bo_Gain27_1" port="bo_Gain22_1">
+      <connect block="bo_Gain27" port="bo_Gain27_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain22_1" port="bo_Gain22_1" usename="true">
+      <connect block="bo_MathFunction18" port="bo_MathFunction18_1"/>
+    </output>
+    <var line="bo_Gain22_1" mode="output" name="bo_Gain22_1" port="bo_Gain22_1" type="real_T"/>
+    <var line="bo_Gain27_1" mode="input" name="bo_Gain27_1" port="bo_Gain22_1" type="real_T"/>
+    <param name="Gain22_Gain" storage="bo_P" type="real_T" value="2.0">
+      <initcode file="bo_data.c" line="48" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/Gain22'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="188" type="task">  /* Gain: '&lt;Root&gt;/Gain22' */
+  bo_Gain22_1 = bo_P.Gain22_Gain * bo_Gain27_1;
+
+</code>
+    <code file="bo.c" line="356" type="init">  bo_Gain22_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction18" type="data">
+      <var line="bo_Gain22_1" mode="input" name="bo_Gain22_1" port="bo_MathFunction18_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain27" type="data">
+      <var line="bo_Gain27_1" mode="output" name="bo_Gain27_1" port="bo_Gain27_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="23" name="bo_Gain23" peinfo="0" rate="0.1">
+    <input line="bo_Gain28_1" port="bo_Gain23_1">
+      <connect block="bo_Gain28" port="bo_Gain28_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain23_1" port="bo_Gain23_1" usename="true">
+      <connect block="bo_Gain24" port="bo_Gain24_1"/>
+    </output>
+    <var line="bo_Gain23_1" mode="output" name="bo_Gain23_1" port="bo_Gain23_1" type="real_T"/>
+    <var line="bo_Gain28_1" mode="input" name="bo_Gain28_1" port="bo_Gain23_1" type="real_T"/>
+    <param name="Gain23_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="54" type="param">  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain23'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="200" type="task">  /* Gain: '&lt;Root&gt;/Gain23' */
+  bo_Gain23_1 = bo_P.Gain23_Gain * bo_Gain28_1;
+
+</code>
+    <code file="bo.c" line="360" type="init">  bo_Gain23_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain24" type="data">
+      <var line="bo_Gain23_1" mode="input" name="bo_Gain23_1" port="bo_Gain24_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain28" type="data">
+      <var line="bo_Gain28_1" mode="output" name="bo_Gain28_1" port="bo_Gain28_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="24" name="bo_Gain24" peinfo="0" rate="0.1">
+    <input line="bo_Gain23_1" port="bo_Gain24_1">
+      <connect block="bo_Gain23" port="bo_Gain23_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain24_1" port="bo_Gain24_1" usename="true">
+      <connect block="bo_MathFunction16" port="bo_MathFunction16_1"/>
+    </output>
+    <var line="bo_Gain24_1" mode="output" name="bo_Gain24_1" port="bo_Gain24_1" type="real_T"/>
+    <var line="bo_Gain23_1" mode="input" name="bo_Gain23_1" port="bo_Gain24_1" type="real_T"/>
+    <param name="Gain24_Gain" storage="bo_P" type="real_T" value="2.0">
+      <initcode file="bo_data.c" line="57" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/Gain24'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="203" type="task">  /* Gain: '&lt;Root&gt;/Gain24' */
+  bo_Gain24_1 = bo_P.Gain24_Gain * bo_Gain23_1;
+
+</code>
+    <code file="bo.c" line="361" type="init">  bo_Gain24_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction16" type="data">
+      <var line="bo_Gain24_1" mode="input" name="bo_Gain24_1" port="bo_MathFunction16_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain23" type="data">
+      <var line="bo_Gain23_1" mode="output" name="bo_Gain23_1" port="bo_Gain23_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="25" name="bo_Gain25" peinfo="0" rate="0.1">
+    <input line="bo_MathFunction16_1" port="bo_Gain25_1">
+      <connect block="bo_MathFunction16" port="bo_MathFunction16_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain25_1" port="bo_Gain25_1" usename="true">
+      <connect block="bo_Add4" port="bo_Add4_1"/>
+    </output>
+    <var line="bo_Gain25_1" mode="output" name="bo_Gain25_1" port="bo_Gain25_1" type="real_T"/>
+    <var line="bo_MathFunction16_1" mode="input" name="bo_MathFunction16_1" port="bo_Gain25_1" type="real_T"/>
+    <param name="Gain25_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="60" type="param">  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain25'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="209" type="task">  /* Gain: '&lt;Root&gt;/Gain25' */
+  bo_Gain25_1 = bo_P.Gain25_Gain * bo_MathFunction16_1;
+
+</code>
+    <code file="bo.c" line="363" type="init">  bo_Gain25_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Add4" type="data">
+      <var line="bo_Gain25_1" mode="input" name="bo_Gain25_1" port="bo_Add4_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction16" type="data">
+      <var line="bo_MathFunction16_1" mode="output" name="bo_MathFunction16_1" port="bo_MathFunction16_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="26" name="bo_Gain26" peinfo="0" rate="0.1">
+    <input line="bo_MathFunction17_1" port="bo_Gain26_1">
+      <connect block="bo_MathFunction17" port="bo_MathFunction17_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain26_1" port="bo_Gain26_1" usename="true">
+      <connect block="bo_Gain27" port="bo_Gain27_1"/>
+    </output>
+    <var line="bo_Gain26_1" mode="output" name="bo_Gain26_1" port="bo_Gain26_1" type="real_T"/>
+    <var line="bo_MathFunction17_1" mode="input" name="bo_MathFunction17_1" port="bo_Gain26_1" type="real_T"/>
+    <param name="Gain26_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="42" type="param">  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain26'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="182" type="task">  /* Gain: '&lt;Root&gt;/Gain26' */
+  bo_Gain26_1 = bo_P.Gain26_Gain * bo_MathFunction17_1;
+
+</code>
+    <code file="bo.c" line="354" type="init">  bo_Gain26_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain27" type="data">
+      <var line="bo_Gain26_1" mode="input" name="bo_Gain26_1" port="bo_Gain27_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction17" type="data">
+      <var line="bo_MathFunction17_1" mode="output" name="bo_MathFunction17_1" port="bo_MathFunction17_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="27" name="bo_Gain27" peinfo="0" rate="0.1">
+    <input line="bo_Gain26_1" port="bo_Gain27_1">
+      <connect block="bo_Gain26" port="bo_Gain26_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain27_1" port="bo_Gain27_1" usename="true">
+      <connect block="bo_Gain22" port="bo_Gain22_1"/>
+    </output>
+    <var line="bo_Gain27_1" mode="output" name="bo_Gain27_1" port="bo_Gain27_1" type="real_T"/>
+    <var line="bo_Gain26_1" mode="input" name="bo_Gain26_1" port="bo_Gain27_1" type="real_T"/>
+    <param name="Gain27_Gain" storage="bo_P" type="real_T" value="2.0">
+      <initcode file="bo_data.c" line="45" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/Gain27'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="185" type="task">  /* Gain: '&lt;Root&gt;/Gain27' */
+  bo_Gain27_1 = bo_P.Gain27_Gain * bo_Gain26_1;
+
+</code>
+    <code file="bo.c" line="355" type="init">  bo_Gain27_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain22" type="data">
+      <var line="bo_Gain27_1" mode="input" name="bo_Gain27_1" port="bo_Gain22_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain26" type="data">
+      <var line="bo_Gain26_1" mode="output" name="bo_Gain26_1" port="bo_Gain26_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="28" name="bo_Gain28" peinfo="0" rate="0.1">
+    <input line="bo_MathFunction15_1" port="bo_Gain28_1">
+      <connect block="bo_MathFunction15" port="bo_MathFunction15_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain28_1" port="bo_Gain28_1" usename="true">
+      <connect block="bo_Gain23" port="bo_Gain23_1"/>
+    </output>
+    <var line="bo_Gain28_1" mode="output" name="bo_Gain28_1" port="bo_Gain28_1" type="real_T"/>
+    <var line="bo_MathFunction15_1" mode="input" name="bo_MathFunction15_1" port="bo_Gain28_1" type="real_T"/>
+    <param name="Gain28_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="51" type="param">  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain28'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="197" type="task">  /* Gain: '&lt;Root&gt;/Gain28' */
+  bo_Gain28_1 = bo_P.Gain28_Gain * bo_MathFunction15_1;
+
+</code>
+    <code file="bo.c" line="359" type="init">  bo_Gain28_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain23" type="data">
+      <var line="bo_Gain28_1" mode="input" name="bo_Gain28_1" port="bo_Gain23_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction15" type="data">
+      <var line="bo_MathFunction15_1" mode="output" name="bo_MathFunction15_1" port="bo_MathFunction15_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="29" name="bo_Gain3" peinfo="1" rate="0.1">
+    <input line="bo_MathFunction4_1" port="bo_Gain3_1">
+      <connect block="bo_MathFunction4" port="bo_MathFunction4_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain3_1" port="bo_Gain3_1" usename="true">
+      <connect block="bo_MathFunction3" port="bo_MathFunction3_1"/>
+    </output>
+    <var line="bo_Gain3_1" mode="output" name="bo_Gain3_1" port="bo_Gain3_1" type="real_T"/>
+    <var line="bo_MathFunction4_1" mode="input" name="bo_MathFunction4_1" port="bo_Gain3_1" type="real_T"/>
+    <param name="Gain3_Gain" storage="bo_P" type="real_T" value="2.0">
+      <initcode file="bo_data.c" line="84" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/Gain3'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="255" type="task">  /* Gain: '&lt;Root&gt;/Gain3' */
+  bo_Gain3_1 = bo_P.Gain3_Gain * bo_MathFunction4_1;
+
+</code>
+    <code file="bo.c" line="377" type="init">  bo_Gain3_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction3" type="data">
+      <var line="bo_Gain3_1" mode="input" name="bo_Gain3_1" port="bo_MathFunction3_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction4" type="data">
+      <var line="bo_MathFunction4_1" mode="output" name="bo_MathFunction4_1" port="bo_MathFunction4_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="30" name="bo_Gain4" peinfo="1" rate="0.1">
+    <input line="bo_MathFunction3_1" port="bo_Gain4_1">
+      <connect block="bo_MathFunction3" port="bo_MathFunction3_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain4_1" port="bo_Gain4_1" usename="true">
+      <connect block="bo_Sqrt3" port="bo_Sqrt3_1"/>
+    </output>
+    <var line="bo_Gain4_1" mode="output" name="bo_Gain4_1" port="bo_Gain4_1" type="real_T"/>
+    <var line="bo_MathFunction3_1" mode="input" name="bo_MathFunction3_1" port="bo_Gain4_1" type="real_T"/>
+    <param name="Gain4_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="87" type="param">  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain4'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="261" type="task">  /* Gain: '&lt;Root&gt;/Gain4' */
+  bo_Gain4_1 = bo_P.Gain4_Gain * bo_MathFunction3_1;
+
+</code>
+    <code file="bo.c" line="379" type="init">  bo_Gain4_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Sqrt3" type="data">
+      <var line="bo_Gain4_1" mode="input" name="bo_Gain4_1" port="bo_Sqrt3_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction3" type="data">
+      <var line="bo_MathFunction3_1" mode="output" name="bo_MathFunction3_1" port="bo_MathFunction3_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="31" name="bo_Gain5" peinfo="1" rate="0.1">
+    <input line="bo_MathFunction6_1" port="bo_Gain5_1">
+      <connect block="bo_MathFunction6" port="bo_MathFunction6_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain5_1" port="bo_Gain5_1" usename="true">
+      <connect block="bo_MathFunction5" port="bo_MathFunction5_1"/>
+    </output>
+    <var line="bo_Gain5_1" mode="output" name="bo_Gain5_1" port="bo_Gain5_1" type="real_T"/>
+    <var line="bo_MathFunction6_1" mode="input" name="bo_MathFunction6_1" port="bo_Gain5_1" type="real_T"/>
+    <param name="Gain5_Gain" storage="bo_P" type="real_T" value="2.0">
+      <initcode file="bo_data.c" line="90" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/Gain5'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="274" type="task">  /* Gain: '&lt;Root&gt;/Gain5' */
+  bo_Gain5_1 = bo_P.Gain5_Gain * bo_MathFunction6_1;
+
+</code>
+    <code file="bo.c" line="382" type="init">  bo_Gain5_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction5" type="data">
+      <var line="bo_Gain5_1" mode="input" name="bo_Gain5_1" port="bo_MathFunction5_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction6" type="data">
+      <var line="bo_MathFunction6_1" mode="output" name="bo_MathFunction6_1" port="bo_MathFunction6_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="32" name="bo_Gain6" peinfo="1" rate="0.1">
+    <input line="bo_MathFunction5_1" port="bo_Gain6_1">
+      <connect block="bo_MathFunction5" port="bo_MathFunction5_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain6_1" port="bo_Gain6_1" usename="true">
+      <connect block="bo_Sqrt4" port="bo_Sqrt4_1"/>
+    </output>
+    <var line="bo_Gain6_1" mode="output" name="bo_Gain6_1" port="bo_Gain6_1" type="real_T"/>
+    <var line="bo_MathFunction5_1" mode="input" name="bo_MathFunction5_1" port="bo_Gain6_1" type="real_T"/>
+    <param name="Gain6_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="93" type="param">  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain6'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="280" type="task">  /* Gain: '&lt;Root&gt;/Gain6' */
+  bo_Gain6_1 = bo_P.Gain6_Gain * bo_MathFunction5_1;
+
+</code>
+    <code file="bo.c" line="384" type="init">  bo_Gain6_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Sqrt4" type="data">
+      <var line="bo_Gain6_1" mode="input" name="bo_Gain6_1" port="bo_Sqrt4_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction5" type="data">
+      <var line="bo_MathFunction5_1" mode="output" name="bo_MathFunction5_1" port="bo_MathFunction5_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="33" name="bo_Gain7" peinfo="1" rate="0.1">
+    <input line="bo_MathFunction8_1" port="bo_Gain7_1">
+      <connect block="bo_MathFunction8" port="bo_MathFunction8_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain7_1" port="bo_Gain7_1" usename="true">
+      <connect block="bo_MathFunction7" port="bo_MathFunction7_1"/>
+    </output>
+    <var line="bo_Gain7_1" mode="output" name="bo_Gain7_1" port="bo_Gain7_1" type="real_T"/>
+    <var line="bo_MathFunction8_1" mode="input" name="bo_MathFunction8_1" port="bo_Gain7_1" type="real_T"/>
+    <param name="Gain7_Gain" storage="bo_P" type="real_T" value="2.0">
+      <initcode file="bo_data.c" line="96" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/Gain7'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="293" type="task">  /* Gain: '&lt;Root&gt;/Gain7' */
+  bo_Gain7_1 = bo_P.Gain7_Gain * bo_MathFunction8_1;
+
+</code>
+    <code file="bo.c" line="387" type="init">  bo_Gain7_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction7" type="data">
+      <var line="bo_Gain7_1" mode="input" name="bo_Gain7_1" port="bo_MathFunction7_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction8" type="data">
+      <var line="bo_MathFunction8_1" mode="output" name="bo_MathFunction8_1" port="bo_MathFunction8_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="34" name="bo_Gain8" peinfo="1" rate="0.1">
+    <input line="bo_MathFunction7_1" port="bo_Gain8_1">
+      <connect block="bo_MathFunction7" port="bo_MathFunction7_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain8_1" port="bo_Gain8_1" usename="true">
+      <connect block="bo_Add3" port="bo_Add3_2"/>
+    </output>
+    <var line="bo_Gain8_1" mode="output" name="bo_Gain8_1" port="bo_Gain8_1" type="real_T"/>
+    <var line="bo_MathFunction7_1" mode="input" name="bo_MathFunction7_1" port="bo_Gain8_1" type="real_T"/>
+    <param name="Gain8_Gain" storage="bo_P" type="real_T" value="0.5">
+      <initcode file="bo_data.c" line="99" type="param">  0.5,                                 /* Expression: 0.5
+                                        * Referenced by: '&lt;Root&gt;/Gain8'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="299" type="task">  /* Gain: '&lt;Root&gt;/Gain8' */
+  bo_Gain8_1 = bo_P.Gain8_Gain * bo_MathFunction7_1;
+
+</code>
+    <code file="bo.c" line="389" type="init">  bo_Gain8_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Add3" type="data">
+      <var line="bo_Gain8_1" mode="input" name="bo_Gain8_1" port="bo_Add3_2" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction7" type="data">
+      <var line="bo_MathFunction7_1" mode="output" name="bo_MathFunction7_1" port="bo_MathFunction7_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Gain" id="35" name="bo_Gain9" peinfo="1" rate="0.1">
+    <input line="bo_MathFunction10_1" port="bo_Gain9_1">
+      <connect block="bo_MathFunction10" port="bo_MathFunction10_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Gain9_1" port="bo_Gain9_1" usename="true">
+      <connect block="bo_MathFunction9" port="bo_MathFunction9_1"/>
+    </output>
+    <var line="bo_Gain9_1" mode="output" name="bo_Gain9_1" port="bo_Gain9_1" type="real_T"/>
+    <var line="bo_MathFunction10_1" mode="input" name="bo_MathFunction10_1" port="bo_Gain9_1" type="real_T"/>
+    <param name="Gain9_Gain" storage="bo_P" type="real_T" value="2.0">
+      <initcode file="bo_data.c" line="102" type="param">  2.0,                                 /* Expression: 2
+                                        * Referenced by: '&lt;Root&gt;/Gain9'
+                                        */
+</initcode>
+    </param>
+    <code file="bo.c" line="315" type="task">  /* Gain: '&lt;Root&gt;/Gain9' */
+  bo_Gain9_1 = bo_P.Gain9_Gain * bo_MathFunction10_1;
+
+</code>
+    <code file="bo.c" line="393" type="init">  bo_Gain9_1 = 0.0;
+</code>
+    <performance best="168" type="task" typical="168" worst="168"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction9" type="data">
+      <var line="bo_Gain9_1" mode="input" name="bo_Gain9_1" port="bo_MathFunction9_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction10" type="data">
+      <var line="bo_MathFunction10_1" mode="output" name="bo_MathFunction10_1" port="bo_MathFunction10_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="36" name="bo_MathFunction1" peinfo="1" rate="0.1">
+    <input line="bo_Gain1_1" port="bo_MathFunction1_1">
+      <connect block="bo_Gain1" port="bo_Gain1_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction1_1" port="bo_MathFunction1_1" usename="true">
+      <connect block="bo_Add" port="bo_Add_2"/>
+    </output>
+    <var line="bo_MathFunction1_1" mode="output" name="bo_MathFunction1_1" port="bo_MathFunction1_1" type="real_T"/>
+    <var line="bo_Gain1_1" mode="input" name="bo_Gain1_1" port="bo_MathFunction1_1" type="real_T"/>
+    <code file="bo.c" line="158" type="task">  /* Math: '&lt;Root&gt;/MathFunction1' */
+  bo_MathFunction1_1 = rt_powd_snf(10.0, bo_Gain1_1);
+
+</code>
+    <code file="bo.c" line="346" type="init">  bo_MathFunction1_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Add" type="data">
+      <var line="bo_MathFunction1_1" mode="input" name="bo_MathFunction1_1" port="bo_Add_2" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain1" type="data">
+      <var line="bo_Gain1_1" mode="output" name="bo_Gain1_1" port="bo_Gain1_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="37" name="bo_MathFunction10" peinfo="1" rate="0.1">
+    <input line="bo_Sqrt5_1" port="bo_MathFunction10_1">
+      <connect block="bo_Sqrt5" port="bo_Sqrt5_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction10_1" port="bo_MathFunction10_1" usename="true">
+      <connect block="bo_Gain9" port="bo_Gain9_1"/>
+    </output>
+    <var line="bo_MathFunction10_1" mode="output" name="bo_MathFunction10_1" port="bo_MathFunction10_1" type="real_T"/>
+    <var line="bo_Sqrt5_1" mode="input" name="bo_Sqrt5_1" port="bo_MathFunction10_1" type="real_T"/>
+    <code file="bo.c" line="308" type="task">  /* Math: '&lt;Root&gt;/MathFunction10'
+   *
+   * About '&lt;Root&gt;/MathFunction10':
+   *  Operator: log10
+   */
+  bo_MathFunction10_1 = log10(bo_Sqrt5_1);
+
+</code>
+    <code file="bo.c" line="392" type="init">  bo_MathFunction10_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain9" type="data">
+      <var line="bo_MathFunction10_1" mode="input" name="bo_MathFunction10_1" port="bo_Gain9_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Sqrt5" type="data">
+      <var line="bo_Sqrt5_1" mode="output" name="bo_Sqrt5_1" port="bo_Sqrt5_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="38" name="bo_MathFunction11" peinfo="0" rate="0.1">
+    <input line="bo_MathFunction14_1" port="bo_MathFunction11_1">
+      <connect block="bo_MathFunction14" port="bo_MathFunction14_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction11_1" port="bo_MathFunction11_1" usename="true">
+      <connect block="bo_Gain21" port="bo_Gain21_1"/>
+    </output>
+    <var line="bo_MathFunction11_1" mode="output" name="bo_MathFunction11_1" port="bo_MathFunction11_1" type="real_T"/>
+    <var line="bo_MathFunction14_1" mode="input" name="bo_MathFunction14_1" port="bo_MathFunction11_1" type="real_T"/>
+    <code file="bo.c" line="227" type="task">  /* Math: '&lt;Root&gt;/MathFunction11' */
+  bo_MathFunction11_1 = rt_powd_snf(10.0, bo_MathFunction14_1);
+
+</code>
+    <code file="bo.c" line="369" type="init">  bo_MathFunction11_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain21" type="data">
+      <var line="bo_MathFunction11_1" mode="input" name="bo_MathFunction11_1" port="bo_Gain21_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction14" type="data">
+      <var line="bo_MathFunction14_1" mode="output" name="bo_MathFunction14_1" port="bo_MathFunction14_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="39" name="bo_MathFunction12" peinfo="0" rate="0.1">
+    <input line="bo_Gain17_1" port="bo_MathFunction12_1">
+      <connect block="bo_Gain17" port="bo_Gain17_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction12_1" port="bo_MathFunction12_1" usename="true">
+      <connect block="bo_Gain18" port="bo_Gain18_1"/>
+    </output>
+    <var line="bo_MathFunction12_1" mode="output" name="bo_MathFunction12_1" port="bo_MathFunction12_1" type="real_T"/>
+    <var line="bo_Gain17_1" mode="input" name="bo_Gain17_1" port="bo_MathFunction12_1" type="real_T"/>
+    <code file="bo.c" line="239" type="task">  /* Math: '&lt;Root&gt;/MathFunction12' */
+  bo_MathFunction12_1 = rt_powd_snf(10.0, bo_Gain17_1);
+
+</code>
+    <code file="bo.c" line="373" type="init">  bo_MathFunction12_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain18" type="data">
+      <var line="bo_MathFunction12_1" mode="input" name="bo_MathFunction12_1" port="bo_Gain18_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain17" type="data">
+      <var line="bo_Gain17_1" mode="output" name="bo_Gain17_1" port="bo_Gain17_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="40" name="bo_MathFunction13" peinfo="0" rate="0.1">
+    <input line="bo_Add2_1" port="bo_MathFunction13_1">
+      <connect block="bo_Add2" port="bo_Add2_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction13_1" port="bo_MathFunction13_1" usename="true">
+      <connect block="bo_Gain19" port="bo_Gain19_1"/>
+    </output>
+    <var line="bo_MathFunction13_1" mode="output" name="bo_MathFunction13_1" port="bo_MathFunction13_1" type="real_T"/>
+    <var line="bo_Add2_1" mode="input" name="bo_Add2_1" port="bo_MathFunction13_1" type="real_T"/>
+    <code file="bo.c" line="212" type="task">  /* Math: '&lt;Root&gt;/MathFunction13' */
+  bo_MathFunction13_1 = rt_powd_snf(10.0, bo_Add2_1);
+
+</code>
+    <code file="bo.c" line="364" type="init">  bo_MathFunction13_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain19" type="data">
+      <var line="bo_MathFunction13_1" mode="input" name="bo_MathFunction13_1" port="bo_Gain19_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Add2" type="data">
+      <var line="bo_Add2_1" mode="output" name="bo_Add2_1" port="bo_Add2_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="41" name="bo_MathFunction14" peinfo="0" rate="0.1">
+    <input line="bo_Gain15_1" port="bo_MathFunction14_1">
+      <connect block="bo_Gain15" port="bo_Gain15_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction14_1" port="bo_MathFunction14_1" usename="true">
+      <connect block="bo_MathFunction11" port="bo_MathFunction11_1"/>
+    </output>
+    <var line="bo_MathFunction14_1" mode="output" name="bo_MathFunction14_1" port="bo_MathFunction14_1" type="real_T"/>
+    <var line="bo_Gain15_1" mode="input" name="bo_Gain15_1" port="bo_MathFunction14_1" type="real_T"/>
+    <code file="bo.c" line="224" type="task">  /* Math: '&lt;Root&gt;/MathFunction14' */
+  bo_MathFunction14_1 = rt_powd_snf(10.0, bo_Gain15_1);
+
+</code>
+    <code file="bo.c" line="368" type="init">  bo_MathFunction14_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction11" type="data">
+      <var line="bo_MathFunction14_1" mode="input" name="bo_MathFunction14_1" port="bo_MathFunction11_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain15" type="data">
+      <var line="bo_Gain15_1" mode="output" name="bo_Gain15_1" port="bo_Gain15_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="42" name="bo_MathFunction15" peinfo="0" rate="0.1">
+    <input line="bo_MathFunction18_1" port="bo_MathFunction15_1">
+      <connect block="bo_MathFunction18" port="bo_MathFunction18_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction15_1" port="bo_MathFunction15_1" usename="true">
+      <connect block="bo_Gain28" port="bo_Gain28_1"/>
+    </output>
+    <var line="bo_MathFunction15_1" mode="output" name="bo_MathFunction15_1" port="bo_MathFunction15_1" type="real_T"/>
+    <var line="bo_MathFunction18_1" mode="input" name="bo_MathFunction18_1" port="bo_MathFunction15_1" type="real_T"/>
+    <code file="bo.c" line="194" type="task">  /* Math: '&lt;Root&gt;/MathFunction15' */
+  bo_MathFunction15_1 = rt_powd_snf(10.0, bo_MathFunction18_1);
+
+</code>
+    <code file="bo.c" line="358" type="init">  bo_MathFunction15_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain28" type="data">
+      <var line="bo_MathFunction15_1" mode="input" name="bo_MathFunction15_1" port="bo_Gain28_1" type="real_T"/>
+    </forward>
+    <backward block="bo_MathFunction18" type="data">
+      <var line="bo_MathFunction18_1" mode="output" name="bo_MathFunction18_1" port="bo_MathFunction18_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="43" name="bo_MathFunction16" peinfo="0" rate="0.1">
+    <input line="bo_Gain24_1" port="bo_MathFunction16_1">
+      <connect block="bo_Gain24" port="bo_Gain24_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction16_1" port="bo_MathFunction16_1" usename="true">
+      <connect block="bo_Gain25" port="bo_Gain25_1"/>
+    </output>
+    <var line="bo_MathFunction16_1" mode="output" name="bo_MathFunction16_1" port="bo_MathFunction16_1" type="real_T"/>
+    <var line="bo_Gain24_1" mode="input" name="bo_Gain24_1" port="bo_MathFunction16_1" type="real_T"/>
+    <code file="bo.c" line="206" type="task">  /* Math: '&lt;Root&gt;/MathFunction16' */
+  bo_MathFunction16_1 = rt_powd_snf(10.0, bo_Gain24_1);
+
+</code>
+    <code file="bo.c" line="362" type="init">  bo_MathFunction16_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain25" type="data">
+      <var line="bo_MathFunction16_1" mode="input" name="bo_MathFunction16_1" port="bo_Gain25_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain24" type="data">
+      <var line="bo_Gain24_1" mode="output" name="bo_Gain24_1" port="bo_Gain24_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="44" name="bo_MathFunction17" peinfo="0" rate="0.1">
+    <input line="bo_Add2_1" port="bo_MathFunction17_1">
+      <connect block="bo_Add2" port="bo_Add2_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction17_1" port="bo_MathFunction17_1" usename="true">
+      <connect block="bo_Gain26" port="bo_Gain26_1"/>
+    </output>
+    <var line="bo_MathFunction17_1" mode="output" name="bo_MathFunction17_1" port="bo_MathFunction17_1" type="real_T"/>
+    <var line="bo_Add2_1" mode="input" name="bo_Add2_1" port="bo_MathFunction17_1" type="real_T"/>
+    <code file="bo.c" line="179" type="task">  /* Math: '&lt;Root&gt;/MathFunction17' */
+  bo_MathFunction17_1 = rt_powd_snf(10.0, bo_Add2_1);
+
+</code>
+    <code file="bo.c" line="353" type="init">  bo_MathFunction17_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain26" type="data">
+      <var line="bo_MathFunction17_1" mode="input" name="bo_MathFunction17_1" port="bo_Gain26_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Add2" type="data">
+      <var line="bo_Add2_1" mode="output" name="bo_Add2_1" port="bo_Add2_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="45" name="bo_MathFunction18" peinfo="0" rate="0.1">
+    <input line="bo_Gain22_1" port="bo_MathFunction18_1">
+      <connect block="bo_Gain22" port="bo_Gain22_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction18_1" port="bo_MathFunction18_1" usename="true">
+      <connect block="bo_MathFunction15" port="bo_MathFunction15_1"/>
+    </output>
+    <var line="bo_MathFunction18_1" mode="output" name="bo_MathFunction18_1" port="bo_MathFunction18_1" type="real_T"/>
+    <var line="bo_Gain22_1" mode="input" name="bo_Gain22_1" port="bo_MathFunction18_1" type="real_T"/>
+    <code file="bo.c" line="191" type="task">  /* Math: '&lt;Root&gt;/MathFunction18' */
+  bo_MathFunction18_1 = rt_powd_snf(10.0, bo_Gain22_1);
+
+</code>
+    <code file="bo.c" line="357" type="init">  bo_MathFunction18_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction15" type="data">
+      <var line="bo_MathFunction18_1" mode="input" name="bo_MathFunction18_1" port="bo_MathFunction15_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain22" type="data">
+      <var line="bo_Gain22_1" mode="output" name="bo_Gain22_1" port="bo_Gain22_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="46" name="bo_MathFunction2" peinfo="1" rate="0.1">
+    <input line="bo_Sqrt1_1" port="bo_MathFunction2_1">
+      <connect block="bo_Sqrt1" port="bo_Sqrt1_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction2_1" port="bo_MathFunction2_1" usename="true">
+      <connect block="bo_Gain1" port="bo_Gain1_1"/>
+    </output>
+    <var line="bo_MathFunction2_1" mode="output" name="bo_MathFunction2_1" port="bo_MathFunction2_1" type="real_T"/>
+    <var line="bo_Sqrt1_1" mode="input" name="bo_Sqrt1_1" port="bo_MathFunction2_1" type="real_T"/>
+    <code file="bo.c" line="148" type="task">  /* Math: '&lt;Root&gt;/MathFunction2'
+   *
+   * About '&lt;Root&gt;/MathFunction2':
+   *  Operator: log10
+   */
+  bo_MathFunction2_1 = log10(bo_Sqrt1_1);
+
+</code>
+    <code file="bo.c" line="344" type="init">  bo_MathFunction2_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain1" type="data">
+      <var line="bo_MathFunction2_1" mode="input" name="bo_MathFunction2_1" port="bo_Gain1_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Sqrt1" type="data">
+      <var line="bo_Sqrt1_1" mode="output" name="bo_Sqrt1_1" port="bo_Sqrt1_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="47" name="bo_MathFunction3" peinfo="1" rate="0.1">
+    <input line="bo_Gain3_1" port="bo_MathFunction3_1">
+      <connect block="bo_Gain3" port="bo_Gain3_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction3_1" port="bo_MathFunction3_1" usename="true">
+      <connect block="bo_Gain4" port="bo_Gain4_1"/>
+    </output>
+    <var line="bo_MathFunction3_1" mode="output" name="bo_MathFunction3_1" port="bo_MathFunction3_1" type="real_T"/>
+    <var line="bo_Gain3_1" mode="input" name="bo_Gain3_1" port="bo_MathFunction3_1" type="real_T"/>
+    <code file="bo.c" line="258" type="task">  /* Math: '&lt;Root&gt;/MathFunction3' */
+  bo_MathFunction3_1 = rt_powd_snf(10.0, bo_Gain3_1);
+
+</code>
+    <code file="bo.c" line="378" type="init">  bo_MathFunction3_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain4" type="data">
+      <var line="bo_MathFunction3_1" mode="input" name="bo_MathFunction3_1" port="bo_Gain4_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain3" type="data">
+      <var line="bo_Gain3_1" mode="output" name="bo_Gain3_1" port="bo_Gain3_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="48" name="bo_MathFunction4" peinfo="1" rate="0.1">
+    <input line="bo_Sqrt2_1" port="bo_MathFunction4_1">
+      <connect block="bo_Sqrt2" port="bo_Sqrt2_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction4_1" port="bo_MathFunction4_1" usename="true">
+      <connect block="bo_Gain3" port="bo_Gain3_1"/>
+    </output>
+    <var line="bo_MathFunction4_1" mode="output" name="bo_MathFunction4_1" port="bo_MathFunction4_1" type="real_T"/>
+    <var line="bo_Sqrt2_1" mode="input" name="bo_Sqrt2_1" port="bo_MathFunction4_1" type="real_T"/>
+    <code file="bo.c" line="248" type="task">  /* Math: '&lt;Root&gt;/MathFunction4'
+   *
+   * About '&lt;Root&gt;/MathFunction4':
+   *  Operator: log10
+   */
+  bo_MathFunction4_1 = log10(bo_Sqrt2_1);
+
+</code>
+    <code file="bo.c" line="376" type="init">  bo_MathFunction4_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain3" type="data">
+      <var line="bo_MathFunction4_1" mode="input" name="bo_MathFunction4_1" port="bo_Gain3_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Sqrt2" type="data">
+      <var line="bo_Sqrt2_1" mode="output" name="bo_Sqrt2_1" port="bo_Sqrt2_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="49" name="bo_MathFunction5" peinfo="1" rate="0.1">
+    <input line="bo_Gain5_1" port="bo_MathFunction5_1">
+      <connect block="bo_Gain5" port="bo_Gain5_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction5_1" port="bo_MathFunction5_1" usename="true">
+      <connect block="bo_Gain6" port="bo_Gain6_1"/>
+    </output>
+    <var line="bo_MathFunction5_1" mode="output" name="bo_MathFunction5_1" port="bo_MathFunction5_1" type="real_T"/>
+    <var line="bo_Gain5_1" mode="input" name="bo_Gain5_1" port="bo_MathFunction5_1" type="real_T"/>
+    <code file="bo.c" line="277" type="task">  /* Math: '&lt;Root&gt;/MathFunction5' */
+  bo_MathFunction5_1 = rt_powd_snf(10.0, bo_Gain5_1);
+
+</code>
+    <code file="bo.c" line="383" type="init">  bo_MathFunction5_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain6" type="data">
+      <var line="bo_MathFunction5_1" mode="input" name="bo_MathFunction5_1" port="bo_Gain6_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain5" type="data">
+      <var line="bo_Gain5_1" mode="output" name="bo_Gain5_1" port="bo_Gain5_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="50" name="bo_MathFunction6" peinfo="1" rate="0.1">
+    <input line="bo_Sqrt3_1" port="bo_MathFunction6_1">
+      <connect block="bo_Sqrt3" port="bo_Sqrt3_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction6_1" port="bo_MathFunction6_1" usename="true">
+      <connect block="bo_Gain5" port="bo_Gain5_1"/>
+    </output>
+    <var line="bo_MathFunction6_1" mode="output" name="bo_MathFunction6_1" port="bo_MathFunction6_1" type="real_T"/>
+    <var line="bo_Sqrt3_1" mode="input" name="bo_Sqrt3_1" port="bo_MathFunction6_1" type="real_T"/>
+    <code file="bo.c" line="267" type="task">  /* Math: '&lt;Root&gt;/MathFunction6'
+   *
+   * About '&lt;Root&gt;/MathFunction6':
+   *  Operator: log10
+   */
+  bo_MathFunction6_1 = log10(bo_Sqrt3_1);
+
+</code>
+    <code file="bo.c" line="381" type="init">  bo_MathFunction6_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain5" type="data">
+      <var line="bo_MathFunction6_1" mode="input" name="bo_MathFunction6_1" port="bo_Gain5_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Sqrt3" type="data">
+      <var line="bo_Sqrt3_1" mode="output" name="bo_Sqrt3_1" port="bo_Sqrt3_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="51" name="bo_MathFunction7" peinfo="1" rate="0.1">
+    <input line="bo_Gain7_1" port="bo_MathFunction7_1">
+      <connect block="bo_Gain7" port="bo_Gain7_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction7_1" port="bo_MathFunction7_1" usename="true">
+      <connect block="bo_Gain8" port="bo_Gain8_1"/>
+    </output>
+    <var line="bo_MathFunction7_1" mode="output" name="bo_MathFunction7_1" port="bo_MathFunction7_1" type="real_T"/>
+    <var line="bo_Gain7_1" mode="input" name="bo_Gain7_1" port="bo_MathFunction7_1" type="real_T"/>
+    <code file="bo.c" line="296" type="task">  /* Math: '&lt;Root&gt;/MathFunction7' */
+  bo_MathFunction7_1 = rt_powd_snf(10.0, bo_Gain7_1);
+
+</code>
+    <code file="bo.c" line="388" type="init">  bo_MathFunction7_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain8" type="data">
+      <var line="bo_MathFunction7_1" mode="input" name="bo_MathFunction7_1" port="bo_Gain8_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain7" type="data">
+      <var line="bo_Gain7_1" mode="output" name="bo_Gain7_1" port="bo_Gain7_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="52" name="bo_MathFunction8" peinfo="1" rate="0.1">
+    <input line="bo_Sqrt4_1" port="bo_MathFunction8_1">
+      <connect block="bo_Sqrt4" port="bo_Sqrt4_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction8_1" port="bo_MathFunction8_1" usename="true">
+      <connect block="bo_Gain7" port="bo_Gain7_1"/>
+    </output>
+    <var line="bo_MathFunction8_1" mode="output" name="bo_MathFunction8_1" port="bo_MathFunction8_1" type="real_T"/>
+    <var line="bo_Sqrt4_1" mode="input" name="bo_Sqrt4_1" port="bo_MathFunction8_1" type="real_T"/>
+    <code file="bo.c" line="286" type="task">  /* Math: '&lt;Root&gt;/MathFunction8'
+   *
+   * About '&lt;Root&gt;/MathFunction8':
+   *  Operator: log10
+   */
+  bo_MathFunction8_1 = log10(bo_Sqrt4_1);
+
+</code>
+    <code file="bo.c" line="386" type="init">  bo_MathFunction8_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain7" type="data">
+      <var line="bo_MathFunction8_1" mode="input" name="bo_MathFunction8_1" port="bo_Gain7_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Sqrt4" type="data">
+      <var line="bo_Sqrt4_1" mode="output" name="bo_Sqrt4_1" port="bo_Sqrt4_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Math" id="53" name="bo_MathFunction9" peinfo="1" rate="0.1">
+    <input line="bo_Gain9_1" port="bo_MathFunction9_1">
+      <connect block="bo_Gain9" port="bo_Gain9_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_MathFunction9_1" port="bo_MathFunction9_1" usename="true">
+      <connect block="bo_Gain10" port="bo_Gain10_1"/>
+    </output>
+    <var line="bo_MathFunction9_1" mode="output" name="bo_MathFunction9_1" port="bo_MathFunction9_1" type="real_T"/>
+    <var line="bo_Gain9_1" mode="input" name="bo_Gain9_1" port="bo_MathFunction9_1" type="real_T"/>
+    <code file="bo.c" line="318" type="task">  /* Math: '&lt;Root&gt;/MathFunction9' */
+  bo_MathFunction9_1 = rt_powd_snf(10.0, bo_Gain9_1);
+
+</code>
+    <code file="bo.c" line="394" type="init">  bo_MathFunction9_1 = 0.0;
+</code>
+    <performance best="392" type="task" typical="538.478" worst="1318"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain10" type="data">
+      <var line="bo_MathFunction9_1" mode="input" name="bo_MathFunction9_1" port="bo_Gain10_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain9" type="data">
+      <var line="bo_Gain9_1" mode="output" name="bo_Gain9_1" port="bo_Gain9_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Sqrt" id="54" name="bo_Sqrt1" peinfo="1" rate="0.1">
+    <input line="bo_In1_1" port="bo_Sqrt1_1">
+      <connect block="bo_In1" port="bo_In1_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Sqrt1_1" port="bo_Sqrt1_1" usename="true">
+      <connect block="bo_Gain" port="bo_Gain_1"/>
+      <connect block="bo_Gain11" port="bo_Gain11_1"/>
+      <connect block="bo_MathFunction2" port="bo_MathFunction2_1"/>
+    </output>
+    <var line="bo_Sqrt1_1" mode="output" name="bo_Sqrt1_1" port="bo_Sqrt1_1" type="real_T"/>
+    <var line="bo_In1_1" mode="extin" name="bo_In1_1" port="bo_Sqrt1_1" type="real_T"/>
+    <code file="bo.c" line="131" type="task">  /* Sqrt: '&lt;Root&gt;/Sqrt1' incorporates:
+   *  Inport: '&lt;Root&gt;/In1'
+   */
+  bo_Sqrt1_1 = sqrt(bo_In1_1);
+
+</code>
+    <code file="bo.c" line="339" type="init">  bo_Sqrt1_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain" type="data">
+      <var line="bo_Sqrt1_1" mode="input" name="bo_Sqrt1_1" port="bo_Gain_1" type="real_T"/>
+    </forward>
+    <forward block="bo_Gain11" type="data">
+      <var line="bo_Sqrt1_1" mode="input" name="bo_Sqrt1_1" port="bo_Gain11_1" type="real_T"/>
+    </forward>
+    <forward block="bo_MathFunction2" type="data">
+      <var line="bo_Sqrt1_1" mode="input" name="bo_Sqrt1_1" port="bo_MathFunction2_1" type="real_T"/>
+    </forward>
+    <backward block="bo_In1" type="port">
+      <var line="bo_In1_1" mode="output" name="bo_In1_1" port="bo_In1_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Sqrt" id="55" name="bo_Sqrt2" peinfo="1" rate="0.1">
+    <input line="bo_Add_1" port="bo_Sqrt2_1">
+      <connect block="bo_Add" port="bo_Add_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Sqrt2_1" port="bo_Sqrt2_1" usename="true">
+      <connect block="bo_Gain12" port="bo_Gain12_1"/>
+      <connect block="bo_Gain13" port="bo_Gain13_1"/>
+      <connect block="bo_MathFunction4" port="bo_MathFunction4_1"/>
+    </output>
+    <var line="bo_Sqrt2_1" mode="output" name="bo_Sqrt2_1" port="bo_Sqrt2_1" type="real_T"/>
+    <var line="bo_Add_1" mode="input" name="bo_Add_1" port="bo_Sqrt2_1" type="real_T"/>
+    <code file="bo.c" line="164" type="task">  /* Sqrt: '&lt;Root&gt;/Sqrt2' */
+  bo_Sqrt2_1 = sqrt(bo_Add_1);
+
+</code>
+    <code file="bo.c" line="348" type="init">  bo_Sqrt2_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_Gain12" type="data">
+      <var line="bo_Sqrt2_1" mode="input" name="bo_Sqrt2_1" port="bo_Gain12_1" type="real_T"/>
+    </forward>
+    <forward block="bo_Gain13" type="data">
+      <var line="bo_Sqrt2_1" mode="input" name="bo_Sqrt2_1" port="bo_Gain13_1" type="real_T"/>
+    </forward>
+    <forward block="bo_MathFunction4" type="data">
+      <var line="bo_Sqrt2_1" mode="input" name="bo_Sqrt2_1" port="bo_MathFunction4_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Add" type="data">
+      <var line="bo_Add_1" mode="output" name="bo_Add_1" port="bo_Add_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Sqrt" id="56" name="bo_Sqrt3" peinfo="1" rate="0.1">
+    <input line="bo_Gain4_1" port="bo_Sqrt3_1">
+      <connect block="bo_Gain4" port="bo_Gain4_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Sqrt3_1" port="bo_Sqrt3_1" usename="true">
+      <connect block="bo_MathFunction6" port="bo_MathFunction6_1"/>
+    </output>
+    <var line="bo_Sqrt3_1" mode="output" name="bo_Sqrt3_1" port="bo_Sqrt3_1" type="real_T"/>
+    <var line="bo_Gain4_1" mode="input" name="bo_Gain4_1" port="bo_Sqrt3_1" type="real_T"/>
+    <code file="bo.c" line="264" type="task">  /* Sqrt: '&lt;Root&gt;/Sqrt3' */
+  bo_Sqrt3_1 = sqrt(bo_Gain4_1);
+
+</code>
+    <code file="bo.c" line="380" type="init">  bo_Sqrt3_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction6" type="data">
+      <var line="bo_Sqrt3_1" mode="input" name="bo_Sqrt3_1" port="bo_MathFunction6_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain4" type="data">
+      <var line="bo_Gain4_1" mode="output" name="bo_Gain4_1" port="bo_Gain4_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Sqrt" id="57" name="bo_Sqrt4" peinfo="1" rate="0.1">
+    <input line="bo_Gain6_1" port="bo_Sqrt4_1">
+      <connect block="bo_Gain6" port="bo_Gain6_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Sqrt4_1" port="bo_Sqrt4_1" usename="true">
+      <connect block="bo_MathFunction8" port="bo_MathFunction8_1"/>
+    </output>
+    <var line="bo_Sqrt4_1" mode="output" name="bo_Sqrt4_1" port="bo_Sqrt4_1" type="real_T"/>
+    <var line="bo_Gain6_1" mode="input" name="bo_Gain6_1" port="bo_Sqrt4_1" type="real_T"/>
+    <code file="bo.c" line="283" type="task">  /* Sqrt: '&lt;Root&gt;/Sqrt4' */
+  bo_Sqrt4_1 = sqrt(bo_Gain6_1);
+
+</code>
+    <code file="bo.c" line="385" type="init">  bo_Sqrt4_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction8" type="data">
+      <var line="bo_Sqrt4_1" mode="input" name="bo_Sqrt4_1" port="bo_MathFunction8_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Gain6" type="data">
+      <var line="bo_Gain6_1" mode="output" name="bo_Gain6_1" port="bo_Gain6_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Sqrt" id="58" name="bo_Sqrt5" peinfo="1" rate="0.1">
+    <input line="bo_Add3_1" port="bo_Sqrt5_1">
+      <connect block="bo_Add3" port="bo_Add3_1"/>
+    </input>
+    <output dimensions="[1 1]" line="bo_Sqrt5_1" port="bo_Sqrt5_1" usename="true">
+      <connect block="bo_MathFunction10" port="bo_MathFunction10_1"/>
+    </output>
+    <var line="bo_Sqrt5_1" mode="output" name="bo_Sqrt5_1" port="bo_Sqrt5_1" type="real_T"/>
+    <var line="bo_Add3_1" mode="input" name="bo_Add3_1" port="bo_Sqrt5_1" type="real_T"/>
+    <code file="bo.c" line="305" type="task">  /* Sqrt: '&lt;Root&gt;/Sqrt5' */
+  bo_Sqrt5_1 = sqrt(bo_Add3_1);
+
+</code>
+    <code file="bo.c" line="391" type="init">  bo_Sqrt5_1 = 0.0;
+</code>
+    <performance best="163" type="task" typical="163" worst="163"/>
+    <performance best="92" type="init" typical="92" worst="92"/>
+    <forward block="bo_MathFunction10" type="data">
+      <var line="bo_Sqrt5_1" mode="input" name="bo_Sqrt5_1" port="bo_MathFunction10_1" type="real_T"/>
+    </forward>
+    <backward block="bo_Add3" type="data">
+      <var line="bo_Add3_1" mode="output" name="bo_Add3_1" port="bo_Add3_1" type="real_T"/>
+    </backward>
+  </block>
+  <block blocktype="Outport" id="59" name="bo_Out1" peinfo="1" rate="0.1">
+    <input line="bo_Gain10_1" port="bo_Out1_1">
+      <connect block="bo_Gain10" port="bo_Gain10_1"/>
+    </input>
+    <var line="bo_Gain10_1" mode="input" name="bo_Gain10_1" port="bo_Out1_1" type="real_T"/>
+    <backward block="bo_Gain10" type="port">
+      <var line="bo_Gain10_1" mode="output" name="bo_Gain10_1" port="bo_Gain10_1" type="real_T"/>
+    </backward>
+  </block>
+  <code type="common-init">  rt_InitInfAndNaN(sizeof(real_T));
+  rtmSetErrorStatus(bo_M, (NULL));
+</code>
+  <code type="rt-macro">/* Macros for accessing real-time model data structure */
+#ifndef rtmGetErrorStatus
+# define rtmGetErrorStatus(rtm)        ((rtm)-&gt;errorStatus)
+#endif
+
+#ifndef rtmSetErrorStatus
+# define rtmSetErrorStatus(rtm, val)   ((rtm)-&gt;errorStatus = (val))
+#endif
+
+</code>
+  <code type="rt-type">/* Real-time Model Data Structure */
+struct tag_RTM_bo_T {
+  const char_T * volatile errorStatus;
+};
+</code>
+  <object kind="rtm-extern" name="bo_M" type="extern RT_MODEL_bo_T * const"/>
+  <object kind="rtm-object" name="bo_M_" type="RT_MODEL_bo_T"/>
+  <object kind="rtm-pointer" name="bo_M" type="RT_MODEL_bo_T * const" value="&amp;bo_M_"/>
+  <includes file="&lt;math.h>" from="bo.h" index="0"/>
+  <includes file="&lt;stddef.h>" from="bo.h" index="1"/>
+  <includes file="&quot;rtwtypes.h&quot;" from="bo.h" index="2"/>
+  <includes file="&quot;bo_types.h&quot;" from="bo.h" index="3"/>
+  <includes file="&quot;rt_nonfinite.h&quot;" from="bo.h" index="4"/>
+  <includes file="&quot;rtGetInf.h&quot;" from="bo.h" index="5"/>
+  <includes file="&quot;bo.h&quot;" from="bo.c" index="6" mark="true"/>
+  <includes file="&quot;bo_private.h&quot;" from="bo.c" index="7"/>
+  <function name="rt_powd_snf" type="defn">
+    <code line="82" type="func">real_T rt_powd_snf(real_T u0, real_T u1)
+{
+  real_T y;
+  real_T tmp;
+  real_T tmp_0;
+  if (rtIsNaN(u0) || rtIsNaN(u1)) {
+    y = (rtNaN);
+  } else {
+    tmp = fabs(u0);
+    tmp_0 = fabs(u1);
+    if (rtIsInf(u1)) {
+      if (tmp == 1.0) {
+        y = (rtNaN);
+      } else if (tmp &gt; 1.0) {
+        if (u1 &gt; 0.0) {
+          y = (rtInf);
+        } else {
+          y = 0.0;
+        }
+      } else if (u1 &gt; 0.0) {
+        y = 0.0;
+      } else {
+        y = (rtInf);
+      }
+    } else if (tmp_0 == 0.0) {
+      y = 1.0;
+    } else if (tmp_0 == 1.0) {
+      if (u1 &gt; 0.0) {
+        y = u0;
+      } else {
+        y = 1.0 / u0;
+      }
+    } else if (u1 == 2.0) {
+      y = u0 * u0;
+    } else if ((u1 == 0.5) &amp;&amp; (u0 &gt;= 0.0)) {
+      y = sqrt(u0);
+    } else if ((u0 &lt; 0.0) &amp;&amp; (u1 &gt; floor(u1))) {
+      y = (rtNaN);
+    } else {
+      y = pow(u0, u1);
+    }
+  }
+
+  return y;
+}
+</code>
+  </function>
+</SM:blocks>

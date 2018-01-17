@@ -47,8 +47,9 @@ plotly.plot()
 ## Getting Started
 
 ```
-git clone https://github.com/hyde2able/SimulinkUtils.git & cd SimulinkUtils
+git clone https://github.com/nu-manycore/Lab.git & cd Lab/FlowVisualizer
 pip install -r requirements.txt
+# settings.ymlを編集
 python main.py # 実行
 ```
 

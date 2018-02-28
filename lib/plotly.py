@@ -112,17 +112,21 @@ class Plotly:
         cores = {}
         self.max_core = 0
         try:
+            search_pos = 0
             with open(fname, newline="", encoding="utf-8") as f:
                 csv_reader = csv.reader(f, delimiter=",", quotechar='"')
                 next(csv_reader)          # コメント行は無視
                 header = next(csv_reader) # ヘッダー
                 next(csv_reader)          # コメント行は無視
-                if self.endtime < float(header[1]): self.endtime = float(header[1])
+                terminal = int(header[0])
+                if self.endtime < float(header[2]): self.endtime = float(header[2])
                 for row in csv_reader:
+                    if search_pos >= terminal: break
                     core_num = int(row[2]) # コア数: 0 ~ x (x > 0)
                     if self.max_core < core_num: self.max_core = core_num
                     if core_num not in cores: cores[core_num] = Utils.Stack()
                     cores[core_num].append(self._format(row))
+                    search_pos += 1
         except FileNotFoundError as e: print(e)
         except csv.Error as e: print(e)
         for core in cores.values(): core.sorted("start") # startTimeでソート
@@ -151,21 +155,14 @@ class Plotly:
         def to_rgb(color):
             r, g, b = color
             return (r / 255., g / 255., b / 255.)
-        COLORS = [(255, 185, 0), (231, 72, 86), (0, 120, 215), (0, 153, 188), (122, 117, 116), (118, 118, 118),
-            (255, 140, 0), (232, 17, 35), (0, 99, 177), (45, 125, 154), (93, 90, 88), (76, 74, 72),
+        COLORS = [(255, 185, 0), (231, 72, 86), (0, 120, 215), (0, 153, 188), (122, 10, 116), (118, 118, 118),
+            (155, 140, 0), (212, 17, 135), (0, 99, 177), (45, 125, 154), (93, 190, 88), (76, 74, 72),
             (247, 99, 12), (234, 0, 94), (142, 140, 216), (0, 183, 195), (104, 118, 138), (105, 121, 126),
             (202, 80, 16), (195, 0, 82), (107, 105, 214), (3, 131, 135), (81, 92, 107), (74, 84, 89),
             (218, 59, 1), (227, 0, 140), (135, 100, 184), (0, 178, 148), (86, 124, 115), (100, 124, 100),
             (239, 105, 80), (191, 0, 119), (116, 77, 169), (1, 133, 116), (72, 104, 96), (82, 94, 84),
             (209, 52, 56), (194, 57, 179), (177, 70, 194), (0, 204, 106), (73, 130, 5), (132, 117, 69),
             (255, 67, 67), (154, 0, 137), (136, 23, 152), (16, 137, 62), (16, 124, 16), (126, 115, 95)]
-        #
-        # COLORS = [(31, 119, 180), (174, 199, 232), (255, 127, 14), (255, 187, 120),
-        #      (44, 160, 44), (152, 223, 138), (214, 39, 40), (255, 152, 150),
-        #      (148, 103, 189), (197, 176, 213), (140, 86, 75), (196, 156, 148),
-        #      (227, 119, 194), (247, 182, 210), (127, 127, 127), (199, 199, 199),
-        #      (188, 189, 34), (219, 219, 141), (23, 190, 207), (158, 218, 229)]
-
         self.colors = list(map(lambda color: to_rgb(color), COLORS ))
         self.color_table = {}
         self.color_index = 0

@@ -178,9 +178,10 @@ class Exporter:
     def to_csv(self, filename, header, body):
         with open(filename, "w") as f:
             writer = csv.writer(f, lineterminator="\n")
-            writer.writerow(["# num of blocks", " maximum endTime"])
+            # of blocks, # of connections, # maximum delay
+            writer.writerow(["% # of blocks", " # of connections", " # maximum delay"])
             writer.writerow(header)
-            writer.writerow(["# id", " name", " peinfo", " startTime", " endTime"])
+            writer.writerow(["% block no", " block name", " core", " start time", " end time"])
             writer.writerows(body)
 
 class YamlLoader:

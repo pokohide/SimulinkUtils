@@ -27,7 +27,7 @@ class GraphManager:
         self._scan_blocks(rootBlocks)
         self._set_base_rate()
         self._set_startBlocks()
-        # self._print(self.blockTable)
+        self._print(self.blockTable)
 
     def _scan_blocks(self, blockNodes):
         "BLXMLのブロックを解析する"

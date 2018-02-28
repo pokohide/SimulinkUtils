@@ -142,7 +142,7 @@ class FlowDecider:
         return importerName
 
     def _csv_header(self):
-        return [len(self.blockTable), self.maxEndTime]
+        return [len(self.blockTable), 0, self.maxEndTime]
         # return ["id", "name", "peinfo", "rate", "startTime", "endTime"]
 
     def _csv_body(self):

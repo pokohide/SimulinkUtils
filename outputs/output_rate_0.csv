@@ -1,16 +1,19 @@
-# num of blocks, maximum endTime
-13,906.0
-# id, name, peinfo, startTime, endTime
-1,simplemodel_In1,0,124.0,124.0
-2,simplemodel_MathFunction,0,287.0,450.0
-3,simplemodel_Product,0,450.0,629.0
-4,simplemodel_Sqrt,0,124.0,287.0
-5,simplemodel_a,1,219.5,461.0
-6,simplemodel_b,1,461.0,702.5
-7,simplemodel_ud1,1,0.0,0.0
-7,simplemodel_ud1[task],1,0.0,219.5
-7,simplemodel_ud1[update],1,702.5,906.0
-8,simplemodel_ud2,0,0.0,0.0
-8,simplemodel_ud2[task],0,0.0,124.0
-8,simplemodel_ud2[update],0,629.0,721.0
-9,simplemodel_Out1,0,629.0,629.0
+% # of blocks, # of connections, # maximum delay
+16,0,151.25
+% block no, block name, core, start time, end time
+1,Fibonacci_Abs,0,104.75,134.75
+2,Fibonacci_Add,1,13.5,29.25
+3,Fibonacci_Divide,0,63.5,89.0
+4,Fibonacci_Fn,1,0.0,0.0
+4,Fibonacci_Fn[task],1,0.0,13.5
+4,Fibonacci_Fn[update],1,29.25,42.0
+5,Fibonacci_Fn_1,1,13.5,27.0
+5,Fibonacci_Fn_1[task],1,0.0,13.5
+5,Fibonacci_Fn_1[update],1,0.0,0.0
+6,Fibonacci_Gain,0,134.75,151.25
+7,Fibonacci_Golden_ratio,0,0.0,0.0
+8,Fibonacci_Saturation,1,0.0,0.0
+9,Fibonacci_Subtract,0,89.0,104.75
+10,Fibonacci_Out1,1,13.5,13.5
+11,Fibonacci_approximate_golden_ratio,0,89.0,89.0
+12,Fibonacci_error,0,151.25,151.25

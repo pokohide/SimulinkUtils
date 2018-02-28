@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<sm:blocks xmlns:sm="http://example.com/SimulinkModel" name="Fibonacci" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://example.com/SimulinkModel SimulinkModel.xsd">
+
+  <file name="Fibonacci.h" size="4331" timestamp="2015-06-23T15:49:10+0900" type="c-header"/>
+
+  <file name="yy_Fibonacci.xml" size="19823" timestamp="2015-06-23T15:59:07+0900" type="xml"/>
+
+  <file name="Fibonacci.c" size="3668" timestamp="2015-06-23T15:49:10+0900" type="c-source"/>
+
+  <file name="Fibonacci_data.c" size="1650" timestamp="2015-06-23T15:49:10+0900" type="c-data"/>
+
+  <file name="../../SHIM.xml" size="15734" timestamp="2015-06-22T14:05:30+0900" type="shim"/>
+
+  <shim-params element="componentset" name="sample"/>
+
+  <shim-params element="mastercomponent" name="sample"/>
+
+  <shim-params element="commoninstructionset" name="sample"/>
+
+  <block blocktype="Abs" id="1" name="Fibonacci_Abs" peinfo="0" rate="1">
+    <input line="Fibonacci_Subtract_1" port="Fibonacci_Abs_1">
+      <connect block="Fibonacci_Subtract" port="Fibonacci_Subtract_1"/>
+    </input>
+    <output line="Fibonacci_Abs_1" port="Fibonacci_Abs_1" usename="true">
+      <connect block="Fibonacci_Gain" port="Fibonacci_Gain_1"/>
+    </output>
+    <var line="Fibonacci_Subtract_1" mode="input" name="Fibonacci_Subtract_1" port="Fibonacci_Abs_1" type="real_T"/>
+    <var line="Fibonacci_Abs_1" mode="output" name="Fibonacci_Abs_1" port="Fibonacci_Abs_1" type="real_T"/>
+    <code file="Fibonacci.c" line="73" type="task">  /* Abs: '&lt;Root&gt;/Abs' */
+  Fibonacci_Abs_1 = fabs(Fibonacci_Subtract_1);
+
+</code>
+    <code file="Fibonacci.c" line="112" type="init">  Fibonacci_Abs_1 = 0.0;
+</code>
+    <performance best="30" type="task" typical="30" worst="30"/>
+    <performance best="12.75" type="init" typical="12.75" worst="12.75"/>
+    <forward block="Fibonacci_Gain" type="data">
+      <var line="Fibonacci_Abs_1" mode="input" name="Fibonacci_Abs_1" port="Fibonacci_Gain_1" type="real_T"/>
+    </forward>
+    <backword block="Fibonacci_Subtract" type="data">
+      <var line="Fibonacci_Subtract_1" mode="output" name="Fibonacci_Subtract_1" port="Fibonacci_Subtract_1" type="real_T"/>
+    </backword>
+  </block>
+
+  <block blocktype="Sum" id="2" name="Fibonacci_Add" peinfo="1" rate="1">
+    <input line="Fibonacci_Fn_1" port="Fibonacci_Add_1">
+      <connect block="Fibonacci_Fn" port="Fibonacci_Fn_1"/>
+    </input>
+    <input line="Fibonacci_Fn_1_1" port="Fibonacci_Add_2">
+      <connect block="Fibonacci_Fn_1" port="Fibonacci_Fn_1_1"/>
+    </input>
+    <output line="Fibonacci_Add_1" port="Fibonacci_Add_1" usename="true">
+      <connect block="Fibonacci_Fn" port="Fibonacci_Fn_1"/>
+    </output>
+    <var line="Fibonacci_Fn_1" mode="input" name="Fibonacci_Fn_1" port="Fibonacci_Add_1" type="real_T"/>
+    <var line="Fibonacci_Fn_1_1" mode="input" name="Fibonacci_Fn_1_1" port="Fibonacci_Add_2" type="real_T"/>
+    <var line="Fibonacci_Add_1" mode="output" name="Fibonacci_Add_1" port="Fibonacci_Add_1" type="real_T"/>
+    <code file="Fibonacci.c" line="79" type="task">  /* Sum: '&lt;Root&gt;/Add' */
+  Fibonacci_Add_1 = Fibonacci_Fn_1 + Fibonacci_Fn_1_1;
+
+</code>
+    <code file="Fibonacci.c" line="114" type="init">  Fibonacci_Add_1 = 0.0;
+
+</code>
+    <performance best="15.75" type="task" typical="15.75" worst="15.75"/>
+    <performance best="12.75" type="init" typical="12.75" worst="12.75"/>
+    <forward block="Fibonacci_Fn" type="data">
+      <var line="Fibonacci_Add_1" mode="input" name="Fibonacci_Add_1" port="Fibonacci_Fn_1" type="real_T"/>
+    </forward>
+    <backword block="Fibonacci_Fn" type="data">
+      <var line="Fibonacci_Fn_1" mode="extout" name="Fibonacci_Fn_1" port="Fibonacci_Fn_1" type="real_T"/>
+    </backword>
+    <backword block="Fibonacci_Fn_1" type="data">
+      <var line="Fibonacci_Fn_1_1" mode="output" name="Fibonacci_Fn_1_1" port="Fibonacci_Fn_1_1" type="real_T"/>
+    </backword>
+  </block>
+
+  <block blocktype="Product" id="3" name="Fibonacci_Divide" peinfo="0" rate="1">
+    <input line="Fibonacci_Fn_1" port="Fibonacci_Divide_1">
+      <connect block="Fibonacci_Fn" port="Fibonacci_Fn_1"/>
+    </input>
+    <input line="Fibonacci_Saturation_1" port="Fibonacci_Divide_2">
+      <connect block="Fibonacci_Saturation" port="Fibonacci_Saturation_1"/>
+    </input>
+    <output line="Fibonacci_Divide_1" port="Fibonacci_Divide_1" usename="true">
+      <connect block="Fibonacci_Subtract" port="Fibonacci_Subtract_1"/>
+      <connect block="Fibonacci_approximate_golden_ratio" port="Fibonacci_approximate_golden_ratio_1"/>
+    </output>
+    <var line="Fibonacci_Fn_1" mode="input" name="Fibonacci_Fn_1" port="Fibonacci_Divide_1" type="real_T"/>
+    <var line="Fibonacci_Saturation_1" mode="input" name="Fibonacci_Saturation_1" port="Fibonacci_Divide_2" type="real_T"/>
+    <var line="Fibonacci_Divide_1" mode="extout" name="Fibonacci_Divide_1" port="Fibonacci_Divide_1" type="real_T"/>
+    <code file="Fibonacci.c" line="64" type="task">  /* Product: '&lt;Root&gt;/Divide' */
+  Fibonacci_Divide_1 = Fibonacci_Fn_1 / Fibonacci_Saturation_1;
+
+</code>
+    <code file="Fibonacci.c" line="109" type="init">  Fibonacci_Divide_1 = 0.0;
+</code>
+    <performance best="25.5" type="task" typical="25.5" worst="25.5"/>
+    <performance best="12.75" type="init" typical="12.75" worst="12.75"/>
+    <forward block="Fibonacci_Subtract" type="data">
+      <var line="Fibonacci_Divide_1" mode="input" name="Fibonacci_Divide_1" port="Fibonacci_Subtract_1" type="real_T"/>
+    </forward>
+    <forward block="Fibonacci_approximate_golden_ratio" type="port">
+      <var line="Fibonacci_Divide_1" mode="input" name="Fibonacci_Divide_1" port="Fibonacci_approximate_golden_ratio_1" type="real_T"/>
+    </forward>
+    <backword block="Fibonacci_Fn" type="data">
+      <var line="Fibonacci_Fn_1" mode="extout" name="Fibonacci_Fn_1" port="Fibonacci_Fn_1" type="real_T"/>
+    </backword>
+    <backword block="Fibonacci_Saturation" type="data">
+      <var line="Fibonacci_Saturation_1" mode="output" name="Fibonacci_Saturation_1" port="Fibonacci_Saturation_1" type="real_T"/>
+    </backword>
+  </block>
+
+  <block blocktype="UnitDelay" id="4" name="Fibonacci_Fn" peinfo="1" rate="1">
+    <input line="Fibonacci_Add_1" port="Fibonacci_Fn_1">
+      <connect block="Fibonacci_Add" port="Fibonacci_Add_1"/>
+    </input>
+    <output line="Fibonacci_Fn_1" port="Fibonacci_Fn_1" usename="true">
+      <connect block="Fibonacci_Add" port="Fibonacci_Add_1"/>
+      <connect block="Fibonacci_Divide" port="Fibonacci_Divide_1"/>
+      <connect block="Fibonacci_Fn_1" port="Fibonacci_Fn_1_1"/>
+      <connect block="Fibonacci_Out1" port="Fibonacci_Out1_1"/>
+    </output>
+    <var line="Fibonacci_Add_1" mode="input" name="Fibonacci_Add_1" port="Fibonacci_Fn_1" type="real_T"/>
+    <var line="Fibonacci_Fn_1" mode="extout" name="Fibonacci_Fn_1" port="Fibonacci_Fn_1" type="real_T"/>
+    <state name="Fn_DSTATE" storage="Fibonacci_DW" type="real_T"/>
+    <param name="Fn_InitialCondition" storage="Fibonacci_P" type="real_T"/>
+    <code file="Fibonacci.c" line="44" type="task">  /* UnitDelay: '&lt;Root&gt;/Fn' */
+  Fibonacci_Fn_1 = Fibonacci_DW.Fn_DSTATE;
+
+</code>
+    <code file="Fibonacci.c" line="82" type="update">  /* Update for UnitDelay: '&lt;Root&gt;/Fn' */
+  Fibonacci_DW.Fn_DSTATE = Fibonacci_Add_1;
+
+</code>
+    <code file="Fibonacci.c" line="106" type="init">  Fibonacci_Fn_1 = 0.0;
+</code>
+    <code file="Fibonacci.c" line="120" type="state">  /* InitializeConditions for UnitDelay: '&lt;Root&gt;/Fn' */
+  Fibonacci_DW.Fn_DSTATE = Fibonacci_P.Fn_InitialCondition;
+
+</code>
+    <code file="Fibonacci_data.c" line="21" type="param">  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/Fn'
+                                        */
+</code>
+    <performance best="13.5" type="task" typical="13.5" worst="13.5"/>
+    <performance best="12.75" type="update" typical="12.75" worst="12.75"/>
+    <performance best="12.75" type="init" typical="12.75" worst="12.75"/>
+    <forward block="Fibonacci_Add" type="data">
+      <var line="Fibonacci_Fn_1" mode="input" name="Fibonacci_Fn_1" port="Fibonacci_Add_1" type="real_T"/>
+    </forward>
+    <forward block="Fibonacci_Divide" type="data">
+      <var line="Fibonacci_Fn_1" mode="input" name="Fibonacci_Fn_1" port="Fibonacci_Divide_1" type="real_T"/>
+    </forward>
+    <forward block="Fibonacci_Fn_1" type="data">
+      <var line="Fibonacci_Fn_1" mode="input" name="Fibonacci_Fn_1" port="Fibonacci_Fn_1_1" type="real_T"/>
+    </forward>
+    <forward block="Fibonacci_Out1" type="port">
+      <var line="Fibonacci_Fn_1" mode="input" name="Fibonacci_Fn_1" port="Fibonacci_Out1_1" type="real_T"/>
+    </forward>
+    <backword block="Fibonacci_Add" type="data">
+      <var line="Fibonacci_Add_1" mode="output" name="Fibonacci_Add_1" port="Fibonacci_Add_1" type="real_T"/>
+    </backword>
+  </block>
+
+  <block blocktype="UnitDelay" id="5" name="Fibonacci_Fn_1" peinfo="1" rate="1">
+    <input line="Fibonacci_Fn_1" port="Fibonacci_Fn_1_1">
+      <connect block="Fibonacci_Fn" port="Fibonacci_Fn_1"/>
+    </input>
+    <output line="Fibonacci_Fn_1_1" port="Fibonacci_Fn_1_1" usename="true">
+      <connect block="Fibonacci_Add" port="Fibonacci_Add_2"/>
+      <connect block="Fibonacci_Saturation" port="Fibonacci_Saturation_1"/>
+    </output>
+    <var line="Fibonacci_Fn_1" mode="input" name="Fibonacci_Fn_1" port="Fibonacci_Fn_1_1" type="real_T"/>
+    <var line="Fibonacci_Fn_1_1" mode="output" name="Fibonacci_Fn_1_1" port="Fibonacci_Fn_1_1" type="real_T"/>
+    <state name="Fn_1_DSTATE" storage="Fibonacci_DW" type="real_T"/>
+    <param name="Fn_1_InitialCondition" storage="Fibonacci_P" type="real_T"/>
+    <code file="Fibonacci.c" line="47" type="task">  /* UnitDelay: '&lt;Root&gt;/Fn_1' */
+  Fibonacci_Fn_1_1 = Fibonacci_DW.Fn_1_DSTATE;
+
+</code>
+    <code file="Fibonacci.c" line="85" type="update">  /* Update for UnitDelay: '&lt;Root&gt;/Fn_1' */
+  Fibonacci_DW.Fn_1_DSTATE = Fibonacci_Fn_1;
+</code>
+    <code file="Fibonacci.c" line="107" type="init">  Fibonacci_Fn_1_1 = 0.0;
+</code>
+    <code file="Fibonacci.c" line="123" type="state">  /* InitializeConditions for UnitDelay: '&lt;Root&gt;/Fn_1' */
+  Fibonacci_DW.Fn_1_DSTATE = Fibonacci_P.Fn_1_InitialCondition;
+</code>
+    <code file="Fibonacci_data.c" line="24" type="param">  0.0,                                 /* Expression: 0
+                                        * Referenced by: '&lt;Root&gt;/Fn_1'
+                                        */
+</code>
+    <performance best="13.5" type="task" typical="13.5" worst="13.5"/>
+    <performance best="12.75" type="update" typical="12.75" worst="12.75"/>
+    <performance best="12.75" type="init" typical="12.75" worst="12.75"/>
+    <forward block="Fibonacci_Add" type="data">
+      <var line="Fibonacci_Fn_1_1" mode="input" name="Fibonacci_Fn_1_1" port="Fibonacci_Add_2" type="real_T"/>
+    </forward>
+    <forward block="Fibonacci_Saturation" type="data">
+      <var line="Fibonacci_Fn_1_1" mode="input" name="Fibonacci_Fn_1_1" port="Fibonacci_Saturation_1" type="real_T"/>
+    </forward>
+    <backword block="Fibonacci_Fn" type="data">
+      <var line="Fibonacci_Fn_1" mode="extout" name="Fibonacci_Fn_1" port="Fibonacci_Fn_1" type="real_T"/>
+    </backword>
+  </block>
+
+  <block blocktype="Gain" id="6" name="Fibonacci_Gain" peinfo="0" rate="1">
+    <input line="Fibonacci_Abs_1" port="Fibonacci_Gain_1">
+      <connect block="Fibonacci_Abs" port="Fibonacci_Abs_1"/>
+    </input>
+    <output line="Fibonacci_Gain_1" port="Fibonacci_Gain_1" usename="true">
+      <connect block="Fibonacci_error" port="Fibonacci_error_1"/>
+    </output>
+    <var line="Fibonacci_Abs_1" mode="input" name="Fibonacci_Abs_1" port="Fibonacci_Gain_1" type="real_T"/>
+    <var line="Fibonacci_Gain_1" mode="extout" name="Fibonacci_Gain_1" port="Fibonacci_Gain_1" type="real_T"/>
+    <param name="Gain_Gain" storage="Fibonacci_P" type="real_T"/>
+    <code file="Fibonacci.c" line="76" type="task">  /* Gain: '&lt;Root&gt;/Gain' */
+  Fibonacci_Gain_1 = Fibonacci_P.Gain_Gain * Fibonacci_Abs_1;
+
+</code>
+    <code file="Fibonacci.c" line="113" type="init">  Fibonacci_Gain_1 = 0.0;
+</code>
+    <code file="Fibonacci_data.c" line="36" type="param">  0.61803398874989479                  /* Expression: 2/(1+sqrt(5))
+                                        * Referenced by: '&lt;Root&gt;/Gain'
+                                        */
+,</code>
+    <performance best="16.5" type="task" typical="16.5" worst="16.5"/>
+    <performance best="12.75" type="init" typical="12.75" worst="12.75"/>
+    <forward block="Fibonacci_error" type="port">
+      <var line="Fibonacci_Gain_1" mode="input" name="Fibonacci_Gain_1" port="Fibonacci_error_1" type="real_T"/>
+    </forward>
+    <backword block="Fibonacci_Abs" type="data">
+      <var line="Fibonacci_Abs_1" mode="output" name="Fibonacci_Abs_1" port="Fibonacci_Abs_1" type="real_T"/>
+    </backword>
+  </block>
+
+  <block blocktype="Constant" id="7" name="Fibonacci_Golden_ratio" peinfo="0" rate="1">
+    <output line="Fibonacci_Golden_ratio_1" port="Fibonacci_Golden_ratio_1" usename="true">
+      <connect block="Fibonacci_Subtract" port="Fibonacci_Subtract_2"/>
+    </output>
+    <var line="Fibonacci_Golden_ratio_1" mode="output" name="Fibonacci_Golden_ratio_1" port="Fibonacci_Golden_ratio_1" type="real_T"/>
+    <param name="Golden_ratio_Value" storage="Fibonacci_P" type="real_T"/>
+    <code file="Fibonacci.c" line="67" type="task">  /* Constant: '&lt;Root&gt;/Golden_ratio' */
+  Fibonacci_Golden_ratio_1 = Fibonacci_P.Golden_ratio_Value;
+
+</code>
+    <code file="Fibonacci.c" line="110" type="init">  Fibonacci_Golden_ratio_1 = 0.0;
+</code>
+    <code file="Fibonacci_data.c" line="33" type="param">  1.6180339887498949,                  /* Expression: (1+sqrt(5))/2
+                                        * Referenced by: '&lt;Root&gt;/Golden_ratio'
+                                        */
+</code>
+    <performance best="13.5" type="task" typical="13.5" worst="13.5"/>
+    <performance best="12.75" type="init" typical="12.75" worst="12.75"/>
+    <forward block="Fibonacci_Subtract" type="data">
+      <var line="Fibonacci_Golden_ratio_1" mode="input" name="Fibonacci_Golden_ratio_1" port="Fibonacci_Subtract_2" type="real_T"/>
+    </forward>
+  </block>
+
+  <block blocktype="Saturate" id="8" name="Fibonacci_Saturation" peinfo="1" rate="1">
+    <input line="Fibonacci_Fn_1_1" port="Fibonacci_Saturation_1">
+      <connect block="Fibonacci_Fn_1" port="Fibonacci_Fn_1_1"/>
+    </input>
+    <output line="Fibonacci_Saturation_1" port="Fibonacci_Saturation_1" usename="true">
+      <connect block="Fibonacci_Divide" port="Fibonacci_Divide_2"/>
+    </output>
+    <var line="Fibonacci_Fn_1_1" mode="input" name="Fibonacci_Fn_1_1" port="Fibonacci_Saturation_1" type="real_T"/>
+    <var line="Fibonacci_Saturation_1" mode="output" name="Fibonacci_Saturation_1" port="Fibonacci_Saturation_1" type="real_T"/>
+    <param name="Saturation_UpperSat" storage="Fibonacci_P" type="real_T"/>
+    <param name="Saturation_LowerSat" storage="Fibonacci_P" type="real_T"/>
+    <code file="Fibonacci.c" line="50" type="task">  /* Saturate: '&lt;Root&gt;/Saturation' */
+  u0 = Fibonacci_Fn_1_1;
+  u1 = Fibonacci_P.Saturation_LowerSat;
+  u2 = Fibonacci_P.Saturation_UpperSat;
+  if (u0 &gt; u2) {
+    Fibonacci_Saturation_1 = u2;
+  } else if (u0 &lt; u1) {
+    Fibonacci_Saturation_1 = u1;
+  } else {
+    Fibonacci_Saturation_1 = u0;
+  }
+
+  /* End of Saturate: '&lt;Root&gt;/Saturation' */
+</code>
+    <code file="Fibonacci.c" line="98" type="init">  Fibonacci_P.Saturation_UpperSat = rtInf;
+
+  Fibonacci_Saturation_1 = 0.0;
+</code>
+    <code file="Fibonacci_data.c" line="27" type="param">  0.0,                                 /* Expression: inf
+                                        * Referenced by: '&lt;Root&gt;/Saturation'
+                                        */
+  1.0,                                 /* Expression: 1
+                                        * Referenced by: '&lt;Root&gt;/Saturation'
+                                        */
+</code>
+    <performance best="18.75" type="task" typical="21" worst="23.25"/>
+    <performance best="14.25" type="init" typical="14.25" worst="14.25"/>
+    <forward block="Fibonacci_Divide" type="data">
+      <var line="Fibonacci_Saturation_1" mode="input" name="Fibonacci_Saturation_1" port="Fibonacci_Divide_2" type="real_T"/>
+    </forward>
+    <backword block="Fibonacci_Fn_1" type="data">
+      <var line="Fibonacci_Fn_1_1" mode="output" name="Fibonacci_Fn_1_1" port="Fibonacci_Fn_1_1" type="real_T"/>
+    </backword>
+  </block>
+
+  <block blocktype="Sum" id="9" name="Fibonacci_Subtract" peinfo="0" rate="1">
+    <input line="Fibonacci_Divide_1" port="Fibonacci_Subtract_1">
+      <connect block="Fibonacci_Divide" port="Fibonacci_Divide_1"/>
+    </input>
+    <input line="Fibonacci_Golden_ratio_1" port="Fibonacci_Subtract_2">
+      <connect block="Fibonacci_Golden_ratio" port="Fibonacci_Golden_ratio_1"/>
+    </input>
+    <output line="Fibonacci_Subtract_1" port="Fibonacci_Subtract_1" usename="true">
+      <connect block="Fibonacci_Abs" port="Fibonacci_Abs_1"/>
+    </output>
+    <var line="Fibonacci_Divide_1" mode="input" name="Fibonacci_Divide_1" port="Fibonacci_Subtract_1" type="real_T"/>
+    <var line="Fibonacci_Golden_ratio_1" mode="input" name="Fibonacci_Golden_ratio_1" port="Fibonacci_Subtract_2" type="real_T"/>
+    <var line="Fibonacci_Subtract_1" mode="output" name="Fibonacci_Subtract_1" port="Fibonacci_Subtract_1" type="real_T"/>
+    <code file="Fibonacci.c" line="70" type="task">  /* Sum: '&lt;Root&gt;/Subtract' */
+  Fibonacci_Subtract_1 = Fibonacci_Divide_1 - Fibonacci_Golden_ratio_1;
+
+</code>
+    <code file="Fibonacci.c" line="111" type="init">  Fibonacci_Subtract_1 = 0.0;
+</code>
+    <performance best="15.75" type="task" typical="15.75" worst="15.75"/>
+    <performance best="12.75" type="init" typical="12.75" worst="12.75"/>
+    <forward block="Fibonacci_Abs" type="data">
+      <var line="Fibonacci_Subtract_1" mode="input" name="Fibonacci_Subtract_1" port="Fibonacci_Abs_1" type="real_T"/>
+    </forward>
+    <backword block="Fibonacci_Divide" type="data">
+      <var line="Fibonacci_Divide_1" mode="extout" name="Fibonacci_Divide_1" port="Fibonacci_Divide_1" type="real_T"/>
+    </backword>
+    <backword block="Fibonacci_Golden_ratio" type="data">
+      <var line="Fibonacci_Golden_ratio_1" mode="output" name="Fibonacci_Golden_ratio_1" port="Fibonacci_Golden_ratio_1" type="real_T"/>
+    </backword>
+  </block>
+
+  <block blocktype="Outport" id="10" name="Fibonacci_Out1" peinfo="1" rate="1">
+    <input line="Fibonacci_Fn_1" port="Fibonacci_Out1_1">
+      <connect block="Fibonacci_Fn" port="Fibonacci_Fn_1"/>
+    </input>
+    <var line="Fibonacci_Fn_1" mode="input" name="Fibonacci_Fn_1" port="Fibonacci_Out1_1" type="real_T"/>
+    <backword block="Fibonacci_Fn" type="port">
+      <var line="Fibonacci_Fn_1" mode="extout" name="Fibonacci_Fn_1" port="Fibonacci_Fn_1" type="real_T"/>
+    </backword>
+  </block>
+
+  <block blocktype="Outport" id="11" name="Fibonacci_approximate_golden_ratio" peinfo="0" rate="1">
+    <input line="Fibonacci_Divide_1" port="Fibonacci_approximate_golden_ratio_1">
+      <connect block="Fibonacci_Divide" port="Fibonacci_Divide_1"/>
+    </input>
+    <var line="Fibonacci_Divide_1" mode="input" name="Fibonacci_Divide_1" port="Fibonacci_approximate_golden_ratio_1" type="real_T"/>
+    <backword block="Fibonacci_Divide" type="port">
+      <var line="Fibonacci_Divide_1" mode="extout" name="Fibonacci_Divide_1" port="Fibonacci_Divide_1" type="real_T"/>
+    </backword>
+  </block>
+
+  <block blocktype="Outport" id="12" name="Fibonacci_error" peinfo="0" rate="1">
+    <input line="Fibonacci_Gain_1" port="Fibonacci_error_1">
+      <connect block="Fibonacci_Gain" port="Fibonacci_Gain_1"/>
+    </input>
+    <var line="Fibonacci_Gain_1" mode="input" name="Fibonacci_Gain_1" port="Fibonacci_error_1" type="real_T"/>
+    <backword block="Fibonacci_Gain" type="port">
+      <var line="Fibonacci_Gain_1" mode="extout" name="Fibonacci_Gain_1" port="Fibonacci_Gain_1" type="real_T"/>
+    </backword>
+  </block>
+
+  <code type="common-init">  rt_InitInfAndNaN(sizeof(real_T));
+</code>
+
+  <code type="rt-macro">/* Macros for accessing real-time model data structure */
+#ifndef rtmGetErrorStatus
+# define rtmGetErrorStatus(rtm)        ((rtm)-&gt;errorStatus)
+#endif
+
+#ifndef rtmSetErrorStatus
+# define rtmSetErrorStatus(rtm, val)   ((rtm)-&gt;errorStatus = (val))
+#endif
+
+</code>
+
+  <code type="rt-type">/* Real-time Model Data Structure */
+struct tag_RTM_Fibonacci_T {
+  const char_T * volatile errorStatus;
+};
+</code>
+
+  <code type="autovars">  real_T u0;
+  real_T u1;
+  real_T u2;
+
+</code>
+
+  <object kind="rtm-extern" name="Fibonacci_M" type="extern RT_MODEL_Fibonacci_T * const"/>
+
+  <object kind="rtm-object" name="Fibonacci_M_" type="RT_MODEL_Fibonacci_T"/>
+
+  <object kind="rtm-pointer" name="Fibonacci_M" type="RT_MODEL_Fibonacci_T * const" value="&amp;Fibonacci_M_"/>
+
+  <includes file="&lt;math.h>" from="Fibonacci.h" index="0"/>
+
+  <includes file="&lt;stddef.h>" from="Fibonacci.h" index="1"/>
+
+  <includes file="&lt;string.h>" from="Fibonacci.h" index="2"/>
+
+  <includes file="&quot;rtwtypes.h&quot;" from="Fibonacci.h" index="3"/>
+
+  <includes file="&quot;Fibonacci_types.h&quot;" from="Fibonacci.h" index="4"/>
+
+  <includes file="&quot;rtGetInf.h&quot;" from="Fibonacci.h" index="5"/>
+
+  <includes file="&quot;rt_nonfinite.h&quot;" from="Fibonacci.h" index="6"/>
+
+  <includes file="&quot;Fibonacci_private.h&quot;" from="Fibonacci.c" index="7"/>
+
+</sm:blocks>
